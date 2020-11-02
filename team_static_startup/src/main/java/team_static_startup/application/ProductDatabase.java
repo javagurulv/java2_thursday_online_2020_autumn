@@ -1,4 +1,4 @@
-package team_static_startup.lesson_1;
+package team_static_startup.application;
 
 public interface ProductDatabase {
 

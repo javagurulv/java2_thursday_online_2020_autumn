@@ -54,8 +54,8 @@ public class Product {
         Product product = (Product) o;
         return
                 price == product.price &&
-                Objects.equals(title, product.title) &&
-                Objects.equals(description, product.description);
+                Objects.equals(title.toLowerCase(), product.title.toLowerCase()) &&
+                Objects.equals(description.toLowerCase(), product.description.toLowerCase());
     }
 
     @Override

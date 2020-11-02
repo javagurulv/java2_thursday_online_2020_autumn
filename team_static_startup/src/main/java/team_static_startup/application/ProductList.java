@@ -1,6 +1,6 @@
-package team_static_startup.lesson_1;
+package team_static_startup.application;
 
-import team_static_startup.lesson_1.uiaction.*;
+import team_static_startup.application.uiaction.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +26,10 @@ class ProductList {
         while (true) {
             System.out.println("\n1. Adding product to Database");
             System.out.println("2. Deleting product from Database by ID");
-            System.out.println("3. Deleting product from Database by all parameters");
+            System.out.println("3. Deleting product from Database by name and description");
             System.out.println("4. Deleting product from Database by name");
             System.out.println("0. Exit the program");
-            System.out.println("-----------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------");
             System.out.print("Please enter menu number: ");
             int userSelectedMenuNumber = Integer.parseInt(sc.nextLine());
             if (userSelectedMenuNumber == 0) {

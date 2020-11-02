@@ -64,7 +64,7 @@ public class InternetStore {
         if (uiAction != null) {
             uiAction.execute();
         } else {
-            System.out.println("Menu item not exist: " + userSelectedMenuNumber);
+            System.out.println("Menu item does not exist: " + userSelectedMenuNumber);
         }
     }
 

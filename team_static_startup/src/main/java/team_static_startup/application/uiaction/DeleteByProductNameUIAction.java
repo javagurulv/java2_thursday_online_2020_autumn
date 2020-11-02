@@ -1,6 +1,6 @@
-package team_static_startup.lesson_1.uiaction;
+package team_static_startup.application.uiaction;
 
-import team_static_startup.lesson_1.ProductDatabase;
+import team_static_startup.application.ProductDatabase;
 
 import java.util.Scanner;
 

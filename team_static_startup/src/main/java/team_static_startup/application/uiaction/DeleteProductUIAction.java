@@ -1,7 +1,7 @@
-package team_static_startup.lesson_1.uiaction;
+package team_static_startup.application.uiaction;
 
-import team_static_startup.lesson_1.Product;
-import team_static_startup.lesson_1.ProductDatabase;
+import team_static_startup.application.Product;
+import team_static_startup.application.ProductDatabase;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

@@ -75,7 +75,7 @@ public class ProductDatabaseImpl implements ProductDatabase{
     @Override
     public Optional<Product> findAnyByTitle(String title) {
         return productList.stream()
-                .filter(product -> product.getTitle().startsWith(title))
+                .filter(product -> product.getTitle().toLowerCase().startsWith(title.toLowerCase()))
                 .findAny();
     }
 
@@ -83,12 +83,11 @@ public class ProductDatabaseImpl implements ProductDatabase{
     public List<Product> findAllByTitle(String title) {
         List <Product> listOfSpecificProducts = new ArrayList<>();
         for (Product product : productList){
-            if (product.getTitle().startsWith(title)){
+            if (product.getTitle().toLowerCase().startsWith(title.toLowerCase())){
                 listOfSpecificProducts.add(product);
             }
         }
         return listOfSpecificProducts;
     }
-
 
 }

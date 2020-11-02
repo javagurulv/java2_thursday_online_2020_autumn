@@ -1,4 +1,4 @@
-package team_static_startup.lesson_1.uiaction;
+package team_static_startup.application.uiaction;
 
 public interface UIAction {
 
