@@ -40,4 +40,19 @@ public class ProductDatabaseImpl implements ProductDatabase {
         productList.removeIf(products -> (products.getName().equals(productName)));
     }
 
+    @Override
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    @Override
+    public List<Product> findByProductName(String productName) {
+        List<Product> productsByName = new ArrayList<>();
+        for (Product product : productList) {
+            if (product.getName().equals(productName)) {
+                productsByName.add(product);
+            }
+        }
+        return productsByName;
+    }
 }
