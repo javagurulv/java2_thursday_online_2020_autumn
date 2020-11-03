@@ -11,15 +11,14 @@ import java.util.Optional;
 //@Service
 public class ItemRetrievalServiceImpl implements ItemRetrievalService {
 
-    private ItemRepository itemRepository = new JpaMock();
 
     @Override
     public List<Item> getAll() {
-        return itemRepository.getAll();
+        return null;
     }
 
     @Override
     public Optional<Item> getItemByType(ItemType type) {
-        return itemRepository.getAll().stream().filter(item -> item.getItemType().equals(type)).findFirst();
+        return null;
     }
 }

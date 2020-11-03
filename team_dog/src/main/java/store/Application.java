@@ -1,13 +1,13 @@
 package store;
 
-import store.mockSpringClasses.ThymeLeafMock;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {
-        ThymeLeafMock userInterfaceMock = new ThymeLeafMock();
-        userInterfaceMock.run();
+        SpringApplication.run(Application.class);
     }
 
 }
