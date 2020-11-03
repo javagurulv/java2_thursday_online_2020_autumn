@@ -1,8 +1,10 @@
 package store.entity;
 
+import lombok.Getter;
 import store.entity.types.ItemType;
 
 //@Entity
+@Getter
 public class Item {
 
     private Long id;    // should be auto increment in DB
@@ -19,25 +21,5 @@ public class Item {
         this.itemType = type;
         this.quantity = qty;
         this.description = desc;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ItemType getItemType() {
-        return itemType;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

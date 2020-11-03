@@ -2,12 +2,34 @@ plugins {
     id 'java'
 }
 
-version 'unspecified'
-
 repositories {
-    mavenCentral()
+    mavenLocal()
+    maven {
+        url = uri("https://repo.maven.apache.org/maven2/")
+    }
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web:2.1.5.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.1.5.RELEASE")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.1.5.RELEASE")
+    compileOnly("org.projectlombok:lombok:1.18.12")
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
 }
+
+
+group = "org.example"
+version = "1.0-SNAPSHOT"
+description = "GammaProject"
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile) {
+    doFirst {
+        println " \"TEST\" AnnotationProcessorPath for $name is ${options.getAnnotationProcessorPath().getFiles()}"
+    }
+}
+
+
+//gradle build --refresh-dependencies
