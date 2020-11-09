@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Simple Spring Boot</title>
+
+
+</head>
+
+<body>
+
+<h2 th:text="'Hello ' + ${testMsg}" ></h2>
+
+<form th:action="@{/wares}">
+    <button type="submit" th:name="type" th:value="shirts">Shirts</button><br>
+    <button type="submit" th:name="type" th:value="jackets">Jackets</button><br>
+    <button type="submit" th:name="type" th:value="trousers">Trousers</button><br>
+    <button type="submit" th:name="type" th:value="socks">Socks</button><br>
+</form>
+
+
+
+
+</body>
+</html>
+
