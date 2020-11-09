@@ -1,24 +1,20 @@
 package store.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import store.entity.Item;
-import store.entity.ItemRepository;
-import store.entity.types.ItemType;
-import store.mockSpringClasses.JpaMock;
+import store.repositories.ItemRepository;
 
-import java.util.List;
-import java.util.Optional;
 
-//@Service
+@Service
 public class ItemRetrievalServiceImpl implements ItemRetrievalService {
 
 
-    @Override
-    public List<Item> getAll() {
-        return null;
-    }
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Override
-    public Optional<Item> getItemByType(ItemType type) {
-        return null;
+    public void saveExampleItem(){
+        itemRepository.save(new Item("name",1,5,"text"));
     }
 }
