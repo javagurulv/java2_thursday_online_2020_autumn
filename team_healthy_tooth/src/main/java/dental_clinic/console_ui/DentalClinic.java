@@ -30,6 +30,10 @@ public class DentalClinic {
         SearchPatientRequestValidator searchPatientRequestValidator =new SearchPatientRequestValidator();
         SearchPatientService searchPatientService = new SearchPatientService(patientDatabase, searchPatientRequestValidator);
 
+        ChangePatientPersonalDataValidator changePatientPersonalDataValidator = new ChangePatientPersonalDataValidator();
+        ChangePatientPersonalDataService changePatientPersonalDataService =
+                new ChangePatientPersonalDataService(patientDatabase, changePatientPersonalDataValidator);
+
         menuNumberToAction = new HashMap();
 
         //TODO exit class
@@ -40,6 +44,7 @@ public class DentalClinic {
         menuNumberToAction.put(5, new SearchPatientUIAction(searchPatientService));
         menuNumberToAction.put(6, new FindPatientByPersonalCodeUIAction(findPatientsByPersonalCodeService));
         menuNumberToAction.put(7, new AddVisitUIAction(addVisitService));
+        menuNumberToAction.put(8, new ChangePatientPersonalDataUiAction(changePatientPersonalDataService));
         menuNumberToAction.put(0, new ExitUIAction());
     }
 
@@ -64,6 +69,7 @@ public class DentalClinic {
                 "5   Search by name / surname\n" +
                 "6   Find patient by personal code\n" +
                 "7   Add visit\n" +
+                "8   Change patient's personal data\n" +
                 "0   Exit");
     }
 

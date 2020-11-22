@@ -4,6 +4,7 @@ import dental_clinic.core.domain.Patient;
 import dental_clinic.core.domain.PersonalData;
 import dental_clinic.core.domain.ToothStatus;
 import dental_clinic.core.domain.Visit;
+import dental_clinic.core.requests.ChangePatientPersonalDataRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,19 @@ public class PatientDatabaseImpl implements PatientDatabase {
                 patientList.get(i).updateJowl(toothNumber, toothStatus);
             }
         }
+    }
+
+    @Override
+    public Optional<Patient> changePatientPersonalData(ChangePatientPersonalDataRequest request) {
+        Optional<Patient> updatedPatientResult = Optional.empty();
+        for (Patient patient : patientList) {
+            long foundId = patient.getPersonalData().getId();
+            if (foundId == id) {
+                patient.updatePersonalData(request);
+                updatedPatientResult = Optional.of(patient);
+            }
+        }
+        return updatedPatientResult;
     }
 
     private boolean isSpecificPatient (int index, long id) {
