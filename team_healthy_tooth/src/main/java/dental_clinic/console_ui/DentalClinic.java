@@ -15,23 +15,18 @@ public class DentalClinic {
 
     public DentalClinic() {
         PatientDatabase patientDatabase = new PatientDatabaseImpl();
-
         AddPatientValidator addPatientValidator = new AddPatientValidator();
         AddPatientService addPatientService = new AddPatientService(patientDatabase, addPatientValidator);
-
         DeletePatientValidator deletePatientValidator = new DeletePatientValidator();
         DeletePatientService deletePatientService = new DeletePatientService(patientDatabase, deletePatientValidator);
-
         GetPatientsService getPatientsService = new GetPatientsService(patientDatabase);
         GetSpecificPatientValidator getSpecificPatientValidator = new GetSpecificPatientValidator();
         GetSpecificPatientHistoryService getSpecificPatientHistoryService =
                 new GetSpecificPatientHistoryService(patientDatabase, getSpecificPatientValidator);
         FindPatientsByPersonalCodeService findPatientsByPersonalCodeService =
                 new FindPatientsByPersonalCodeService(patientDatabase);
-
         AddVisitValidator addVisitValidator = new AddVisitValidator();
         AddVisitService addVisitService = new AddVisitService(patientDatabase, addVisitValidator);
-
         SearchPatientRequestValidator searchPatientRequestValidator =new SearchPatientRequestValidator();
         SearchPatientService searchPatientService = new SearchPatientService(patientDatabase, searchPatientRequestValidator);
 
@@ -73,7 +68,6 @@ public class DentalClinic {
                 "5   Search by name / surname\n" +
                 "6   Find patient by personal code\n" +
                 "7   Add visit\n" +
-                "8   Change patient's personal data\n" +
                 "0   Exit");
     }
 

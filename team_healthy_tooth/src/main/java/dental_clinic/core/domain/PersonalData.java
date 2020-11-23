@@ -16,7 +16,13 @@ public class PersonalData {
         this.surname = surname;
         this.phone = phone;
         this.personalCode = personalCode;
+    }
 
+    public PersonalData(String newName, String newSurname, String newPhone) {
+        this.name = newName;
+        this.surname = newSurname;
+        this.phone = newPhone;
+        this.personalCode = ""; //чтобы не убирать final
     }
 
     public long getId (){

@@ -1,5 +1,7 @@
 package dental_clinic.core.domain;
 
+import dental_clinic.core.requests.ChangePatientPersonalDataRequest;
+
 import java.util.*;
 
 public class Patient {
@@ -30,6 +32,22 @@ public class Patient {
 
     public void updateJowl(int toothNumber, ToothStatus toothStatus){
         jowl.updateJowl(toothNumber, toothStatus);
+    }
+
+    public void updatePersonalData(ChangePatientPersonalDataRequest request) {
+        String updatedName = request.getUpdatedName();
+        String updatedSurname = request.getUpdatedSurname();
+        String updatedPhoneNumber = request.getUpdatedPhoneNumber();
+
+        long savedId = this.personalData.getId();
+        String savedPersonalCode = this.personalData.getPersonalCode();
+
+        PersonalData updatedPersonalData = new PersonalData(
+                updatedName, updatedSurname, updatedPhoneNumber, savedPersonalCode
+        );
+        updatedPersonalData.setId(savedId);
+
+        this.personalData = updatedPersonalData;
     }
 
     @Override
