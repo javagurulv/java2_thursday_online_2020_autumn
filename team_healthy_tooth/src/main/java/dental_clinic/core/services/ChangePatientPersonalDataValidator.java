@@ -39,6 +39,7 @@ public class ChangePatientPersonalDataValidator {
         return errors;
     }
 
+
     private boolean isValidName(String nameToCheck) {
         return (nameToCheck != null && !nameToCheck.isBlank());
     }

@@ -38,4 +38,17 @@ public class ChangePatientPersonalDataService {
             return new ChangePatientPersonalDataResponse(errors);
         }
     }
+
+    public boolean canFindId(long idToSearch) {
+        boolean result = false;
+        List<Patient> patientList = patientDatabase.getPatients();
+
+        for (Patient patient : patientList) {
+            long foundId = patient.getPersonalData().getId();
+            if (foundId == idToSearch) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }

@@ -19,26 +19,31 @@ public class ChangePatientPersonalDataUiAction implements UIAction {
 
         System.out.println("Please enter patient's id : ");
         long id = in.nextLong();
-        in.nextLine();
 
-        System.out.println("Please enter new name : ");
-        String name = in.nextLine();
+        if (service.canFindId(id)) {
+            in.nextLine();
+            System.out.println("Please enter new name : ");
+            String name = in.nextLine();
 
-        System.out.println("Please enter new surname : ");
-        String surname = in.nextLine();
+            System.out.println("Please enter new surname : ");
+            String surname = in.nextLine();
 
-        System.out.println("Please enter new phone number : ");
-        String phoneNumber = in.nextLine();
+            System.out.println("Please enter new phone number : ");
+            String phoneNumber = in.nextLine();
 
-        ChangePatientPersonalDataRequest request = new ChangePatientPersonalDataRequest(
-                id, name, surname, phoneNumber);
-        ChangePatientPersonalDataResponse response = service.execute(request);
+            ChangePatientPersonalDataRequest request = new ChangePatientPersonalDataRequest(
+                    id, name, surname, phoneNumber);
+            ChangePatientPersonalDataResponse response = service.execute(request);
 
-        if (response.hasErrors()) {
-            response.getErrors().forEach(System.out::println);
+            if (response.hasErrors()) {
+                response.getErrors().forEach(System.out::println);
+            }
+            else {
+                System.out.println("Patient's info updated!");
+            }
         }
         else {
-            System.out.println("Patient's info updated!");
+            System.out.println("Could not find patient with this ID");
         }
     }
 }
