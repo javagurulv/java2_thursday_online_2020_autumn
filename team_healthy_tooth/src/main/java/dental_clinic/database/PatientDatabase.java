@@ -3,6 +3,7 @@ package dental_clinic.database;
 import dental_clinic.core.domain.Patient;
 import dental_clinic.core.domain.PersonalData;
 import dental_clinic.core.domain.ToothStatus;
+import dental_clinic.core.requests.ChangePersonalDataRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,5 +27,7 @@ public interface PatientDatabase {
     List<Patient> findPatientsByPersonalCode(String personalCode);
 
     void addVisit(long id, int toothNumber, Optional<String> comment, ToothStatus toothStatus, String doctor);
+    Optional<Patient> changePersonalData(long idToSearch, String updatedSurname, String updatedPhone);
 
+    Optional<Patient> findPatientByIdNumber(long idToSearch);
 }

@@ -4,6 +4,7 @@ import dental_clinic.core.domain.Patient;
 import dental_clinic.core.domain.PersonalData;
 import dental_clinic.core.domain.ToothStatus;
 import dental_clinic.core.domain.Visit;
+import dental_clinic.core.requests.ChangePersonalDataRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,40 @@ public class PatientDatabaseImpl implements PatientDatabase {
                 patientList.get(i).updateJowl(toothNumber, toothStatus);
             }
         }
+    }
+
+    @Override
+    public Optional<Patient> changePersonalData(long idToSearch,
+                                                String updatedSurname,
+                                                String updatedPhone) {
+
+        Optional<Patient> patientToUpdate = findPatientByIdNumber(idToSearch); // result
+
+        if (patientToUpdate.isPresent()) {
+            Patient patient = patientToUpdate.get();
+            patient.getPersonalData().setSurname(updatedSurname);
+            patient.getPersonalData().setPhone(updatedPhone);
+
+            int patientIndexInList = (int) (idToSearch - 1);   //тут надо придумать
+            patientList.set(patientIndexInList, patient);
+        }
+        return patientToUpdate;
+    }
+
+    @Override
+    public Optional<Patient> findPatientByIdNumber(long idToSearch) {
+        Optional<Patient> result = Optional.empty();
+        for (Patient patient : patientList) {
+            long foundId = patient.getPersonalData().getId();
+            if (foundId == idToSearch) {
+                result = Optional.of(patient);
+            }
+        }
+        return result;
+    }
+
+    public boolean canFindById(long idToSearch) {
+        return findPatientByIdNumber(idToSearch).isPresent();
     }
 
     private boolean isSpecificPatient (int index, long id) {
