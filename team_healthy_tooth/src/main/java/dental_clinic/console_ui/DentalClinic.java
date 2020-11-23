@@ -68,6 +68,7 @@ public class DentalClinic {
                 "5   Search by name / surname\n" +
                 "6   Find patient by personal code\n" +
                 "7   Add visit\n" +
+                "8   Change patient's personal data\n" +
                 "0   Exit");
     }
 

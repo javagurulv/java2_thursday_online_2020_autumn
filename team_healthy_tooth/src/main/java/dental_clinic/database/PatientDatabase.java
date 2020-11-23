@@ -27,6 +27,7 @@ public interface PatientDatabase {
     List<Patient> findPatientsByPersonalCode(String personalCode);
 
     void addVisit(long id, int toothNumber, Optional<String> comment, ToothStatus toothStatus, String doctor);
+
     Optional<Patient> changePersonalData(long idToSearch, String updatedSurname, String updatedPhone);
 
     Optional<Patient> findPatientByIdNumber(long idToSearch);
