@@ -62,10 +62,9 @@ public class InternetStoreCustomerSide {
     private void printMenu(){
         System.out.println("\nMenu\n" +
                 "1   Sign in\n" +
-                "2   Delete by id\n" +
-                "3   Print customers\n" +
-                "4   Find all by id\n" +
-                "5   SEARCH\n" +
+                "2   Delete account by id\n" +
+                "3   SEARCH\n" + // добавть в Product Menu
+                "4   Buy product\n"+ //будет вызвать Шоппинг Карт
                 "0   Exit");
     }
 

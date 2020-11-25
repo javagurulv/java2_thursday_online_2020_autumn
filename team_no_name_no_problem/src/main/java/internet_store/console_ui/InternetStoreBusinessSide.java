@@ -65,6 +65,9 @@ public class InternetStoreBusinessSide {
                 "5   Change description\n" +
                 "6   Find product by id\n"+
                 "7   Search product by title / description\n"+
+                "8   Print order list\n"+
+                "9   Check clients\n"+
+                "10  Remove client\n"+
                 "0   Exit");
     }
 
