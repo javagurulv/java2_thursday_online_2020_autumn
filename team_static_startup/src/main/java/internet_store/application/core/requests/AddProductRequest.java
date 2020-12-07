@@ -2,7 +2,7 @@ package internet_store.application.core.requests;
 
 import java.math.BigDecimal;
 
-public class AddProductRequest {
+public class AddProductRequest implements CoreRequest {
 
     private String productName;
     private String productDescription;

@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AddProductValidator {
+public class AddProductValidator implements CoreValidator<AddProductRequest> {
 
-    public List<CoreError> validate(AddProductRequest request) {
+        @Override
+        public List<CoreError> validate(AddProductRequest request) {
         List<CoreError> errors = new ArrayList<>();
+        errors.addAll(validateRegex(request));
         validateProductName(request).ifPresent(errors::add);
         validateProductDescription(request).ifPresent(errors::add);
         validateProductPrice(request).ifPresent(errors::add);
@@ -35,4 +37,5 @@ public class AddProductValidator {
                 ? Optional.of(new CoreError("Price", "must be over 00.00"))
                 : Optional.empty());
     }
+
 }
