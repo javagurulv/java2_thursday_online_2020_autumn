@@ -1,4 +1,4 @@
-package internet_store.application.acceptancetests;
+/*package internet_store.application.acceptancetests;
 
 import internet_store.application.config.ProductListConfiguration;
 import internet_store.application.core.requests.AddProductRequest;
@@ -82,3 +82,6 @@ public class AddProductAcceptanceTest {
     }
 
 }
+
+
+ */

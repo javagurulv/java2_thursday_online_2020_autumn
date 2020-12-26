@@ -1,4 +1,4 @@
-package internet_store.application.core.database;
+/*package internet_store.application.core.database;
 
 import internet_store.application.core.domain.Product;
 import org.junit.Before;
@@ -79,3 +79,5 @@ public class InMemoryDatabaseTest {
     }
 
 }
+
+ */

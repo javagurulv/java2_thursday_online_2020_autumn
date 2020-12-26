@@ -32,15 +32,9 @@ public class DeleteByProductUIAction implements UIAction {
             response.getErrors().forEach(coreError ->
                     System.out.println("Error: " + coreError.getField() + " " + coreError.getMessage())
             );
-        } else {
-            System.out.println("\nProduct deleted\n"
-                    + response.getDeletedProduct().getName() + "\n"
-                    + response.getDeletedProduct().getDescription() + "\n"
-                    + response.getDeletedProduct().getPrice() + " EUR");
         }
 
-        boolean productDeleted = deleteProductByProductService.delete(new Product(productName, productDescription, productPrice));
-        if (productDeleted) {
+        if (response.getDeletedProduct() != null) {
             System.out.println("\nProduct deleted");
         } else {
             System.out.println("\nThere is no such product in the database");

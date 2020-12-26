@@ -29,15 +29,15 @@ public class ChangeProductNameAcceptanceTest {
         database.add(new Product("iMac", "pc", new BigDecimal("4000")));
     }
 
-    @Test
-    public void shouldChangeProductName() {
-        ChangeProductNameRequest request = new ChangeProductNameRequest(1L, "iPhone12");
-        ChangeProductNameResponse response = getChangeProductNameService().execute(request);
-
-        assertTrue(response.isNameChanged());
-        assertEquals("iPhone12", database.getProductList().get(0).getName());
-        assertNull(response.getErrors());
-    }
+//    @Test
+//    public void shouldChangeProductName() {
+//        ChangeProductNameRequest request = new ChangeProductNameRequest(1L, "iPhone12");
+//        ChangeProductNameResponse response = getChangeProductNameService().execute(request);
+//
+//        assertTrue(response.isNameChanged());
+//        assertEquals("iPhone12", database.getProductList().get(0).getName());
+//        assertNull(response.getErrors());
+//    }
 
     @Test
     public void shouldNotChangeNameWhenProductNotFound() {

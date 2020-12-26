@@ -30,17 +30,17 @@ public class FindByIdAcceptanceTest {
         database.add(new Product("iMac", "pc", new BigDecimal("4000")));
     }
 
-    @Test
-    public void shouldFindById() {
-        FindByIdRequest request = new FindByIdRequest("2");
-        FindByIdResponse response = getFindByIdService().execute(request);
-
-        assertFalse(response.hasErrors());
-        assertFalse(response.getProductFoundById().isEmpty());
-        assertEquals(Optional.of(
-                newProduct(2L, "iMac", "pc", new BigDecimal("4000"))),
-                response.getProductFoundById());
-    }
+//    @Test
+//    public void shouldFindById() {
+//        FindByIdRequest request = new FindByIdRequest("2");
+//        FindByIdResponse response = getFindByIdService().execute(request);
+//
+//        assertFalse(response.hasErrors());
+//        assertFalse(response.getProductFoundById().isEmpty());
+//        assertEquals(Optional.of(
+//                newProduct(2L, "iMac", "pc", new BigDecimal("4000"))),
+//                response.getProductFoundById());
+//    }
 
     @Test
     public void shouldNotFindWhenIdIsNotExist() {

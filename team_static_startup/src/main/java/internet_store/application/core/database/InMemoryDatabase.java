@@ -1,3 +1,4 @@
+/*
 package internet_store.application.core.database;
 
 import internet_store.application.core.domain.Product;
@@ -93,3 +94,4 @@ public class InMemoryDatabase implements Database {
     }
 
 }
+*/

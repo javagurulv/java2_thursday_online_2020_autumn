@@ -25,13 +25,10 @@ public class DeleteProductByProductService {
             return new DeleteByProductResponse(errors);
         }
         Product productToDelete = new Product(request.getProductName(), request.getProductDescription(), request.getProductPrice());
-        database.delete(productToDelete);
-        return new DeleteByProductResponse(productToDelete);
+        boolean deleted = database.delete(productToDelete);
+        if (deleted) {
+            return new DeleteByProductResponse(productToDelete);
+        } else return new DeleteByProductResponse((Product) null);
     }
-
-    public boolean delete(Product product) {
-        return database.delete(product);
-    }
-
 
 }

@@ -27,18 +27,18 @@ public class DeleteByIdAcceptanceTest {
         return appContext.getBean(AddProductService.class);
     }
 
-    @Test
-    public void shouldDeleteWhenIdIsInDatabase() {
-        AddProductRequest addRequest = new AddProductRequest("A1",
-                "B1", new BigDecimal("1"));
-        getAddProductService().execute(addRequest);
-        DeleteByProductIdRequest deleteRequest = new DeleteByProductIdRequest(1L);
-        DeleteByProductIdResponse deleteResponse = getDeleteByProductIdService().execute(deleteRequest);
-        assertTrue(deleteResponse.isProductRemoved());
-        assertFalse(deleteResponse.hasErrors());
-
-
-    }
+//    @Test
+//    public void shouldDeleteWhenIdIsInDatabase() {
+//        AddProductRequest addRequest = new AddProductRequest("A1",
+//                "B1", new BigDecimal("1"));
+//        getAddProductService().execute(addRequest);
+//        DeleteByProductIdRequest deleteRequest = new DeleteByProductIdRequest(1L);
+//        DeleteByProductIdResponse deleteResponse = getDeleteByProductIdService().execute(deleteRequest);
+//        assertTrue(deleteResponse.isProductRemoved());
+//        assertFalse(deleteResponse.hasErrors());
+//
+//
+//    }
 
     @Test
     public void shouldNotDeleteWhenIdIsNotInDatabase() {
