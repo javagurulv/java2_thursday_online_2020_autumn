@@ -1,239 +1,136 @@
 package internet_store.application.core.database;
 
 import internet_store.application.core.domain.Product;
-import internet_store.application.core.services.DatabaseConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
+@Profile("mysql")
 public class MySQLDatabase implements Database {
 
     @Autowired
-    private DatabaseConnectionService connectionService;
+    private final JdbcTemplate jdbcTemplate;
+
+    public MySQLDatabase(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public Long add(Product product) {
-        Connection connection = null;
-        Long id = null;
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO products (name, description, price) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        String query = "INSERT INTO products (name, description, price) VALUES (?,?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getDescription());
             preparedStatement.setBigDecimal(3, product.getPrice());
-            preparedStatement.execute();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) id = resultSet.getLong(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        }
-        return id;
+            return preparedStatement;
+        }, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     @Override
     public boolean deleteByProductId(Long productId) {
-        Connection connection = null;
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "DELETE FROM products WHERE id = ?");
+        String query = "DELETE FROM products WHERE id = ?";
+        int affectedRows = jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, productId);
-            int deletedProduct = preparedStatement.executeUpdate();
-            return deletedProduct == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return false;
+            return preparedStatement;
+        });
+        return affectedRows == 1;
     }
 
     @Override
     public boolean delete(Product product) {
-        Connection connection = null;
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "DELETE FROM products WHERE name = ? AND description = ?");
+        String query = "DELETE FROM products WHERE name = ? AND description = ?";
+        int affectedRows = jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setString(2, product.getDescription());
-            int deletedProducts = preparedStatement.executeUpdate();
-            return deletedProducts > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return false;
+            return preparedStatement;
+        });
+        return affectedRows > 0;
     }
 
     @Override
     public boolean deleteByProductName(String product) {
-        Connection connection = null;
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "DELETE FROM products WHERE name = ?");
+        String query = "DELETE FROM products WHERE name = ?";
+        int affectedRows = jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, product);
-            int deletedProduct = preparedStatement.executeUpdate();
-            return deletedProduct > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return false;
+            return preparedStatement;
+        });
+        return affectedRows > 0;
     }
 
     @Override
     public List<Product> findByProductName(String productName) {
-        Connection connection = null;
-        List<Product> products = new ArrayList<>();
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM products WHERE name = ?");
+        String query = "SELECT * FROM products WHERE name = ?";
+        return jdbcTemplate.query(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                BigDecimal price = resultSet.getBigDecimal("price");
-                Product productFound = new Product(name, description, price);
-                productFound.setId(id);
-                products.add(productFound);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return products;
+            return preparedStatement;
+        }, new BeanPropertyRowMapper<>(Product.class));
     }
 
     @Override
     public List<Product> findByProductDescription(String productDescription) {
-        Connection connection = null;
-        List<Product> products = new ArrayList<>();
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM products WHERE description = ?");
+        String query = "SELECT * FROM products WHERE description = ?";
+        return jdbcTemplate.query(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, productDescription);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                BigDecimal price = resultSet.getBigDecimal("price");
-                Product productFound = new Product(name, description, price);
-                productFound.setId(id);
-                products.add(productFound);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return products;
+            return preparedStatement;
+        }, new BeanPropertyRowMapper<>(Product.class));
     }
 
     @Override
     public List<Product> findByNameAndDescription(String name, String description) {
-        Connection connection = null;
-        List<Product> products = new ArrayList<>();
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM products WHERE name = ? AND description = ?");
+        String query = "SELECT * FROM products WHERE name = ? AND description = ?";
+        return jdbcTemplate.query(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, description);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Long foundId = resultSet.getLong("id");
-                String foundName = resultSet.getString("name");
-                String foundDescription = resultSet.getString("description");
-                BigDecimal foundPrice = resultSet.getBigDecimal("price");
-                Product productFound = new Product(foundName, foundDescription, foundPrice);
-                productFound.setId(foundId);
-                products.add(productFound);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return products;
+            return preparedStatement;
+        }, new BeanPropertyRowMapper<>(Product.class));
     }
 
     @Override
     public List<Product> getProductList() {
-        Connection connection = null;
-        List<Product> products = new ArrayList<>();
-        try {
-            connection = connectionService.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM products");
-            while (resultSet.next()) {
-                Long foundId = resultSet.getLong("id");
-                String foundName = resultSet.getString("name");
-                String foundDescription = resultSet.getString("description");
-                BigDecimal foundPrice = resultSet.getBigDecimal("price");
-                Product productFound = new Product(foundName, foundDescription, foundPrice);
-                productFound.setId(foundId);
-                products.add(productFound);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return products;
+        String query = "SELECT * FROM products";
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Product.class));
     }
 
     @Override
     public Optional<Product> findById(Long id) {
-        Connection connection = null;
         try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM products WHERE id = ?");
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Long foundId = resultSet.getLong("id");
-                String foundName = resultSet.getString("name");
-                String foundDescription = resultSet.getString("description");
-                BigDecimal foundPrice = resultSet.getBigDecimal("price");
-                Product productFound = new Product(foundName, foundDescription, foundPrice);
-                productFound.setId(foundId);
-                return Optional.of(productFound);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return Optional.empty();
+            String query = "SELECT * FROM products WHERE id = ?";
+            Product foundProduct = jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Product.class));
+            return Optional.ofNullable(foundProduct);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public boolean changeProductName(Long id, String newName) {
-        Connection connection = null;
-        try {
-            connection = connectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "UPDATE products SET name = ? WHERE id = ?");
+        String query = "UPDATE products SET name = ? WHERE id = ?";
+        int affectedRows = jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, newName);
             preparedStatement.setLong(2, id);
-            int updatedProduct = preparedStatement.executeUpdate();
-            return updatedProduct > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connectionService.closeConnection(connection);
-        } return false;
+            return preparedStatement;
+        });
+        return affectedRows == 1;
     }
 }

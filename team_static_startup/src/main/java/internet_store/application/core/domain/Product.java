@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Product {
+
     private Long id;
     private String productName;
     private String productDescription;
@@ -13,6 +14,9 @@ public class Product {
         this.productName = productName;
         this.productDescription = productDescription;
         this.price = price;
+    }
+
+    public Product() {
     }
 
     public Long getId() {

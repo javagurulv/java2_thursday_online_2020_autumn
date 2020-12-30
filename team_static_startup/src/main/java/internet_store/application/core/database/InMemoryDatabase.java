@@ -1,7 +1,7 @@
-/*
 package internet_store.application.core.database;
 
 import internet_store.application.core.domain.Product;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@Profile("inmemory")
 public class InMemoryDatabase implements Database {
     private Long id = 1L;
     private final List<Product> productList = new ArrayList<>();
@@ -94,4 +95,3 @@ public class InMemoryDatabase implements Database {
     }
 
 }
-*/
