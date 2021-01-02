@@ -5,5 +5,9 @@ dependencies {
 	testCompile('org.springframework:spring-test:5.2.6.RELEASE')
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
 	compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.6.RELEASE'
+	compile group: 'org.springframework', name: 'spring-orm', version: '5.2.6.RELEASE'
+	compile group: 'org.springframework', name: 'spring-tx', version: '5.2.6.RELEASE'
 	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.8.0'
+	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.27.Final'
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.27.Final'
 }

@@ -1,13 +1,22 @@
 package internet_store.application.core.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "products")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String productName;
+    @Column(name = "description")
     private String productDescription;
+    @Column(name = "price")
     private BigDecimal price;
 
     public Product(String productName, String productDescription, BigDecimal price) {
