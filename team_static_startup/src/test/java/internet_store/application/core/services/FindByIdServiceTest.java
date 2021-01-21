@@ -1,6 +1,6 @@
 package internet_store.application.core.services;
 
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.FindByIdRequest;
 import internet_store.application.core.responses.CoreError;
@@ -23,7 +23,8 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class FindByIdServiceTest {
 
-    @Mock Database database;
+    @Mock
+    ProductDatabase database;
     @Mock FindByIdValidator validator;
     @InjectMocks FindByIdService service;
 

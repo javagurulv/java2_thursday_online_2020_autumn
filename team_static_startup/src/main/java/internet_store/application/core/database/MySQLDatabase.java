@@ -12,12 +12,11 @@ import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
 @Profile("mysql")
-public class MySQLDatabase implements Database {
+public class MySQLDatabase implements ProductDatabase {
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;

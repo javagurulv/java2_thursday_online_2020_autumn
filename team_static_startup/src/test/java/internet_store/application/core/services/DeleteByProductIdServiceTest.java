@@ -1,6 +1,6 @@
 package internet_store.application.core.services;
 
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.requests.DeleteByProductIdRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.DeleteByProductIdResponse;
@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 @RunWith(MockitoJUnitRunner.class)
 public class DeleteByProductIdServiceTest {
 
-    @Mock private Database database;
+    @Mock private ProductDatabase database;
     @Mock private DeleteByProductIdValidator validator;
     @InjectMocks DeleteByProductIdService service;
 

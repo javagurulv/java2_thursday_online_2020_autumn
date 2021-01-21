@@ -1,6 +1,6 @@
 package internet_store.application.core.services;
 
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.requests.ChangeProductNameRequest;
 import internet_store.application.core.responses.ChangeProductNameResponse;
 import internet_store.application.core.responses.CoreError;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ChangeProductNameService {
 
     @Autowired
-    private Database database;
+    private ProductDatabase database;
     @Autowired
     private ChangeProductNameValidator validator;
 

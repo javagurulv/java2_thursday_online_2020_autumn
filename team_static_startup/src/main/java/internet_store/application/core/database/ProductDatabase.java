@@ -5,7 +5,7 @@ import internet_store.application.core.domain.Product;
 import java.util.List;
 import java.util.Optional;
 
-public interface Database {
+public interface ProductDatabase {
 
     Long add(Product product);
 

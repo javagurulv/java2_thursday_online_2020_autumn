@@ -1,6 +1,6 @@
 package internet_store.application.core.services;
 
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.FindProductsRequest;
 import internet_store.application.core.requests.Ordering;
@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 @RunWith(MockitoJUnitRunner.class)
 
 public class FindProductsServiceTest {
-    @Mock private Database database;
+    @Mock private ProductDatabase database;
     @Mock private FindProductsRequestValidator validator;
     @InjectMocks FindProductsService service;
     private List<Product> products = new ArrayList<>();

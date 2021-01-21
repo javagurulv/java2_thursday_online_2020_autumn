@@ -1,7 +1,6 @@
 package internet_store.application.core.services;
 
-import internet_store.application.core.database.Database;
-import internet_store.application.core.domain.Product;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.requests.ChangeProductNameRequest;
 import internet_store.application.core.responses.ChangeProductNameResponse;
 import internet_store.application.core.responses.CoreError;
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ChangeProductNameServiceTest {
 
-    @Mock private Database database;
+    @Mock private ProductDatabase database;
     @Mock private ChangeProductNameValidator validator;
     @InjectMocks private ChangeProductNameService service;
 

@@ -1,7 +1,7 @@
 package internet_store.application.acceptancetests;
 
 import internet_store.application.config.ProductListConfiguration;
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.ChangeProductNameRequest;
 import internet_store.application.core.responses.ChangeProductNameResponse;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class ChangeProductNameAcceptanceTest {
 
     private ApplicationContext applicationContext;
-    private Database database;
+    private ProductDatabase database;
 
     @Before
     public void setUp() {
@@ -59,8 +59,8 @@ public class ChangeProductNameAcceptanceTest {
         assertEquals("Should not be empty.", response.getErrors().get(0).getMessage());
     }
 
-    private Database getDatabase() {
-        return applicationContext.getBean(Database.class);
+    private ProductDatabase getDatabase() {
+        return applicationContext.getBean(ProductDatabase.class);
     }
 
     private ChangeProductNameService getChangeProductNameService() {

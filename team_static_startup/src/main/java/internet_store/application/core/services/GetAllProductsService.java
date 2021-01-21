@@ -1,6 +1,6 @@
 package internet_store.application.core.services;
 
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.GetAllProductsRequest;
 import internet_store.application.core.responses.GetAllProductsResponse;
@@ -13,7 +13,7 @@ import java.util.List;
 public class GetAllProductsService {
 
     @Autowired
-    private Database database;
+    private ProductDatabase database;
 
  public GetAllProductsResponse execute(GetAllProductsRequest request) {
         List<Product> productList = database.getProductList();

@@ -1,7 +1,7 @@
 package internet_store.application.acceptancetests;
 
 import internet_store.application.config.ProductListConfiguration;
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.FindByIdRequest;
 import internet_store.application.core.responses.FindByIdResponse;
@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class FindByIdAcceptanceTest {
 
     private ApplicationContext appContext;
-    private Database database;
+    private ProductDatabase database;
 
     @Before
     public void setUp() {
@@ -69,8 +69,8 @@ public class FindByIdAcceptanceTest {
         return product;
     }
 
-    private Database getDatabase() {
-        return appContext.getBean(Database.class);
+    private ProductDatabase getDatabase() {
+        return appContext.getBean(ProductDatabase.class);
     }
 
     private FindByIdService getFindByIdService() {

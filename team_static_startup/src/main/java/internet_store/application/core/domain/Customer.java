@@ -1,60 +1,85 @@
 package internet_store.application.core.domain;
 
-//import lombok.Data;
-
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
-//@Data
+@Entity
+@Table(name = "customers")
 public class Customer {
-    private Long customerId;
-    private String customerFirstName;
-    private String customerSecondName;
-    private String customerPhone;
-    private String customerEmail;
 
-    public Customer(String customerFirstName, String customerSecondName) {
-        this.customerFirstName = customerFirstName;
-        this.customerSecondName = customerSecondName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "email")
+    private String email;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private Set<Order> orders;
+
+    public Customer(String name, String surname, String phone) {
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Customer() {
+
     }
 
-    public String getCustomerFirstName() {
-        return customerFirstName;
+    public Long getId() {
+        return id;
     }
 
-    public String getCustomerSecondName() {
-        return customerSecondName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getCustomerPhone() {
-        return customerPhone;
+    public String getName() {
+        return name;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setCustomerFirstName(String customerFirstName) {
-        this.customerFirstName = customerFirstName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public void setCustomerSecondName(String customerSecondName) {
-        this.customerSecondName = customerSecondName;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
@@ -62,28 +87,23 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(customerId, customer.customerId) &&
-                Objects.equals(customerFirstName, customer.customerFirstName) &&
-                Objects.equals(customerSecondName, customer.customerSecondName) &&
-                Objects.equals(customerPhone, customer.customerPhone) &&
-                Objects.equals(customerEmail, customer.customerEmail);
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(surname, customer.surname) && Objects.equals(phone, customer.phone) && Objects.equals(email, customer.email) && Objects.equals(orders, customer.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerId, customerFirstName, customerSecondName, customerPhone, customerEmail);
+        return Objects.hash(id, name, surname, phone, email, orders);
     }
 
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId=" + customerId +
-                ", customerFirstName='" + customerFirstName + '\'' +
-                ", customerSecondName='" + customerSecondName + '\'' +
-                ", customerPhone='" + customerPhone + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", orders=" + orders +
                 '}';
     }
-
 }
-

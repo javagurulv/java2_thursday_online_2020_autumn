@@ -1,6 +1,6 @@
 package internet_store.application.core.services;
 
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.FindProductsRequest;
 import internet_store.application.core.responses.CoreError;
@@ -21,7 +21,7 @@ public class FindProductsService {
     @Value("${search.paging.enabled}")
     private boolean pagingEnabled;
 
-    @Autowired private Database database;
+    @Autowired private ProductDatabase database;
     @Autowired private FindProductsRequestValidator validator;
 
     public FindProductsResponse execute(FindProductsRequest request) {

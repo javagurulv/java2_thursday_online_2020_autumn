@@ -1,7 +1,7 @@
 package internet_store.application.core.services;
 
 import internet_store.application.core.domain.Product;
-import internet_store.application.core.database.Database;
+import internet_store.application.core.database.ProductDatabase;
 import internet_store.application.core.requests.GetAllProductsRequest;
 import internet_store.application.core.responses.GetAllProductsResponse;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertFalse;
 @RunWith(MockitoJUnitRunner.class)
 public class GetAllProductsServiceTest {
 
-    @Mock private Database database;
+    @Mock private ProductDatabase database;
     @InjectMocks private GetAllProductsService service;
 
     @Test

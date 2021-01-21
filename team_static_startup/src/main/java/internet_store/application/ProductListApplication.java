@@ -26,6 +26,12 @@ class ProductListApplication {
         menuNumberToActionMap.put(6, applicationContext.getBean(FindProductsUIAction.class));
         menuNumberToActionMap.put(7, applicationContext.getBean(ChangeProductNameUIAction.class));
         menuNumberToActionMap.put(8, applicationContext.getBean(GetAllProductsUIAction.class));
+        menuNumberToActionMap.put(9, applicationContext.getBean(AddOrderUIAction.class));
+        menuNumberToActionMap.put(10, applicationContext.getBean(FindOrderByIdUIAction.class));
+        menuNumberToActionMap.put(11, applicationContext.getBean(FindAllOrdersUIAction.class));
+        menuNumberToActionMap.put(12, applicationContext.getBean(AddCustomerUIAction.class));
+        menuNumberToActionMap.put(13, applicationContext.getBean(FindCustomerByIdUIAction.class));
+        menuNumberToActionMap.put(14, applicationContext.getBean(FindAllCustomersUIAction.class));
         menuNumberToActionMap.put(0, applicationContext.getBean(ExitProgramUIAction.class));
     }
 
@@ -58,6 +64,12 @@ class ProductListApplication {
         System.out.println("6. Find product(s) from database by name and(or) description");
         System.out.println("7. Find product(s) from database by ID and change name");
         System.out.println("8. Print out all database products");
+        System.out.println("9. Add order to database");
+        System.out.println("10. Find order by ID in database");
+        System.out.println("11. Print out all orders");
+        System.out.println("12. Add customer to database");
+        System.out.println("13. Find customer by ID in database");
+        System.out.println("14. Print out all customers");
         System.out.println("0. Exit the program");
         System.out.println("------------------------------------------------------------");
         System.out.print("Please enter menu number: ");
