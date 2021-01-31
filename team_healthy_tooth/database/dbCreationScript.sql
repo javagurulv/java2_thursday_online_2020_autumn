@@ -22,29 +22,52 @@ CREATE TABLE IF NOT EXISTS `doctor`(
   `surname` VARCHAR(30) NOT NULL,
   `phone` VARCHAR(30) NOT NULL,
   `isEmployed` boolean NOT NULL,
-  `monday_start` DATETIME,
-  `monday_end` DATETIME,
-  `tuesday_start` DATETIME,
-  `tuesday_end` DATETIME,
-  `wednesday_start` DATETIME,
-  `wednesday_end` DATETIME,
-  `thursday_start` DATETIME,
-  `thursday_end` DATETIME,
-  `friday_start` DATETIME,
-  `friday_end` DATETIME,
-  `saturday_start` DATETIME,
-  `saturday_end` DATETIME,
-  `sunday_start` DATETIME,
-  `sunday_end` DATETIME,
+  `monday_start` VARCHAR(30),
+  `monday_end` VARCHAR(30),
+  `tuesday_start` VARCHAR(30),
+  `tuesday_end` VARCHAR(30),
+  `wednesday_start` VARCHAR(30),
+  `wednesday_end` VARCHAR(30),
+  `thursday_start` VARCHAR(30),
+  `thursday_end` VARCHAR(30),
+  `friday_start` VARCHAR(30),
+  `friday_end` VARCHAR(30),
+  `saturday_start` VARCHAR(30),
+  `saturday_end` VARCHAR(30),
+  `sunday_start` VARCHAR(30),
+  `sunday_end` VARCHAR(30),
   PRIMARY KEY (`id`)
 )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1;
 
-CREATE TABLE IF NOT EXISTS `service`(
+CREATE TABLE IF NOT EXISTS `doctorsWorkGraphic`(
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `service_type` VARCHAR(30) NOT NULL,
-  `price` BIGINT NOT NULL,
+  `doctor_id` BIGINT NOT NULL,
+  `monday_start` VARCHAR(30),
+  `monday_end` VARCHAR(30),
+  `tuesday_start` VARCHAR(30),
+  `tuesday_end` VARCHAR(30),
+  `wednesday_start` VARCHAR(30),
+  `wednesday_end` VARCHAR(30),
+  `thursday_start` VARCHAR(30),
+  `thursday_end` VARCHAR(30),
+  `friday_start` VARCHAR(30),
+  `friday_end` VARCHAR(30),
+  `saturday_start` VARCHAR(30),
+  `saturday_end` VARCHAR(30),
+  `sunday_start` VARCHAR(30),
+  `sunday_end` VARCHAR(30),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`doctor_id`) REFERENCES `doctor`(`id`)
+)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `manipulation`(
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `manipulation_type` VARCHAR(30) NOT NULL,
+  `price` int NOT NULL,
   `isActive` boolean NOT NULL,
   PRIMARY KEY (`id`)
 )
@@ -130,19 +153,16 @@ CREATE TABLE IF NOT EXISTS `visit`(
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `patient_id` BIGINT NOT NULL,
   `doctor_id` BIGINT NOT NULL,
-  `service_id` BIGINT NOT NULL,
-  `discount` BIGINT,
-  `date` DATETIME NOT NULL,
-  `time` DATETIME NOT NULL,
-  `time_end` DATETIME,
-  `calculate_sum` BIGINT NOT NULL,
-  `cash_sum` BIGINT NOT NULL,
-  `complete_visit` boolean NOT NULL,
-   `Remarks` VARCHAR(100) NOT NULL,
+  `manipulation_id` BIGINT NOT NULL,
+  `dateAndTime` DATETIME NOT NULL,
+  `sum` int NOT NULL,
+  `tooth_number` INT NOT NULL,
+  `tooth_status`  VARCHAR(30) NOT NULL,
+  `Remarks` VARCHAR(100) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (`patient_id`) REFERENCES `personalData`(`id`),
   FOREIGN KEY (`doctor_id`) REFERENCES `doctor`(`id`),
-  FOREIGN KEY (`service_id`) REFERENCES `service`(`id`)
+  FOREIGN KEY (`manipulation_id`) REFERENCES `manipulation`(`id`)
 )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1;
@@ -150,9 +170,11 @@ AUTO_INCREMENT = 1;
 CREATE TABLE IF NOT EXISTS `plannedVisit`(
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `patient_id` BIGINT NOT NULL,
+  `doctor_id` BIGINT NOT NULL,
   `dateAndTime` DATETIME NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (`patient_id`) REFERENCES `personalData`(`id`)
+  FOREIGN KEY (`patient_id`) REFERENCES `personalData`(`id`),
+  FOREIGN KEY (`doctor_id`) REFERENCES `doctor`(`id`)
 )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1;
