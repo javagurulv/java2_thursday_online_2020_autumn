@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/*
 public class DoctorRowMapper implements RowMapper<Doctor> {
 
 
@@ -46,4 +46,4 @@ public class DoctorRowMapper implements RowMapper<Doctor> {
         workGraphic.setTimesEnd(timeEnd);
         return workGraphic;
     }
-}
+}*/

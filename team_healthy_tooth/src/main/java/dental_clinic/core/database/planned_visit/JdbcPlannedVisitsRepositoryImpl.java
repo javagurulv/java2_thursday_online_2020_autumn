@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-@Component
+//@Component
 public class JdbcPlannedVisitsRepositoryImpl implements PlannedVisitsRepository {
 
     @Autowired

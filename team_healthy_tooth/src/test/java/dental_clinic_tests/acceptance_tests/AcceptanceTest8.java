@@ -7,7 +7,7 @@ import dental_clinic.core.requests.plannedVisit.GetPlannedVisitsRequest;
 import dental_clinic.core.responses.planned_visit.GetPlannedVisitsResponse;
 import dental_clinic.core.services.planned_visit.AddPlannedVisitService;
 import dental_clinic.core.services.planned_visit.GetPlannedVisitsService;
-import dental_clinic.DatabaseCleanerClinic;
+import dental_clinic_tests.DatabaseCleanerClinic;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

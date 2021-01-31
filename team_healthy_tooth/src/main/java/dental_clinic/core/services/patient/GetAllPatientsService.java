@@ -1,6 +1,7 @@
 package dental_clinic.core.services.patient;
 
 import dental_clinic.core.domain.Patient;
+import dental_clinic.core.domain.PersonalData;
 import dental_clinic.core.requests.patient.GetAllPatientsRequest;
 import dental_clinic.core.responses.CoreError;
 import dental_clinic.core.responses.patient.GetAllPatientsResponse;
@@ -31,7 +32,7 @@ public class GetAllPatientsService {
             return new GetAllPatientsResponse(errors, new ArrayList<>());
         }
 
-        List<Patient>patients = patientRepository.getPatients();
+        List<PersonalData>patients = patientRepository.getPatients();
         return new GetAllPatientsResponse(patients);
     }
 }

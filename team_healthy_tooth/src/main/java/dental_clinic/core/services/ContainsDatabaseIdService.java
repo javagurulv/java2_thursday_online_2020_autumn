@@ -36,6 +36,6 @@ public class ContainsDatabaseIdService {
     }
 
     private PersonalData getCurrentPatientPersonalData(int index){
-        return patientRepository.getPatients().get(index).getPersonalData();
+        return patientRepository.getPatients().get(index);
     }
 }

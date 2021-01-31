@@ -9,7 +9,7 @@ import dental_clinic.core.responses.patient.GetPatientCardResponse;
 import dental_clinic.core.services.patient.AddPatientService;
 import dental_clinic.core.services.patient.ChangePersonalDataService;
 import dental_clinic.core.services.patient.GetPatientCardService;
-import dental_clinic.DatabaseCleanerClinic;
+import dental_clinic_tests.DatabaseCleanerClinic;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

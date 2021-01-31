@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+/*
 //@Component
 public class InMemoryVisitRepositoryImpl implements VisitRepository {
 
@@ -38,4 +38,4 @@ public class InMemoryVisitRepositoryImpl implements VisitRepository {
                 visit.getDate().equals(dateTo)))
                .collect(Collectors.toList());
     }
-}
+}*/

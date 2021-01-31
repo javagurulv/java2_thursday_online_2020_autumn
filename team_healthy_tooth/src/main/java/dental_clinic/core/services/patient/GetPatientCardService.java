@@ -41,13 +41,13 @@ public class GetPatientCardService {
         Patient newPatient = new Patient();
         newPatient.setPersonalData(patientRepository.getPatientCard(getPatientCardRequest.getId()).get().getPersonalData());
         Jowl specificPatientJowl = new Jowl();
-        specificPatientJowl = getSpecificPatientJowl(getPatientCardRequest);
+    /*    specificPatientJowl = getSpecificPatientJowl(getPatientCardRequest);
         Jowl currentStatusOfJowl = new Jowl();
         currentStatusOfJowl = getCurrentPatientJowl(specificPatientJowl);
-        newPatient.setJowl(currentStatusOfJowl);
+        newPatient.setJowl(currentStatusOfJowl);*/
         return newPatient;
     }
-
+/*
     private Jowl getCurrentPatientJowl(Jowl specificPatientJowl) {
         Jowl currentStatusOfJowl = new Jowl();
         for (Integer key : specificPatientJowl.getJowl().keySet()) {
@@ -69,6 +69,6 @@ public class GetPatientCardService {
 
     private List<ToothStatus> addLastStatus(Jowl specificPatientJowl, Integer key) {
         return Arrays.asList(specificPatientJowl.getJowl().get(key).get(specificPatientJowl.getJowl().get(key).size() - 1));
-    }
+    }*/
 
 }

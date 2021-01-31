@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
-@Component
+/*
+//@Component
 public class JdbcDoctorRepositoryImpl implements DoctorRepository {
 
     @Autowired
@@ -55,7 +55,7 @@ public class JdbcDoctorRepositoryImpl implements DoctorRepository {
     public boolean specificDoctorIsEmployed(Doctor doctor) {
         String sql = "SELECT * FROM doctor WHERE name = \"" + doctor.getName() +
                 "\" AND surname = \"" + doctor.getSurname() + "\";";
-        return jdbcTemplate.query(sql, new DoctorRowMapper()).get(0).getIsEmployed();
+        return jdbcTemplate.query(sql, new DoctorRowMapper()).get(0).isEmployed();
     }
 
     @Override
@@ -104,4 +104,4 @@ public class JdbcDoctorRepositoryImpl implements DoctorRepository {
             default: return "sunday_end";
         }
     }
-}
+}*/

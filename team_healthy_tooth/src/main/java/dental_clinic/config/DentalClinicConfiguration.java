@@ -56,7 +56,7 @@ public class DentalClinicConfiguration {
     @Bean
     public Properties hibernateProperties(
             @Value("${hibernate.show_sql}") Boolean showSql,
-            @Value("${hibernate.hbm2ddl.auto") String hbm2ddl,
+            @Value("${hibernate.hbm2ddl.auto}") String hbm2ddl,
             @Value("${hibernate.dialect}") String dialect) {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", showSql);

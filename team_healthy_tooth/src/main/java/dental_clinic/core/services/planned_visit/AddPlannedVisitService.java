@@ -58,11 +58,11 @@ public class AddPlannedVisitService {
         Doctor doctor = doctorRepository.getDoctorById(addPlannedVisitRequest.getId()).get();
 
         PlannedVisit plannedVisit = new PlannedVisit(visitDate, addPlannedVisitRequest.getPersonalData(), doctor);
-
+/*
         if (doctorDoesNotWorksInThisTime(plannedVisit, addPlannedVisitRequest)) {
             errorList.add(new CoreError("work graphic", "Doctor doesn't work at this time"));
             return new AddPlannedVisitResponse(errorList);
-        }
+        }*/
 
         if (plannedVisitsRepository.containsPlannedVisitInTheSameTimeTheSameDoctor(plannedVisit)) {
             errorList.add(new CoreError("database", "Not empty time"));
@@ -82,25 +82,25 @@ public class AddPlannedVisitService {
         }
         return addPlannedVisitRequest;
     }
-
+/*
     private boolean doctorDoesNotWorksInThisTime (PlannedVisit plannedVisit, AddPlannedVisitRequest addPlannedVisitRequest) {
         Integer day = plannedVisit.getVisitTime().get(Calendar.DAY_OF_WEEK);
         int index = (day == 6) ? 1 : day-2;
         if (doctorDoesNotWorkThisDay(plannedVisit, index)) {
             return true;
         }
-        LocalTime timeFrom = LocalTime.parse(plannedVisit.getDoctor().getWorkGraphic().getTimesStart()[index]);
-        LocalTime timeTo = LocalTime.parse(plannedVisit.getDoctor().getWorkGraphic().getTimesEnd()[index]);
-        LocalTime visitTime = LocalTime.parse(addPlannedVisitRequest.getVisitDataText().split(" ")[1]);
+        //LocalTime timeFrom = LocalTime.parse(plannedVisit.getDoctor().getWorkGraphic().getTimesStart()[index]);
+        //LocalTime timeTo = LocalTime.parse(plannedVisit.getDoctor().getWorkGraphic().getTimesEnd()[index]);
+        //LocalTime visitTime = LocalTime.parse(addPlannedVisitRequest.getVisitDataText().split(" ")[1]);
         return !((visitTime.isAfter(timeFrom) && visitTime.isBefore(timeTo)));
-    }
-
+    }*/
+/*
     private boolean doctorDoesNotWorkThisDay (PlannedVisit plannedVisit, int index) {
         return ((plannedVisit.getDoctor().getWorkGraphic().getTimesStart()[index] == null ||
                 plannedVisit.getDoctor().getWorkGraphic().getTimesStart()[index].isEmpty())
                 || (plannedVisit.getDoctor().getWorkGraphic().getTimesEnd()[index] == null ||
                 plannedVisit.getDoctor().getWorkGraphic().getTimesEnd()[index].isEmpty()));
-    }
+    }*/
 
     private GregorianCalendar getVisitDate (String visitDateText) {
         GregorianCalendar visitDateDateFormat = new GregorianCalendar();
@@ -125,7 +125,7 @@ public class AddPlannedVisitService {
     }
 
     private AddPlannedVisitRequest fillPersonalData (AddPlannedVisitRequest addPlannedVisitRequest1) {
-        PersonalData personalData = patientRepository.findPatientsByPersonalCode(addPlannedVisitRequest1.getPersonalData().getPersonalCode()).get(0).getPersonalData();
+        PersonalData personalData = patientRepository.findPatientsByPersonalCode(addPlannedVisitRequest1.getPersonalData().getPersonalCode()).get(0);
         return new AddPlannedVisitRequest(false, addPlannedVisitRequest1.getVisitDataText(), personalData, addPlannedVisitRequest1.getId());
     }
 }

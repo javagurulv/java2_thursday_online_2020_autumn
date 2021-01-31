@@ -2,6 +2,7 @@ package dental_clinic.core.services.visit;
 
 import dental_clinic.core.domain.Doctor;
 import dental_clinic.core.domain.Manipulation;
+import dental_clinic.core.domain.ToothStatus;
 import dental_clinic.core.requests.visit.AddVisitRequest;
 import dental_clinic.core.responses.visit.AddVisitResponse;
 import dental_clinic.core.responses.CoreError;
@@ -57,7 +58,7 @@ public class AddVisitService {
             doctor.setEmployed(true);
         }
 
-        if (!doctor.getIsEmployed()) {
+        if (!doctor.isEmployed()) {
             errors.add(new CoreError("doctor", "Doctor must be employed"));
             return new AddVisitResponse(errors);
         }
@@ -67,8 +68,12 @@ public class AddVisitService {
             return new AddVisitResponse(errors);
         }
 
-        Visit visit = new Visit(addVisitRequest.getPatientsId(), addVisitRequest.getToothNumber(), addVisitRequest.getComment(),
-                addVisitRequest.getToothStatus(), doctor,
+        Visit visit = new Visit(addVisitRequest.getPatientsId(), addVisitRequest.getToothNumber(),
+                //addVisitRequest.getComment(),
+                Optional.of("No comments"),
+                ToothStatus.HEALTHY,
+                //addVisitRequest.getToothStatus(),
+                doctor,
                 manipulationList(addVisitRequest.getManipulationsIds()), addVisitRequest.getDate());
 
         visitRepository.addVisit(visit);
@@ -76,11 +81,11 @@ public class AddVisitService {
         if (isNewDoctor(doctor)){
             doctorRepository.addDoctor(doctor);
         }
-
+/*
         if (patientRepository.containsPatientWithSpecificId(addVisitRequest.getPatientsId())){
-            addVisitToDoctor(doctor, visit);
+            //addVisitToDoctor(doctor, visit);
             return addVisitToPatient(addVisitRequest, visit);
-        }
+        }*/
 
         errors.add(new CoreError("id", "Database doesn't contain patient with id " + addVisitRequest.getPatientsId()));
         return new AddVisitResponse(errors);
@@ -95,7 +100,7 @@ public class AddVisitService {
             return false;
         }
     }
-
+/*
     private void addVisitToDoctor (Doctor doctor, Visit visit) {
         for (Doctor d : doctorRepository.getDoctorList()) {
             if (d.getName().equals(doctor.getName())
@@ -103,13 +108,16 @@ public class AddVisitService {
                 d.addVisit(visit);
             }
         }
-    }
-
+    }*/
+/*
     private AddVisitResponse addVisitToPatient (AddVisitRequest addVisitRequest, Visit visit) {
         for (int i = 0; i < patientRepository.getPatients().size(); i++) {
             if (isSpecificPatient(i, addVisitRequest.getPatientsId())) {
                 patientRepository.getPatients().get(i).addVisit(visit);
-                patientRepository.getPatients().get(i).updateJowl(addVisitRequest.getToothNumber(), addVisitRequest.getToothStatus());
+                patientRepository.getPatients().get(i).updateJowl(addVisitRequest.getToothNumber(),
+                        ToothStatus.HEALTHY
+                        //addVisitRequest.getToothStatus()
+                );
                 return new AddVisitResponse();
             }
         }
@@ -118,7 +126,7 @@ public class AddVisitService {
 
     private boolean isSpecificPatient (int index, long id) {
         return patientRepository.getPatients().get(index).getPersonalData().getId().equals(id);
-    }
+    }*/
 
     private boolean isNewDoctor(Doctor doctor) {
         return !doctorRepository.containsDoctor(doctor);

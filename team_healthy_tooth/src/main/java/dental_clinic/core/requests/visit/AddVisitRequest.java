@@ -29,14 +29,14 @@ public class AddVisitRequest {
     public Integer getToothNumber() {
         return visit.getToothNumber();
     }
-
+/*
     public Optional<String> getComment() {
         return visit.getComment();
     }
 
     public ToothStatus getToothStatus() {
         return visit.getToothStatus();
-    }
+    }*/
 
     public Doctor getDoctor() {
         return visit.getDoctor();

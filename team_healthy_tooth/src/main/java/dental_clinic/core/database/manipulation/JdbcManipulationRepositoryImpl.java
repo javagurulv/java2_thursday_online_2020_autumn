@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+//@Component
 public class JdbcManipulationRepositoryImpl implements ManipulationRepository {
 
     @Autowired
@@ -17,7 +17,7 @@ public class JdbcManipulationRepositoryImpl implements ManipulationRepository {
     @Override
     public void addManipulation(Manipulation manipulation) {
         jdbcTemplate.update(
-                "INSERT INTO service (service_type, price, isActive) "
+                "INSERT INTO manipulation (service_type, price, isActive) "
                 + "VALUES (?, ?, ?)",
                 manipulation.getManipulation_type(), manipulation.getPrice(), manipulation.isActive()
         );
@@ -25,34 +25,34 @@ public class JdbcManipulationRepositoryImpl implements ManipulationRepository {
 
     @Override
     public List<Manipulation> getManipulationsList() {
-        String sql = "SELECT * FROM service";
+        String sql = "SELECT * FROM manipulation";
         return jdbcTemplate.query(sql, new ManipulationRowMapper());
     }
 
     @Override
     public void deactivateManipulation(Long id) {
         jdbcTemplate.update(
-                "UPDATE service " +
+                "UPDATE manipulation " +
                     "SET isActive = " + false +
                     " WHERE id = " + id + ";");
     }
 
     @Override
     public boolean containsTheSameManipulation(Manipulation manipulation) {
-        String sql = "SELECT * FROM service WHERE service_type = \""
+        String sql = "SELECT * FROM manipulation WHERE manipulation_type = \""
                 + manipulation.getManipulation_type() +"\";";
         return jdbcTemplate.query(sql, new ManipulationRowMapper()).size() == 1;
     }
 
     @Override
     public boolean manipulationIsActive(Long id) {
-        String sql = "SELECT * FROM service WHERE id = " + id;
+        String sql = "SELECT * FROM manipulation WHERE id = " + id;
         return jdbcTemplate.query(sql, new ManipulationRowMapper()).get(0).isActive();
     }
 
     @Override
     public boolean containsId(Long id) {
-        String sql = "SELECT * FROM service WHERE id = " + id + ";";
+        String sql = "SELECT * FROM manipulation WHERE id = " + id + ";";
         return jdbcTemplate.query(sql, new ManipulationRowMapper()).size() == 1;
     }
 }

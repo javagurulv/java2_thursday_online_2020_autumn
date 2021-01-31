@@ -25,20 +25,20 @@ public class GetSpecificPatientHistoryService {
         if (!errors.isEmpty()){
             return new GetSpecificPatientHistoryResponse(errors);
         }
-
+/*
         if (patientRepository.containsPatientWithSpecificId(getSpecificPatientHistoryRequest.getId())){
             for (int i = 0; i < patientRepository.getPatients().size(); i++){
                 if (isSpecificPatient(i, getSpecificPatientHistoryRequest.getId())){
                     return new GetSpecificPatientHistoryResponse(Optional.of(patientRepository.getPatients().get(i)));
                 }
             }
-        }
+        }*/
 
         errors.add(new CoreError("id", "Database doesn't contain patient with id"));
         return new GetSpecificPatientHistoryResponse(errors);
     }
 
     private boolean isSpecificPatient (int index, Long id) {
-        return patientRepository.getPatients().get(index).getPersonalData().getId().equals(id);
+        return patientRepository.getPatients().get(index).getId().equals(id);
     }
 }

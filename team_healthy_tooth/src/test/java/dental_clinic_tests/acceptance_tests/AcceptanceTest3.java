@@ -6,7 +6,7 @@ import dental_clinic.core.requests.Paging;
 import dental_clinic.core.requests.patient.SearchPatientRequest;
 import dental_clinic.core.responses.patient.SearchPatientResponse;
 import dental_clinic.core.services.patient.SearchPatientService;
-import dental_clinic.DatabaseCleanerClinic;
+import dental_clinic_tests.DatabaseCleanerClinic;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

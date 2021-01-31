@@ -1,15 +1,32 @@
 package dental_clinic.core.domain;
 
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
+@Entity
+@Table(name="plannedVisit")
 public class PlannedVisit {
 
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name="patient_id", nullable = false)
     private PersonalData personalData;
-    private GregorianCalendar visitTime;
+
+    @ManyToOne
+    @JoinColumn(name="doctor_id", nullable = false)
     private Doctor doctor;
+
+    //@Temporal(TemporalType.TIMESTAMP)
+    @Column(name="dateAndTime", nullable = false)
+    private GregorianCalendar visitTime;
+
+    public PlannedVisit() { }
 
     public PlannedVisit(GregorianCalendar visitTime, PersonalData personalData, Doctor doctor) {
         this.visitTime = visitTime;
@@ -37,8 +54,16 @@ public class PlannedVisit {
         return personalData;
     }
 
+    public void setPersonalData(PersonalData personalData) {
+        this.personalData = personalData;
+    }
+
     public Doctor getDoctor() {
         return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     @Override
@@ -46,12 +71,14 @@ public class PlannedVisit {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlannedVisit that = (PlannedVisit) o;
-        return Objects.equals(visitTime, that.visitTime) && Objects.equals(personalData, that.personalData);
+        return  Objects.equals(personalData, that.personalData)
+                && Objects.equals(doctor, that.doctor)
+                && Objects.equals(visitTime, that.visitTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(visitTime, personalData, doctor);
+        return Objects.hash(id, personalData, doctor, visitTime);
     }
 
     @Override

@@ -8,7 +8,7 @@ import dental_clinic.core.requests.patient.AddPatientRequest;
 import dental_clinic.core.responses.doctor.AddDoctorResponse;
 import dental_clinic.core.services.doctor.AddDoctorService;
 import dental_clinic.core.services.patient.AddPatientService;
-import dental_clinic.DatabaseCleanerClinic;
+import dental_clinic_tests.DatabaseCleanerClinic;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

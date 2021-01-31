@@ -36,7 +36,7 @@ public class InMemoryDoctorRepositoryImplTest {
     public void testDeleteDoctorById() {
         doctorRepository.deleteDoctorById(4L);
         assertTrue(doctorRepository.getDoctorList().size() == 4);
-        assertFalse(doctorRepository.getDoctorList().get(3).getIsEmployed());
+        assertFalse(doctorRepository.getDoctorList().get(3).isEmployed());
     }
 
     @Test

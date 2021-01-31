@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PatientRepository {
 
-    List<Patient> getPatients();
+    List<PersonalData> getPatients();
 
     void addPatient(PersonalData personalData);
 
@@ -17,9 +17,9 @@ public interface PatientRepository {
 
     Optional <Patient> getSpecificPatientHistory(Long id);
 
-    List<Patient> findPatientsBySurname(String surname);
+    List<PersonalData> findPatientsBySurname(String surname);
 
-    List<Patient> findPatientsByPersonalCode(String personalCode);
+    List<PersonalData> findPatientsByPersonalCode(String personalCode);
 
     void addVisit(Long id, Visit newVisit);
 

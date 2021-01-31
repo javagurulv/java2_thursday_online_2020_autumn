@@ -2,13 +2,14 @@ package dental_clinic.core.database.patient;
 
 import dental_clinic.core.domain.Patient;
 import dental_clinic.core.domain.PersonalData;
+import dental_clinic.core.domain.ToothStatus;
 import dental_clinic.core.domain.Visit;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+/*
 //@Component
 public class InMemoryPatientRepositoryImpl implements PatientRepository {
 
@@ -64,11 +65,12 @@ public class InMemoryPatientRepositoryImpl implements PatientRepository {
     public void addVisit(Long id, Visit newVisit) {
         for (int i = 0; i < patientList.size(); i++){
             if (isSpecificPatient(i, id)){
-                Visit visit =
+                Visit visit = new Visit();
                         new Visit(id, newVisit.getToothNumber(), newVisit.getComment(), newVisit.getToothStatus(),
                                 newVisit.getDoctor(), newVisit.getManipulations(), newVisit.getDate());
                 patientList.get(i).addVisit(visit);
-                patientList.get(i).updateJowl(newVisit.getToothNumber(), newVisit.getToothStatus());
+                patientList.get(i).updateJowl(newVisit.getToothNumber(), ToothStatus.HEALTHY);
+                        newVisit.getToothStatus());
             }
         }
     }
@@ -131,4 +133,4 @@ public class InMemoryPatientRepositoryImpl implements PatientRepository {
                 .anyMatch(personalData1 -> personalData1.getPersonalCode().equals(personalData.getPersonalCode()));
     }
 
-}
+}*/

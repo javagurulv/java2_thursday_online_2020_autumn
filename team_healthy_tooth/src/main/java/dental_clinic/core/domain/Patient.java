@@ -39,7 +39,7 @@ public class Patient {
     }
 
     public void updateJowl(int toothNumber, ToothStatus toothStatus){
-        jowl.updateJowl(toothNumber, toothStatus);
+        //jowl.updateJowl(toothNumber, toothStatus);
     }
 
     @Override

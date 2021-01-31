@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
-@Component
+/*
+//@Component
 public class JdbcPatientRepositoryImpl implements PatientRepository {
 
     @Autowired
@@ -81,4 +81,4 @@ public class JdbcPatientRepositoryImpl implements PatientRepository {
     public boolean containsSpecificPersonalData(PersonalData personalData) {
         return false;
     }
-}
+}*/

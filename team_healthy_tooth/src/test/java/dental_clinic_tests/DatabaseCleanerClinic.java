@@ -1,4 +1,4 @@
-package dental_clinic;
+package dental_clinic_tests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
