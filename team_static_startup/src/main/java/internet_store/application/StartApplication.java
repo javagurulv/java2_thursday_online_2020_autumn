@@ -3,7 +3,16 @@ package internet_store.application;
 import internet_store.application.config.AppConfig;
 import internet_store.application.console_ui.*;
 import internet_store.application.console_ui.customer.*;
+import internet_store.application.console_ui.order.AddOrderUIAction;
+import internet_store.application.console_ui.order.FindAllOrdersUIAction;
+import internet_store.application.console_ui.order.FindOrderByIdUIAction;
 import internet_store.application.console_ui.product.*;
+import internet_store.application.console_ui.shopping_cart.AddShoppingCartUIAction;
+import internet_store.application.console_ui.shopping_cart.FindAllShoppingCartsUIAction;
+import internet_store.application.console_ui.shopping_cart.FindShoppingCartByIdUIAction;
+import internet_store.application.console_ui.shopping_cart_item.AddShoppingCartItemUIAction;
+import internet_store.application.console_ui.shopping_cart_item.FindAllShoppingCartItemsUIAction;
+import internet_store.application.console_ui.shopping_cart_item.FindShoppingCartItemByIdUIAction;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -34,6 +43,15 @@ class StartApplication {
         menuNumberToActionMap.put(13, applicationContext.getBean(ChangeCustomerFirstNameUIAction.class));
         menuNumberToActionMap.put(14, applicationContext.getBean(GetAllCustomersUIAction.class));
         menuNumberToActionMap.put(15, applicationContext.getBean(FindByCustomerFirstNameUIAction.class));
+        menuNumberToActionMap.put(16, applicationContext.getBean(AddShoppingCartUIAction.class));
+        menuNumberToActionMap.put(17, applicationContext.getBean(FindShoppingCartByIdUIAction.class));
+        menuNumberToActionMap.put(18, applicationContext.getBean(FindAllShoppingCartsUIAction.class));
+        menuNumberToActionMap.put(19, applicationContext.getBean(AddOrderUIAction.class));
+        menuNumberToActionMap.put(20, applicationContext.getBean(FindOrderByIdUIAction.class));
+        menuNumberToActionMap.put(21, applicationContext.getBean(FindAllOrdersUIAction.class));
+        menuNumberToActionMap.put(22, applicationContext.getBean(AddShoppingCartItemUIAction.class));
+        menuNumberToActionMap.put(23, applicationContext.getBean(FindShoppingCartItemByIdUIAction.class));
+        menuNumberToActionMap.put(24, applicationContext.getBean(FindAllShoppingCartItemsUIAction.class));
         menuNumberToActionMap.put(0, applicationContext.getBean(ExitProgramUIAction.class));
     }
 
@@ -72,6 +90,18 @@ class StartApplication {
         System.out.println("13. Find customer from database by ID and change FirstName");
         System.out.println("14. Print out all customers");
         System.out.println("15. Find customer(s) by first name: ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("16. Add shopping cart to database: ");
+        System.out.println("17. Find shopping cart by ID: ");
+        System.out.println("18. Find all shopping carts: ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("19. Add order to database: ");
+        System.out.println("20. Find order by ID: ");
+        System.out.println("21. Find all orders: ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("22. Add shopping cart item to database: ");
+        System.out.println("23. Find shopping cart item by ID: ");
+        System.out.println("24. Find all shopping cart items: ");
         System.out.println("------------------------------------------------------------");
         System.out.println("0. Exit the program");
         System.out.println("------------------------------------------------------------");
