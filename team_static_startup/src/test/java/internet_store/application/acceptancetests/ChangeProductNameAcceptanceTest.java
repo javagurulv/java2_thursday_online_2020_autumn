@@ -1,6 +1,6 @@
 package internet_store.application.acceptancetests;
 
-import internet_store.application.config.AppConfig;
+import internet_store.application.config.SpringCoreConfiguration;
 import internet_store.application.core.database.product.ProductRepository;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.product.ChangeProductNameRequest;
@@ -24,7 +24,7 @@ public class ChangeProductNameAcceptanceTest {
 
     @Before
     public void setUp() {
-        appContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        appContext = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
         getDatabaseCleaner().clean();
         productRepository = getRepository();
         productRepository.add(new Product("iPhone", "phone", new BigDecimal("900")));

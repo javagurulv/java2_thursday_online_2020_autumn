@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Static Startup Internet Store</title>
+</head>
+<body>
+
+<h3>Show all books in the list</h3>
+
+<table>
+    <tr>
+        <td>Id:</td>
+        <td>First name:</td>
+        <td>Second name:</td>
+        <td>Phone:</td>
+        <td>Email:</td>
+        <td>Address:</td>
+    </tr>
+
+    <td th:if="${customers != null}">
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.customerId}" />
+            <td th:text="${customer.customerFirstName}" />
+            <td th:text="${customer.customerSecondName}" />
+            <td th:text="${customer.customerPhone}" />
+            <td th:text="${customer.customerEmail}" />
+            <td th:text="${customer.customerAddress}" />
+        </tr>
+    </td>
+
+</table>
+
+<form action="/" method="get">
+    <input type="submit" value="Go to main page" name="Submit" />
+</form>
+
+</body>
+
+</html>

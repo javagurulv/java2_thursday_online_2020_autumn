@@ -13,32 +13,43 @@ public class AddCustomerRequest {
         this.customerSecondName = customerSecondName;
     }
 
+    public AddCustomerRequest() {
+    }
+
     public String getCustomerFirstName() {
         return customerFirstName;
+    }
+
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
     }
 
     public String getCustomerSecondName() {
         return customerSecondName;
     }
 
+    public void setCustomerSecondName(String customerSecondName) {
+        this.customerSecondName = customerSecondName;
+    }
+
     public String getCustomerPhone() {
         return customerPhone;
-    }
-
-    public String getCustomerEMail() {
-        return customerEMail;
-    }
-
-    public String getCustomerAddress() {
-        return customerAddress;
     }
 
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
     }
 
+    public String getCustomerEMail() {
+        return customerEMail;
+    }
+
     public void setCustomerEMail(String customerEMail) {
         this.customerEMail = customerEMail;
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
     public void setCustomerAddress(String customerAddress) {
