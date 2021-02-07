@@ -14,22 +14,28 @@ public class StartUpGuideUIAction implements UIAction {
 
     @Override
     public void execute() {
-        Guides guides = new Guides("Alex","alex@guides.com","12345678");
+        Guides guides = new Guides("Alex","alex@guides.com","+37112345678");
         databaseGuides.add(guides);
 
-        guides = new Guides("Alex2","alex2@guides.com","23456789");
+        guides = new Guides("Alex33","aleksej22@guides.com","+37123456789");
         databaseGuides.add(guides);
 
-        guides = new Guides("Alexandr","alexandr@guides.com","345678900");
+        guides = new Guides("Alex","alex@guides.com","+37112345678");
         databaseGuides.add(guides);
 
-        guides = new Guides("Boris","boris@guides.com","456789001");
+        guides = new Guides("Alex2","alex2@guides.com","+37123456789");
         databaseGuides.add(guides);
 
-        guides = new Guides("Bogdan","bogdan@guides.com","56789002");
+        guides = new Guides("Alexandr","alexandr@guides.com","+37145678900");
         databaseGuides.add(guides);
 
-        guides = new Guides("Susanin","susanin@guides.com","666000666");
+        guides = new Guides("Boris","boris@guides.com","+371456789001");
+        databaseGuides.add(guides);
+
+        guides = new Guides("Bogdan","bogdan@guides.com","+37156789002");
+        databaseGuides.add(guides);
+
+        guides = new Guides("Susanin","susanin@guides.com","+371666000666");
         databaseGuides.add(guides);
     }
 }

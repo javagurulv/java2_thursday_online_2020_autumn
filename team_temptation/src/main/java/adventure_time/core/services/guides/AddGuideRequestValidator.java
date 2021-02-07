@@ -32,9 +32,9 @@ public class AddGuideRequestValidator {
             CoreError error = new CoreError("guidePhone", "Must be longer than 7 symbols");
             errors.add(error);
         }
-        if (request.getGuidePhone().startsWith("+")) {
+        if (!request.getGuidePhone().startsWith("+")) {
             // error
-            CoreError error = new CoreError("guidePhone", "Must star with a symbol + ");
+            CoreError error = new CoreError("guidePhone", "Must start with a symbol + ");
             errors.add(error);
         }
         if (!request.getGuideEmail().contains("@")) {

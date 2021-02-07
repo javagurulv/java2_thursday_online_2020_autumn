@@ -11,9 +11,9 @@ import java.util.List;
 public class AddGuideService {
 
     private final DatabaseGuides databaseGuides;
-    private final AddGuideRequestValidator validator;
+    private final adventure_time.core.services.guides.AddGuideRequestValidator validator;
 
-    public AddGuideService(DatabaseGuides databaseGuides, AddGuideRequestValidator validator) {
+    public AddGuideService(DatabaseGuides databaseGuides, adventure_time.core.services.guides.AddGuideRequestValidator validator) {
         this.databaseGuides = databaseGuides;
         this.validator = validator;
     }

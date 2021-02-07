@@ -8,8 +8,15 @@ public interface DatabaseGuides {
 
     boolean add(Guides guide);
 
-    boolean remove(String guideName);
+    boolean removeByName (String eventName);
+
+    boolean removeById (Long id);
 
     List<Guides> getGuidesList();
 
+    List<Guides> findByGuideName(String guideName);
+
+    List<Guides> findByGuideEmail(String guideEmail);
+
+    List<Guides> findByGuideNameAndEmail(String guideName, String guideEmail);
 }

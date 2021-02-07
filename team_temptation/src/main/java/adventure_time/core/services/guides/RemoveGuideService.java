@@ -24,9 +24,13 @@ public class RemoveGuideService {
             return new RemoveGuideResponse(errors);
         }
 
-        if (databaseGuides.remove(request.getGuideName())) return new RemoveGuideResponse();
+        boolean isSuccessRemoval;
+        if (request.getDeletionWay().equals("byName")) {
+            isSuccessRemoval = databaseGuides.removeByName(request.getGuideName());
+        } else {
+            isSuccessRemoval = databaseGuides.removeById(request.getGuideId());
+        }
 
-        errors.add(new CoreError("guideName", "Guide \"" + request.getGuideName() + "\" was not found."));
-        return new RemoveGuideResponse(errors);
+        return new RemoveGuideResponse(isSuccessRemoval);
     }
 }

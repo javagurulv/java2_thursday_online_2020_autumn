@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Guides {
 
-    private long guideID;
-    private String guideName;
-    private String guideEmail;
-    private String guidePhone;
+    private Long guideId;
+    private final String guideName;
+    private final String guideEmail;
+    private final String guidePhone;
     private boolean activity;
 
     public Guides(String guideName, String guideEmail, String guidePhone) {
@@ -18,8 +18,8 @@ public class Guides {
         this.activity = true;
     }
 
-    public long getGuideID() {
-        return guideID;
+    public Long getGuideId() {
+        return guideId;
     }
 
     public String getGuideName() {
@@ -34,8 +34,8 @@ public class Guides {
         return guidePhone;
     }
 
-    public void setGuideID(long guideID) {
-        this.guideID = guideID;
+    public void setGuideId(Long guideId) {
+        this.guideId = guideId;
     }
 
     public boolean isActivity() {
@@ -45,6 +45,7 @@ public class Guides {
     public void activityOn(boolean activity) {
         this.activity = true;
     }
+
     public void activityOff(boolean activity) {
         this.activity = false;
     }
@@ -54,18 +55,18 @@ public class Guides {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Guides guides = (Guides) o;
-        return guideID == guides.guideID && activity == guides.activity && Objects.equals(guideName, guides.guideName) && Objects.equals(guideEmail, guides.guideEmail) && Objects.equals(guidePhone, guides.guidePhone);
+        return guideId == guides.guideId && activity == guides.activity && Objects.equals(guideName, guides.guideName) && Objects.equals(guideEmail, guides.guideEmail) && Objects.equals(guidePhone, guides.guidePhone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guideID, guideName, guideEmail, guidePhone, activity);
+        return Objects.hash(guideId, guideName, guideEmail, guidePhone, activity);
     }
 
     @Override
     public String toString() {
         return "Guides{" +
-                "guideID=" + guideID +
+                "guideId=" + guideId +
                 ", guideName='" + guideName + '\'' +
                 ", guideEmail='" + guideEmail + '\'' +
                 ", guidePhone='" + guidePhone + '\'' +
