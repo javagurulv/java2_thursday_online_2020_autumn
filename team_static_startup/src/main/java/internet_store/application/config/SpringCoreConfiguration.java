@@ -22,7 +22,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = "internet_store.application")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
-public class AppConfig {
+public class SpringCoreConfiguration {
 
     @Value("${database.username}")
     private String username;

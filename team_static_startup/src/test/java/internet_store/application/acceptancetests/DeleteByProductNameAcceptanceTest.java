@@ -1,6 +1,6 @@
 package internet_store.application.acceptancetests;
 
-import internet_store.application.config.AppConfig;
+import internet_store.application.config.SpringCoreConfiguration;
 import internet_store.application.core.requests.product.AddProductRequest;
 import internet_store.application.core.requests.product.DeleteByProductNameRequest;
 import internet_store.application.core.responses.product.DeleteByProductNameResponse;
@@ -25,7 +25,7 @@ public class DeleteByProductNameAcceptanceTest {
 
     @Before
     public void before() {
-        appContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        appContext = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
         getDatabaseCleaner().clean();
     }
 

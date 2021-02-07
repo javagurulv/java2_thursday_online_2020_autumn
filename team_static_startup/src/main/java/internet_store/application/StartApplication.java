@@ -1,6 +1,6 @@
 package internet_store.application;
 
-import internet_store.application.config.AppConfig;
+import internet_store.application.config.SpringCoreConfiguration;
 import internet_store.application.console_ui.UIAction;
 import internet_store.application.console_ui.customer.*;
 import internet_store.application.console_ui.order.*;
@@ -17,7 +17,7 @@ import java.util.Scanner;
 class StartApplication {
 
     private static final ApplicationContext applicationContext
-            = new AnnotationConfigApplicationContext(AppConfig.class);
+            = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
 
     private final Map<Integer, UIAction> menuNumberToActionMap;
 
