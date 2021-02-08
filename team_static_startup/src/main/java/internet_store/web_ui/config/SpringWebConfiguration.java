@@ -11,7 +11,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"internet_store"})
+@ComponentScan(basePackages = {"internet_store.application"})
 public class SpringWebConfiguration implements WebMvcConfigurer {
 
     @Override
