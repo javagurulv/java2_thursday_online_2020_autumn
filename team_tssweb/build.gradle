@@ -1,25 +1,26 @@
 dependencies {
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
-    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.8.0'
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.27.Final'
-    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.27.Final'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.8.0'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.27.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.27.Final'
 
     // Spring Boot
-    compile('org.springframework.boot:spring-boot-starter-web:2.4.1') {
+    implementation('org.springframework.boot:spring-boot-starter-web:2.4.1') {
         exclude(group: 'ch.qos.logback', module: 'logback-classic')
     }
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf:2.4.1') {
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf:2.4.1') {
         exclude(group: 'ch.qos.logback', module: 'logback-classic')
     }
-    compile('org.springframework.boot:spring-boot-starter-data-jpa:2.4.1') {
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa:2.4.1') {
         exclude(group: 'ch.qos.logback', module: 'logback-classic')
     }
 
     // Tests
-    testCompile('junit:junit:4.13.1')
-    testCompile('org.mockito:mockito-core:3.6.0')
-    testCompile('org.springframework:spring-test:5.2.12.RELEASE')
+    testImplementation('junit:junit:4.13.1')
+    testImplementation('org.mockito:mockito-core:3.6.0')
+    testImplementation('org.springframework:spring-test:5.2.12.RELEASE')
 
     // Java Doc
-    compile group: 'org.apache.maven.plugins', name: 'maven-javadoc-plugin', version: '3.2.0'
+    implementation group: 'org.apache.maven.plugins', name: 'maven-javadoc-plugin', version: '3.2.0'
+
 }
