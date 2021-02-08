@@ -1,7 +1,8 @@
 package internet_store.application;
 
 import internet_store.application.console_ui.ProgramMenu;
-import internet_store.web_ui.config.SpringWebConfiguration;
+
+import internet_store.application.web_ui.config.SpringWebConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;

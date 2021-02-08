@@ -1,4 +1,4 @@
-package internet_store.web_ui.config;
+package internet_store.application.web_ui.config;
 
 import internet_store.application.config.SpringCoreConfiguration;
 import org.springframework.web.context.WebApplicationContext;
