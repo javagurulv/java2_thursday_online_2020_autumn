@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "lv.tssweb.estore.core")
+@ComponentScan(basePackages = "lv.tssweb.estore")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
 public class SpringCoreConfiguration {
