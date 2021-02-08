@@ -33,10 +33,10 @@ public class SpringCoreConfiguration {
     @Value("${database.driverName}")
     private String databaseDriverName;
 
-/*    @Bean
+    @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
-    }*/
+    }
 
     @Bean
     public DataSource dataSource() {
