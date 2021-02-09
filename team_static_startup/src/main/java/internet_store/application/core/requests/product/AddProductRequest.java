@@ -8,6 +8,9 @@ public class AddProductRequest {
     private String productDescription;
     private BigDecimal productPrice;
 
+    public AddProductRequest() {
+    }
+
     public AddProductRequest(String productName, String productDescription, BigDecimal productPrice) {
         this.productName = productName;
         this.productDescription = productDescription;

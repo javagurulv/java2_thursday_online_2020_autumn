@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Internet Store demo project">
+    <meta name="author" content="Team Static Startup">
+    <title>Product Library</title>
+</head>
+
+<body>
+
+<h3>Add product</h3>
+
+<table>
+    <tr>
+        <td>Name:</td>
+        <td>Description:</td>
+        <td>Price:</td>
+    </tr>
+
+    <tr>
+        <form action="/addProduct" th:object="${request}" method="post">
+            <td><input type="text" th:field="${request.productName}"/></td>
+            <td><input type="text" th:field="${request.productDescription}"/></td>
+            <td><input type="text" th:field="${request.productPrice}"/></td>
+            <td>
+                <input type="submit" value="Add Product"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </form>
+    </tr>
+</table>
+
+</body>
+
+</html>
