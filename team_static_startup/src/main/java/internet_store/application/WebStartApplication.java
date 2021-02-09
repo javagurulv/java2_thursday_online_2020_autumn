@@ -12,7 +12,7 @@ public class WebStartApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(SpringWebConfiguration.class);
-//        ProgramMenu programMenu = context.getBean(ProgramMenu.class);
-//        programMenu.runMenu();
+        ProgramMenu programMenu = context.getBean(ProgramMenu.class);
+        programMenu.runMenu();
     }
 }
