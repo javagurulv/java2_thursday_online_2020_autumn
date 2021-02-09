@@ -4,17 +4,23 @@ import adventure_time.core.requests.guides.RemoveGuideRequest;
 import adventure_time.core.responses.CoreError;
 import adventure_time.core.responses.guides.RemoveGuideResponse;
 import adventure_time.database.guides.DatabaseGuides;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class RemoveGuideService {
+
+    @Autowired
     private final DatabaseGuides databaseGuides;
+    @Autowired
     private final RemoveGuideRequestValidator validator;
 
-    public RemoveGuideService(DatabaseGuides databaseGuides, RemoveGuideRequestValidator validator) {
-        this.databaseGuides = databaseGuides;
-        this.validator = validator;
-    }
+//    public RemoveGuideService(DatabaseGuides databaseGuides, RemoveGuideRequestValidator validator) {
+//        this.databaseGuides = databaseGuides;
+//        this.validator = validator;
+//    }
 
     public RemoveGuideResponse removeGuide(RemoveGuideRequest request) {
 

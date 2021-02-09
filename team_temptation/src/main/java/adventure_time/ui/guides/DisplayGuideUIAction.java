@@ -1,17 +1,20 @@
 package adventure_time.ui.guides;
 
-
 import adventure_time.core.services.guides.DisplayGuideListService;
 import adventure_time.core.domain.Guides;
 import adventure_time.ui.UIAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DisplayGuideUIAction implements UIAction {
 
+    @Autowired
     private final DisplayGuideListService displayGuideListService;
 
-    public DisplayGuideUIAction(DisplayGuideListService displayGuideListService) {
-        this.displayGuideListService = displayGuideListService;
-    }
+//    public DisplayGuideUIAction(DisplayGuideListService displayGuideListService) {
+//        this.displayGuideListService = displayGuideListService;
+//    }
 
     @Override
     public void execute() {

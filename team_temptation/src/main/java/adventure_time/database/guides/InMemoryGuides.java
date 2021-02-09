@@ -1,11 +1,13 @@
 package adventure_time.database.guides;
 
 import adventure_time.core.domain.Guides;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class InMemoryGuides implements adventure_time.database.guides.DatabaseGuides {
 
     private long idCounter = 1L;

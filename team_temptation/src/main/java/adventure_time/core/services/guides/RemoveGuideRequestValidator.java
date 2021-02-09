@@ -2,10 +2,12 @@ package adventure_time.core.services.guides;
 
 import adventure_time.core.requests.guides.RemoveGuideRequest;
 import adventure_time.core.responses.CoreError;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class RemoveGuideRequestValidator {
 
     public List<CoreError> validate(RemoveGuideRequest request) {

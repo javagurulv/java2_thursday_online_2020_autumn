@@ -7,22 +7,27 @@ import adventure_time.core.responses.CoreError;
 import adventure_time.core.responses.guides.SearchGuideResponse;
 import adventure_time.database.guides.DatabaseGuides;
 import adventure_time.core.domain.Guides;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class SearchGuideService {
 
+	@Autowired
 	private final DatabaseGuides database;
+	@Autowired
 	private final adventure_time.core.services.guides.SearchGuideRequestValidator validator;
 
-	public SearchGuideService(DatabaseGuides database,
-							  adventure_time.core.services.guides.SearchGuideRequestValidator validator) {
-		this.database = database;
-		this.validator = validator;
-	}
+//	public SearchGuideService(DatabaseGuides database,
+//							  adventure_time.core.services.guides.SearchGuideRequestValidator validator) {
+//		this.database = database;
+//		this.validator = validator;
+//	}
 
 	public SearchGuideResponse execute(SearchGuideRequest request) {
 		List<CoreError> errors = validator.validate(request);

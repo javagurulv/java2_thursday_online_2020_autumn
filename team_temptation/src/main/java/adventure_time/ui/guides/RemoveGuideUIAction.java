@@ -5,16 +5,20 @@ import adventure_time.core.requests.guides.RemoveGuideRequest;
 import adventure_time.core.responses.guides.RemoveGuideResponse;
 import adventure_time.core.services.guides.RemoveGuideService;
 import adventure_time.ui.UIAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class RemoveGuideUIAction implements UIAction {
 
+    @Autowired
     private final RemoveGuideService removeGuideService;
 
-    public RemoveGuideUIAction(RemoveGuideService removeGuideService) {
-        this.removeGuideService = removeGuideService;
-    }
+//    public RemoveGuideUIAction(RemoveGuideService removeGuideService) {
+//        this.removeGuideService = removeGuideService;
+//    }
 
     @Override
     public void execute() {

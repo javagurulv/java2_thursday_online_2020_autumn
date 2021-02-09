@@ -3,14 +3,18 @@ package adventure_time.ui.guides;
 import adventure_time.database.guides.DatabaseGuides;
 import adventure_time.core.domain.Guides;
 import adventure_time.ui.UIAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StartUpGuideUIAction implements UIAction {
 
+    @Autowired
     private DatabaseGuides databaseGuides;
 
-    public StartUpGuideUIAction(DatabaseGuides databaseGuides) {
-        this.databaseGuides = databaseGuides;
-    }
+//    public StartUpGuideUIAction(DatabaseGuides databaseGuides) {
+//        this.databaseGuides = databaseGuides;
+//    }
 
     @Override
     public void execute() {

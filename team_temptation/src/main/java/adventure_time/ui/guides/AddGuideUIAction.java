@@ -4,16 +4,20 @@ import adventure_time.core.requests.guides.AddGuideRequest;
 import adventure_time.core.responses.guides.AddGuideResponse;
 import adventure_time.core.services.guides.AddGuideService;
 import adventure_time.ui.UIAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class AddGuideUIAction implements UIAction {
 
+    @Autowired
     private final AddGuideService addGuideService;
 
-    public AddGuideUIAction(AddGuideService addGuideService) {
-        this.addGuideService = addGuideService;
-    }
+//    public AddGuideUIAction(AddGuideService addGuideService) {
+//        this.addGuideService = addGuideService;
+//    }
 
     @Override
     public void execute() {

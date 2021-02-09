@@ -4,11 +4,13 @@ import adventure_time.core.requests.Ordering;
 import adventure_time.core.requests.Paging;
 import adventure_time.core.requests.guides.SearchGuideRequest;
 import adventure_time.core.responses.CoreError;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class SearchGuideRequestValidator {
 
 	public List<CoreError> validate(SearchGuideRequest request) {

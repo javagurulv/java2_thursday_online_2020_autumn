@@ -1,9 +1,10 @@
 package adventure_time.ui.guides;
 
 import adventure_time.ui.UIAction;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ExitGuideUIAction implements UIAction {
-
 
     @Override
     public void execute() {

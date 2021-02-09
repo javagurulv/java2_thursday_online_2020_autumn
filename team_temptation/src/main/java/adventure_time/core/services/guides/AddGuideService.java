@@ -5,18 +5,23 @@ import adventure_time.core.responses.CoreError;
 import adventure_time.core.responses.guides.AddGuideResponse;
 import adventure_time.database.guides.DatabaseGuides;
 import adventure_time.core.domain.Guides;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class AddGuideService {
 
+    @Autowired
     private final DatabaseGuides databaseGuides;
+    @Autowired
     private final adventure_time.core.services.guides.AddGuideRequestValidator validator;
 
-    public AddGuideService(DatabaseGuides databaseGuides, adventure_time.core.services.guides.AddGuideRequestValidator validator) {
-        this.databaseGuides = databaseGuides;
-        this.validator = validator;
-    }
+//    public AddGuideService(DatabaseGuides databaseGuides, adventure_time.core.services.guides.AddGuideRequestValidator validator) {
+//        this.databaseGuides = databaseGuides;
+//        this.validator = validator;
+//    }
 
     public AddGuideResponse addGuide(AddGuideRequest request) {
         // Validation

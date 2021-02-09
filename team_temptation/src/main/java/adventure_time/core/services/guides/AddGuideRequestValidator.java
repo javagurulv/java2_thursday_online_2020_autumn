@@ -2,10 +2,12 @@ package adventure_time.core.services.guides;
 
 import adventure_time.core.requests.guides.AddGuideRequest;
 import adventure_time.core.responses.CoreError;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class AddGuideRequestValidator {
 
     public List<CoreError> validate(AddGuideRequest request) {
