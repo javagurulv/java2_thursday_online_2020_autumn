@@ -1,6 +1,10 @@
 package adventure_time.ui;
 
 import adventure_time.ui.customers.*;
+import adventure_time.ui.guides.AddGuideUIAction;
+import adventure_time.ui.guides.DisplayGuideUIAction;
+import adventure_time.ui.guides.RemoveGuideUIAction;
+import adventure_time.ui.guides.SearchGuideUIAction;
 import adventure_time.ui.menus.*;
 import adventure_time.ui.events.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +32,10 @@ public class AdminMenu {
         menuFunctionMap.put(16, findUIAction(uiActionList, UpdateCustomerUIAction.class));
 
         menuFunctionMap.put(21, findUIAction(uiActionList, ToMainMenuUIAction.class));
-        menuFunctionMap.put(22, findUIAction(uiActionList, ToMainMenuUIAction.class));
-        menuFunctionMap.put(23, findUIAction(uiActionList, ToMainMenuUIAction.class));
-        menuFunctionMap.put(24, findUIAction(uiActionList, ToMainMenuUIAction.class));
-        menuFunctionMap.put(25, findUIAction(uiActionList, ToMainMenuUIAction.class));
+        menuFunctionMap.put(22, findUIAction(uiActionList, AddGuideUIAction.class));
+        menuFunctionMap.put(23, findUIAction(uiActionList, RemoveGuideUIAction.class));
+        menuFunctionMap.put(24, findUIAction(uiActionList, SearchGuideUIAction.class));
+        menuFunctionMap.put(25, findUIAction(uiActionList, DisplayGuideUIAction.class));
         menuFunctionMap.put(26, findUIAction(uiActionList, ToMainMenuUIAction.class));
 
         menuFunctionMap.put(31, findUIAction(uiActionList, AddEventUIAction.class));

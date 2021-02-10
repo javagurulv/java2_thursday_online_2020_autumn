@@ -16,7 +16,7 @@ public class AddGuideService {
     @Autowired
     private final DatabaseGuides databaseGuides;
     @Autowired
-    private final adventure_time.core.services.guides.AddGuideRequestValidator validator;
+    private final AddGuideRequestValidator validator;
 
 //    public AddGuideService(DatabaseGuides databaseGuides, adventure_time.core.services.guides.AddGuideRequestValidator validator) {
 //        this.databaseGuides = databaseGuides;
