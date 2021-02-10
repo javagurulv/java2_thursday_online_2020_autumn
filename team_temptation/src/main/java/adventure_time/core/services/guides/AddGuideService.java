@@ -14,9 +14,9 @@ import java.util.List;
 public class AddGuideService {
 
     @Autowired
-    private final DatabaseGuides databaseGuides;
+    private DatabaseGuides databaseGuides;
     @Autowired
-    private final AddGuideRequestValidator validator;
+    private AddGuideRequestValidator validator;
 
 //    public AddGuideService(DatabaseGuides databaseGuides, adventure_time.core.services.guides.AddGuideRequestValidator validator) {
 //        this.databaseGuides = databaseGuides;

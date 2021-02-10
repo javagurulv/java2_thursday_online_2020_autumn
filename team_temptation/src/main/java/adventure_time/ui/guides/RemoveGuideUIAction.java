@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class RemoveGuideUIAction implements UIAction {
 
     @Autowired
-    private final RemoveGuideService removeGuideService;
+    private RemoveGuideService removeGuideService;
 
 //    public RemoveGuideUIAction(RemoveGuideService removeGuideService) {
 //        this.removeGuideService = removeGuideService;

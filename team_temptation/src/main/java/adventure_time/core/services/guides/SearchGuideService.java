@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 public class SearchGuideService {
 
 	@Autowired
-	private final DatabaseGuides database;
+	private DatabaseGuides database;
 	@Autowired
-	private final adventure_time.core.services.guides.SearchGuideRequestValidator validator;
+	private SearchGuideRequestValidator validator;
 
 //	public SearchGuideService(DatabaseGuides database,
 //							  adventure_time.core.services.guides.SearchGuideRequestValidator validator) {

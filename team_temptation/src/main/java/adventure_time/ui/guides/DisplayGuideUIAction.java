@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class DisplayGuideUIAction implements UIAction {
 
     @Autowired
-    private final DisplayGuideListService displayGuideListService;
+    private DisplayGuideListService displayGuideListService;
 
 //    public DisplayGuideUIAction(DisplayGuideListService displayGuideListService) {
 //        this.displayGuideListService = displayGuideListService;

@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class SearchGuideUIAction implements UIAction {
 
     @Autowired
-    private final SearchGuideService searchGuideService;
+    private SearchGuideService searchGuideService;
 
 //    public SearchGuideUIAction(SearchGuideService searchGuideService) {
 //        this.searchGuideService = searchGuideService;

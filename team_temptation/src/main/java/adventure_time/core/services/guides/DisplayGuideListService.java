@@ -11,7 +11,7 @@ import java.util.List;
 public class DisplayGuideListService {
 
     @Autowired
-    private final DatabaseGuides databaseGuides;
+    private DatabaseGuides databaseGuides;
 
 //    public DisplayGuideListService(DatabaseGuides databaseGuides) {
 //        this.databaseGuides = databaseGuides;

@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class AddGuideUIAction implements UIAction {
 
     @Autowired
-    private final AddGuideService addGuideService;
+    private AddGuideService addGuideService;
 
 //    public AddGuideUIAction(AddGuideService addGuideService) {
 //        this.addGuideService = addGuideService;

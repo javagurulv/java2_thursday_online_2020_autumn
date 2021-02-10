@@ -13,9 +13,9 @@ import java.util.List;
 public class RemoveGuideService {
 
     @Autowired
-    private final DatabaseGuides databaseGuides;
+    private DatabaseGuides databaseGuides;
     @Autowired
-    private final RemoveGuideRequestValidator validator;
+    private RemoveGuideRequestValidator validator;
 
 //    public RemoveGuideService(DatabaseGuides databaseGuides, RemoveGuideRequestValidator validator) {
 //        this.databaseGuides = databaseGuides;
