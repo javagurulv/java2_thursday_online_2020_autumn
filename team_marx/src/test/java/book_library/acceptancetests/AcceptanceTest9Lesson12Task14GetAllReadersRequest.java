@@ -1,7 +1,7 @@
 package book_library.acceptancetests;
 
 import book_library.DatabaseCleaner;
-import book_library.config.BookListConfiguration;
+import book_library.config.SpringCoreConfiguration;
 import book_library.core.requests.Reader.GetAllReaderRequest;
 import book_library.core.requests.Reader.RegisterReaderRequest;
 import book_library.core.responses.Reader.GetAllReadersResponse;
@@ -22,7 +22,7 @@ public class AcceptanceTest9Lesson12Task14GetAllReadersRequest {
     @Before
     public void setup() {
 
-        appContext = new AnnotationConfigApplicationContext(BookListConfiguration.class);
+        appContext = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
         getDatabaseCleaner().clean();
     }
 

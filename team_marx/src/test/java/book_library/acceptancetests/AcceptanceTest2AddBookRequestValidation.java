@@ -1,7 +1,7 @@
 package book_library.acceptancetests;
 
 import book_library.DatabaseCleaner;
-import book_library.config.BookListConfiguration;
+import book_library.config.SpringCoreConfiguration;
 import book_library.core.requests.Book.AddBookRequest;
 import book_library.core.responses.Book.AddBookResponse;
 import book_library.core.services.Book.AddBookService;
@@ -19,7 +19,7 @@ public class AcceptanceTest2AddBookRequestValidation {
     @Before
     public void setup(){
 
-        appContext = new AnnotationConfigApplicationContext(BookListConfiguration.class);
+        appContext = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
         getDatabaseCleaner().clean();
     }
 

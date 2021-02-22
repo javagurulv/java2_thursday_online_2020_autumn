@@ -21,7 +21,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = "book_library")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
-public class BookListConfiguration {
+public class SpringCoreConfiguration {
 
     @Value("${jdbc.url}")
     private String jdbcUrl;

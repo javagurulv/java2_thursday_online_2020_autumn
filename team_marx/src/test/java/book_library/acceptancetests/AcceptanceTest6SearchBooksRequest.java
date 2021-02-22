@@ -1,7 +1,7 @@
 package book_library.acceptancetests;
 
 import book_library.DatabaseCleaner;
-import book_library.config.BookListConfiguration;
+import book_library.config.SpringCoreConfiguration;
 import book_library.core.requests.Book.AddBookRequest;
 import book_library.core.requests.Ordering;
 import book_library.core.requests.Paging;
@@ -23,7 +23,7 @@ public class AcceptanceTest6SearchBooksRequest {
 
     @Before
     public void setup(){
-        appContext = new AnnotationConfigApplicationContext(BookListConfiguration.class);
+        appContext = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
         ReflectionTestUtils.setField(appContext.getBean(SearchBooksService.class),"orderingEnabled", true);
         ReflectionTestUtils.setField(appContext.getBean(SearchBooksService.class),"pagingEnabled", true);
         getDatabaseCleaner().clean();

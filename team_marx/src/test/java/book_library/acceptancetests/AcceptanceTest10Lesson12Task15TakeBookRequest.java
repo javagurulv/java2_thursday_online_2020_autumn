@@ -2,7 +2,7 @@ package book_library.acceptancetests;
 
 
 import book_library.TestDatabaseRestorer;
-import book_library.config.BookListConfiguration;
+import book_library.config.SpringCoreConfiguration;
 import book_library.core.requests.Book.AddBookRequest;
 import book_library.core.requests.Reader.RegisterReaderRequest;
 import book_library.core.requests.ReaderBook.TakeBookRequest;
@@ -28,7 +28,7 @@ public class AcceptanceTest10Lesson12Task15TakeBookRequest {
     @Before
     public void setup(){
 
-        appContext = new AnnotationConfigApplicationContext(BookListConfiguration.class);
+        appContext = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
         getDatabaseRestorer().execute();
     }
 

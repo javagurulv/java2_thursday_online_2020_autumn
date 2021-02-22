@@ -1,6 +1,6 @@
 package book_library;
 
-import book_library.config.BookListConfiguration;
+import book_library.config.SpringCoreConfiguration;
 import book_library.console_ui.*;
 
 import org.springframework.context.ApplicationContext;
@@ -20,6 +20,6 @@ public class BookListApplication {
     }
 
     private static ApplicationContext createApplicationContext() {
-        return new AnnotationConfigApplicationContext(BookListConfiguration.class);
+        return new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
     }
 }
