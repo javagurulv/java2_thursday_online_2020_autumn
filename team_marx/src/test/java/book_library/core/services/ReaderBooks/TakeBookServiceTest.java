@@ -64,4 +64,21 @@ public class TakeBookServiceTest {
         Mockito.verifyNoInteractions(readerRepository);
         Mockito.verifyNoInteractions(bookRepository);
     }
+
+    @Test
+    public void shouldRegisterBookTaking() throws ParseException {
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        Date bookOutDate = formatter1.parse("2020/01/01 14:45");
+        TakeBookRequest request = new TakeBookRequest(1L, 1L, bookOutDate);
+
+        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
+        Mockito.when(readerRepository.getReaderById(any())).thenReturn(new Reader("FirstName", "LastName", 11111111111L));
+        Mockito.when(bookRepository.getBookById(any())).thenReturn(new Book("Title", "Author"));
+
+        TakeBookResponse response = service.execute(request);
+
+        assertFalse(response.hasErrors());
+        Mockito.verify(readerBookRepository).save(argThat(new ReaderBookMatcher(new Reader("FirstName", "LastName", 11111111111L),
+                new Book("Title", "Author"), bookOutDate)));
+    }
 }
