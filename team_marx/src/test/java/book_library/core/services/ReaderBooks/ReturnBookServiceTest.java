@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReturnBookServiceTest {
@@ -50,4 +51,17 @@ public class ReturnBookServiceTest {
         Mockito.verifyNoInteractions(readerBookRepository);
     }
 
+    @Test
+    public void shouldRegisterBookReturning() throws ParseException {
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        Date bookReturnDate = formatter1.parse("9020/01/01 14:45");
+        ReturnBookRequest request = new ReturnBookRequest(1L, 1L, bookReturnDate);
+
+        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
+
+        ReturnBookResponse response = service.execute(request);
+
+        assertFalse(response.hasErrors());
+        Mockito.verify(readerBookRepository).returnBook(request);
+    }
 }
