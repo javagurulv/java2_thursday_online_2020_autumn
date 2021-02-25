@@ -10,6 +10,10 @@ public class AddBookRequest {
         this.author = author;
     }
 
+    public AddBookRequest() {
+
+    }
+
     public String getTitle() {
         return title;
     }
