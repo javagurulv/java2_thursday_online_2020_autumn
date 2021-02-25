@@ -53,7 +53,7 @@ public class ProgramMenu {
         System.out.println("2. Delete book from list");
         System.out.println("3. Show all books in the list");
         System.out.println("4. Search books");
-        System.out.println("5. Register new readers");
+        System.out.println("5. Register new reader");
         System.out.println("6. Show all readers in the list");
         System.out.println("7. Search readers");
         System.out.println("8. Take a book");
