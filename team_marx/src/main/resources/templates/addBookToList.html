@@ -14,11 +14,6 @@
 
 <table>
     <tr>
-        <td>Title:</td>
-        <td>Author:</td>
-    </tr>
-
-    <tr>
         <form action="/addBookToList" th:object="${request}" method="post">
             <td><input type="text" th:field="${request.title}"/></td>
             <td><input type="text" th:field="${request.author}"/></td>
@@ -28,6 +23,14 @@
             </td>
         </form>
     </tr>
+</table>
+
+<td th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
+</td>
 </table>
 
 </body>

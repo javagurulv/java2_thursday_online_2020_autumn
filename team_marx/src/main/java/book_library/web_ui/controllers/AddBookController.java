@@ -1,6 +1,7 @@
 package book_library.web_ui.controllers;
 
 import book_library.core.requests.Book.AddBookRequest;
+import book_library.core.responses.Book.AddBookResponse;
 import book_library.core.services.Book.AddBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,14 @@ public class AddBookController {
     }
 
     @PostMapping("/addBookToList")
-    public String processAddBookRequest(@ModelAttribute(value = "request") AddBookRequest request) {
-        addBookService.execute(request);
-        return "index";
+    public String processAddBookRequest(@ModelAttribute(value = "request") AddBookRequest request, ModelMap modelMap) {
+        AddBookResponse response = addBookService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+            return "addBookToList";
+        } else {
+            return "index";
+        }
     }
 
 }
