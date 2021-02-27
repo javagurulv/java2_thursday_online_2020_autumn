@@ -30,7 +30,7 @@ public class AddBookController {
             modelMap.addAttribute("errors", response.getErrors());
             return "addBookToList";
         } else {
-            return "index";
+            return "redirect:/";
         }
     }
 
