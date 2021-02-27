@@ -14,12 +14,14 @@
 
 <table>
     <tr>
+        <td>Id:</td>
         <td>Title:</td>
         <td>Author:</td>
     </tr>
 
     <td th:if="${books != null}">
         <tr th:each="book : ${books}">
+            <td th:text="${book.id}" />
             <td th:text="${book.title}" />
             <td th:text="${book.author}" />
         </tr>
