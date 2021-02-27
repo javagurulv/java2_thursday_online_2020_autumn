@@ -1,8 +1,6 @@
 package book_library.web_ui.controllers;
 
-import book_library.core.requests.Book.AddBookRequest;
 import book_library.core.requests.Book.RemoveBookRequest;
-import book_library.core.responses.Book.AddBookResponse;
 import book_library.core.responses.Book.RemoveBookResponse;
 import book_library.core.services.Book.RemoveBookService;
 import org.springframework.beans.factory.annotation.Autowired;
