@@ -65,4 +65,15 @@ public class ReaderBookRepository {
         }
         return updatedReadeBookId;
     }
+
+    public boolean isRecordWithSuchBookIdInReaderBook(Long id) {
+        boolean answer = false;
+        Query query1 = sessionFactory.getCurrentSession().createQuery(
+                "SELECT b FROM ReaderBook b WHERE book_id = :book_id");
+        query1.setParameter("book_id", id);
+        if (!query1.getResultList().isEmpty()) {
+            answer = true;
+        }
+        return answer;
+    }
 }

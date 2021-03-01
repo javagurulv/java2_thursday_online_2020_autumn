@@ -2,7 +2,6 @@ package book_library.core.validators.Book;
 
 import book_library.core.database.Book.BookRepository;
 import book_library.core.database.ReaderBook.ReaderBookRepository;
-import book_library.core.requests.Book.AddBookRequest;
 import book_library.core.requests.Book.RemoveBookRequest;
 import book_library.core.responses.CoreError;
 import book_library.matchers.RemoveBookRequestMatcher;
@@ -58,6 +57,8 @@ public class RemoveBookRequestValidatorTest {
         RemoveBookRequest request = new RemoveBookRequest (1L);
         Mockito.when(bookRepository.isSuchIdPresentsInDatabase(any())).thenReturn(false);
         List<CoreError> errors = validator.validate(request);
+        Mockito.verify(bookRepository).isSuchIdPresentsInDatabase(
+                argThat(new RemoveBookRequestMatcher(1L)));
         assertEquals(1,errors.size());
         assertEquals("id", errors.get(0).getField());
         assertEquals("No book with such id found!", errors.get(0).getMessage());
@@ -69,6 +70,10 @@ public class RemoveBookRequestValidatorTest {
         Mockito.when(bookRepository.isSuchIdPresentsInDatabase(any())).thenReturn(true);
         Mockito.when(readerBookRepository.isBookInLibrary(any())).thenReturn(true);
         List<CoreError> errors = validator.validate(request);
+        Mockito.verify(bookRepository).isSuchIdPresentsInDatabase(
+                argThat(new RemoveBookRequestMatcher(1L)));
+        Mockito.verify(readerBookRepository).isBookInLibrary(
+                argThat(new RemoveBookRequestMatcher(1L)));
         assertEquals(1,errors.size());
         assertEquals("id", errors.get(0).getField());
         assertEquals("You can't delete this, because there is an record with this book Id in ReaderBook", errors.get(0).getMessage());

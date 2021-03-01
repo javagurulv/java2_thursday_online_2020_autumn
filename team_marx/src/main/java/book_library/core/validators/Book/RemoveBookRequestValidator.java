@@ -45,7 +45,7 @@ public class RemoveBookRequestValidator {
     }
 
     private Optional<CoreError> validateBookWithSuchIdIsTaken(RemoveBookRequest request) {
-        return (readerBookRepository.isBookInLibrary(request.getBookIdToRemove()))
+        return (readerBookRepository.isRecordWithSuchBookIdInReaderBook(request.getBookIdToRemove()))
                 ? Optional.of(new CoreError("id", "You can't delete this, because there is an record with this book Id in ReaderBook"))
                 : Optional.empty();
     }
