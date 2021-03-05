@@ -11,6 +11,9 @@ public class SearchBooksRequest {
     private Ordering ordering;
     private Paging paging;
 
+    public SearchBooksRequest() {
+    }
+
     public SearchBooksRequest(String title, String author) {
         this.title = title;
         this.author = author;
@@ -36,21 +39,35 @@ public class SearchBooksRequest {
     }
 
     public String getTitle() {
-
         return title;
     }
 
-    public String getAuthor() {
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public String getAuthor() {
         return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Ordering getOrdering() {
         return ordering;
     }
 
+    public void setOrdering(Ordering ordering) {
+        this.ordering = ordering;
+    }
+
     public Paging getPaging() {
         return paging;
+    }
+
+    public void setPaging(Paging paging) {
+        this.paging = paging;
     }
 
     public boolean isTitleProvided() {

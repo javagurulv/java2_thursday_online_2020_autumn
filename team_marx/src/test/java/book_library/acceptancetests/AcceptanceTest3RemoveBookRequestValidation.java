@@ -1,8 +1,6 @@
 package book_library.acceptancetests;
 
 import book_library.TestDatabaseRestorer;
-import book_library.config.SpringCoreConfiguration;
-import book_library.console_ui.ExitUIAction;
 import book_library.core.requests.Book.AddBookRequest;
 import book_library.core.requests.Book.GetAllBooksRequest;
 import book_library.core.requests.Book.RemoveBookRequest;
@@ -16,16 +14,10 @@ import book_library.core.services.Reader.RegisterReaderService;
 import book_library.core.services.ReaderBooks.TakeBookService;
 import book_library.core.validators.Book.RemoveBookRequestValidator;
 import book_library.web_ui.config.SpringWebConfiguration;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,9 +27,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringCoreConfiguration.class)
-@WebAppConfiguration
 public class AcceptanceTest3RemoveBookRequestValidation {
 
     private ApplicationContext appContext;
