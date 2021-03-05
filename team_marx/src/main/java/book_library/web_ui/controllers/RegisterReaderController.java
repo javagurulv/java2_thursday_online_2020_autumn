@@ -19,13 +19,13 @@ public class RegisterReaderController {
     private RegisterReaderService registerReaderService;
 
     @GetMapping(value = "/registerReader")
-    public String showAddBookPage(ModelMap modelMap) {
+    public String showRegisterReaderPage(ModelMap modelMap) {
         modelMap.addAttribute("request", new RegisterReaderRequest());
         return "registerReader";
     }
 
     @PostMapping("/registerReader")
-    public String processAddBookRequest(@ModelAttribute(value = "request") RegisterReaderRequest request, ModelMap modelMap) {
+    public String processRegisterReaderRequest(@ModelAttribute(value = "request") RegisterReaderRequest request, ModelMap modelMap) {
         RegisterReaderResponse response = registerReaderService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
