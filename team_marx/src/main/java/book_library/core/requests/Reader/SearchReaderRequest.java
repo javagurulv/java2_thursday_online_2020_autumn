@@ -13,6 +13,9 @@ public class SearchReaderRequest {
     private Ordering ordering;
     private Paging paging;
 
+    public SearchReaderRequest() {
+    }
+
     public SearchReaderRequest(String firstName, String lastName, Long personalCode) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,20 +48,40 @@ public class SearchReaderRequest {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Long getPersonalCode() {
         return personalCode;
     }
 
+    public void setPersonalCode(Long personalCode) {
+        this.personalCode = personalCode;
+    }
+
     public Ordering getOrdering() {
         return ordering;
     }
 
+    public void setOrdering(Ordering ordering) {
+        this.ordering = ordering;
+    }
+
     public Paging getPaging() {
         return paging;
+    }
+
+    public void setPaging(Paging paging) {
+        this.paging = paging;
     }
 
     public boolean isFirstNameProvided() {

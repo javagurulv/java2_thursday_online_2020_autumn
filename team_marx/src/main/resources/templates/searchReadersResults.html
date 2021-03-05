@@ -1,0 +1,40 @@
+<<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Book Library demo project">
+    <meta name="author" content="JavaGuru">
+    <title>Book Library</title>
+</head>
+
+<body>
+
+<form action="/" method="get">
+    <input type="submit" value="Go to main page" name="Submit" />
+</form>
+
+<h3>Search Results:</h3>
+
+<table>
+    <tr>
+        <td>Id:</td>
+        <td>First name:</td>
+        <td>Last name:</td>
+        <td>Personal code:</td>
+    </tr>
+
+    <td th:if="${readers != null}">
+        <tr th:each="reader : ${readers}">
+            <td th:text="${reader.id}" />
+            <td th:text="${reader.firstName}" />
+            <td th:text="${reader.lastName}" />
+            <td th:text="${reader.personalCode}" />
+        </tr>
+    </td>
+
+</table>
+
+</body>
+
+</html>
