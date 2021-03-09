@@ -16,7 +16,6 @@ public class AddBookController {
     @Autowired
     private AddBookService addBookService;
 
-
     @GetMapping(value = "/addBookToList")
     public String showAddBookPage(ModelMap modelMap) {
         modelMap.addAttribute("request", new AddBookRequest());

@@ -4,12 +4,15 @@ import java.util.Date;
 
 public class TakeBookRequest {
     private Long readerId;
-    private Long BookId;
+    private Long bookId;
     private Date bookOutDate;
+
+    public TakeBookRequest() {
+    }
 
     public TakeBookRequest(Long readerId, Long bookId, Date bookOutDate) {
         this.readerId = readerId;
-        BookId = bookId;
+        this.bookId = bookId;
         this.bookOutDate = bookOutDate;
     }
 
@@ -17,11 +20,23 @@ public class TakeBookRequest {
         return readerId;
     }
 
+    public void setReaderId(Long readerId) {
+        this.readerId = readerId;
+    }
+
     public Long getBookId() {
-        return BookId;
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public Date getBookOutDate() {
         return bookOutDate;
+    }
+
+    public void setBookOutDate(Date bookOutDate) {
+        this.bookOutDate = bookOutDate;
     }
 }

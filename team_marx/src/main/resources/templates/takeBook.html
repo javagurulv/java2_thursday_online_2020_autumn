@@ -1,0 +1,49 @@
+<<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Book Library demo project">
+    <meta name="author" content="JavaGuru">
+    <title>Book Library</title>
+</head>
+
+<body>
+
+<form action="/" method="get">
+    <input type="submit" value="Go to main page" name="Submit" />
+</form>
+
+<h3>Take book</h3>
+
+<table>
+    <tr>
+        <td>Reader id:</td>
+        <td>Book id:</td>
+        <td>Book out date (yyyy/MM/dd HH:mm)</td>
+    </tr>
+
+    <tr>
+        <form action="/takeBook" th:object="${request}" method="post">
+            <td><input type="number" th:field="${request.readerId}"/></td>
+            <td><input type="number" th:field="${request.bookId}"/></td>
+            <td><input type="text" th:field="${request.bookOutDate}"/></td>
+            <td>
+                <input type="submit" value="Take Book"/>
+                <input type="reset" value="Clear"/>
+            </td>
+        </form>
+    </tr>
+</table>
+
+<td th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}"/>
+        <td th:text="${error.message}"/>
+    </tr>
+</td>
+</table>
+
+</body>
+
+</html>
