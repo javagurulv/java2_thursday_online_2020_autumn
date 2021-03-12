@@ -3,6 +3,7 @@ package book_library.core.database.Book;
 import book_library.core.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository {
 
@@ -22,7 +23,9 @@ public interface BookRepository {
 
     List<Book> findByTitleAndAuthor(String title, String author);
 
-    public Book getBookById(Long id);
+    Book getBookById(Long id);
+
+    Optional<Book> getById(Long id);
 
 
 }

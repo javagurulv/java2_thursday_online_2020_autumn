@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -87,5 +88,15 @@ public class OrmBookRepositoryImp implements BookRepository {
                 "SELECT b FROM Book b WHERE id = :id");
         query.setParameter("id", id);
         return (Book) query.getSingleResult();
+    }
+
+    @Override
+    public Optional<Book> getById(Long id) {
+        Book book = sessionFactory.getCurrentSession().get(Book.class, id);
+        if (book == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(book);
+        }
     }
 }

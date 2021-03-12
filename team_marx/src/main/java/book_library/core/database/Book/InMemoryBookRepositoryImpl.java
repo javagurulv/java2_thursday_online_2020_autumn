@@ -84,4 +84,9 @@ public class InMemoryBookRepositoryImpl implements BookRepository {
                 .filter(book -> book.getId().equals(id))
                 .collect(Collectors.toList()).get(0);
     }
+
+    @Override
+    public Optional<Book> getById(Long id) {
+        return Optional.empty();
+    }
 }

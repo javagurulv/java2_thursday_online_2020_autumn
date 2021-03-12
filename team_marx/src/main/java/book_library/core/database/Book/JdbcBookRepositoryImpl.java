@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 //@Component
 public class JdbcBookRepositoryImpl implements BookRepository {
@@ -75,5 +76,10 @@ public class JdbcBookRepositoryImpl implements BookRepository {
         String sql = "SELECT * FROM books WHERE id = ?";
         Object[] args = new Object[]{id};
         return (Book) jdbcTemplate.query(sql, args, new BookRowMapper());
+    }
+
+    @Override
+    public Optional<Book> getById(Long id) {
+        return Optional.empty();
     }
 }
