@@ -12,18 +12,26 @@ import org.springframework.stereotype.Component;
 public class GetUnfinishedRecordsUIAction implements UIAction {
 
     @Autowired
-    GetUnfinishedRecordsService getUnfinishedRecordsService;
+    private GetUnfinishedRecordsService getUnfinishedRecordsService;
 
     @Override
     public void execute() {
-        GetUnfinishedRecordsRequest getUnfinishedRecordsRequest = new GetUnfinishedRecordsRequest();
-        GetUnfinishedRecordsResponse getUnfinishedRecordsResponse = getUnfinishedRecordsService.execute(getUnfinishedRecordsRequest);
+        GetUnfinishedRecordsRequest getUnfinishedRecordsRequest = createGetUnfinishedRecordsRequest();
+        GetUnfinishedRecordsResponse getUnfinishedRecordsResponse = validateGetUnfinishedRecordsRequest(getUnfinishedRecordsRequest);
 
         if (isRecordListEmpty(getUnfinishedRecordsResponse)){
             printResponseMessage();
         } else {
             printRecordsList(getUnfinishedRecordsResponse);
         }
+    }
+
+    private GetUnfinishedRecordsResponse validateGetUnfinishedRecordsRequest(GetUnfinishedRecordsRequest getUnfinishedRecordsRequest){
+        return getUnfinishedRecordsService.execute(getUnfinishedRecordsRequest);
+    }
+
+    private GetUnfinishedRecordsRequest createGetUnfinishedRecordsRequest() {
+        return new GetUnfinishedRecordsRequest();
     }
 
     private boolean isRecordListEmpty(GetUnfinishedRecordsResponse getUnfinishedRecordsResponse){

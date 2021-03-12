@@ -13,9 +13,9 @@ public class AddDoctorRequestValidator {
     public List<CoreError> validate (AddDoctorRequest addDoctorRequest) {
         List <CoreError> errors = new ArrayList<>();
 
-        errors.addAll(addNameValidationErrors(addDoctorRequest.getDoctor().getName()));
-        errors.addAll(addSurnameValidationErrors(addDoctorRequest.getDoctor().getSurname()));
-        errors.addAll(phoneValidationErrors(addDoctorRequest.getDoctor().getPhone()));
+        errors.addAll(addNameValidationErrors(addDoctorRequest.getName()));
+        errors.addAll(addSurnameValidationErrors(addDoctorRequest.getSurname()));
+        errors.addAll(phoneValidationErrors(addDoctorRequest.getPhone()));
 
         return errors;
     }

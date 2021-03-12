@@ -1,5 +1,6 @@
 package internet_store.application.core.services.shopping_cart_item;
 
+import internet_store.application.core.database.jpa.JpaShoppingCartItemRepository;
 import internet_store.application.core.database.shopping_cart_item.ShoppingCartItemRepository;
 import internet_store.application.core.requests.shopping_cart_item.GetShoppingCartItemRequest;
 import internet_store.application.core.responses.CoreError;
@@ -16,7 +17,7 @@ import java.util.List;
 public class GetShoppingCartItemService {
 
     @Autowired
-    private ShoppingCartItemRepository shoppingCartItemRepository;
+    private JpaShoppingCartItemRepository shoppingCartItemRepository;
     @Autowired
     private GetShoppingCartItemValidator validator;
 
@@ -25,7 +26,7 @@ public class GetShoppingCartItemService {
         if (!errors.isEmpty()) {
             return new GetShoppingCartItemResponse(errors);
         }
-        return shoppingCartItemRepository.getById(request.getId())
+        return shoppingCartItemRepository.findById(request.getId())
                 .map(GetShoppingCartItemResponse::new)
                 .orElseGet(() -> {
                     errors.add(new CoreError("id", "Not found!"));

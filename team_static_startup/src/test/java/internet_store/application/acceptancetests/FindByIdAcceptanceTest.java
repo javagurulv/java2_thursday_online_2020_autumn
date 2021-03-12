@@ -9,6 +9,7 @@ import internet_store.application.core.responses.product.FindByProductIdResponse
 import internet_store.application.core.services.product.FindByProductIdService;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Profile;
@@ -17,9 +18,10 @@ import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-@Profile("hibernate")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FindByIdAcceptanceTest {
 /*
+
     private ApplicationContext appContext;
     private ProductRepository repository;
 
@@ -84,4 +86,5 @@ public class FindByIdAcceptanceTest {
         return appContext.getBean(DatabaseCleaner.class);
     }
 */
+
 }

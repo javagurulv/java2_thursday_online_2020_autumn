@@ -8,10 +8,11 @@ import internet_store.core.requests.customer.SearchCustomerRequest;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.customer.SearchCustomerResponse;
 import internet_store.core.services.customer.validators.SearchCustomerRequestValidator;
-import internet_store.database.customer.CustomerDatabase;
+import internet_store.database.jpa.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 @Component
 @Transactional
 public class SearchCustomerService {
@@ -29,7 +31,7 @@ public class SearchCustomerService {
     @Value("${search.paging.enabled}")
     private boolean pagingEnabled;
 
-    @Autowired private CustomerDatabase customerDatabase;
+    @Autowired private CustomerRepository customerDatabase;
     @Autowired private SearchCustomerRequestValidator searchCustomerRequestValidator;
 
     public SearchCustomerResponse execute(SearchCustomerRequest searchCustomerRequest) {

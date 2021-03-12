@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+<changeSet author="staticstartup" id="3">
+    <createTable tableName="shopping_cart_items">
+        <column autoIncrement="true" name="id" type="BIGINT(20)">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="shopping_cart_id" type="BIGINT(20)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="product_id" type="BIGINT(20)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="quantity" type="BIGINT(20)">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+    <rollback>
+        <dropTable schemaName="internet_store_test"
+                   tableName="shopping_cart_items"
+                   cascadeConstraints="true"/>
+    </rollback>
+</changeSet>
+</databaseChangeLog>

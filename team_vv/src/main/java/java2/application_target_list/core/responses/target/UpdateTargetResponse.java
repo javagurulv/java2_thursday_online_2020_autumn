@@ -1,7 +1,6 @@
 package java2.application_target_list.core.responses.target;
 
 import java2.application_target_list.core.responses.CoreError;
-
 import java.util.List;
 
 public class UpdateTargetResponse extends TargetCoreResponse{

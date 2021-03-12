@@ -1,21 +1,21 @@
 package adventure_time.core.requests.customers;
 
+import adventure_time.core.domain.Customers;
+
 public class UpdateCustomerRequest {
 
     private String name;
     private String email;
     private String phone;
-    private String passwordOne;
-    private String passwordTwo;
-    private Long id;
+    private String password;
+    private Customers customer;
 
-    public UpdateCustomerRequest(String name, String email, String phone, String passwordOne, String passwordTwo, Long id) {
+    public UpdateCustomerRequest(String name, String email, String phone, String password, Customers customer) {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.passwordOne = passwordOne;
-        this.passwordTwo = passwordTwo;
-        this.id = id;
+        this.password = password;
+        this.customer = customer;
     }
 
     public String getName() {
@@ -30,15 +30,11 @@ public class UpdateCustomerRequest {
         return phone;
     }
 
-    public String getPasswordOne() {
-        return passwordOne;
+    public String getPassword() {
+        return password;
     }
 
-    public String getPasswordTwo() {
-        return passwordTwo;
-    }
-
-    public Long getId() {
-        return id;
+    public Customers getCustomer() {
+        return customer;
     }
 }

@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.domain.Customer;
 import internet_store.application.core.requests.customer.FindByCustomerIdRequest;
 import internet_store.application.core.responses.CoreError;
@@ -22,7 +23,8 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class FindByCustomerIdServiceTest {
 
-    @Mock CustomerRepository customerRepository;
+    @Mock
+    JpaCustomerRepository customerRepository;
     @Mock FindByCustomerIdValidator validator;
     @InjectMocks FindByCustomerIdService service;
 
@@ -30,7 +32,7 @@ public class FindByCustomerIdServiceTest {
     public void shouldReturnResponseWithoutErrors() {
         FindByCustomerIdRequest request = new FindByCustomerIdRequest("1");
         Mockito.when(validator.validate(request)).thenReturn(new ArrayList<>());
-        Mockito.when(customerRepository.findByCustomerId(1L)).thenReturn(Optional.of(
+        Mockito.when(customerRepository.findById(1L)).thenReturn(Optional.of(
                 new Customer("customerFirst", "customerLast")));
 
         FindByCustomerIdResponse response = service.execute(request);

@@ -15,8 +15,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class ORMShoppingCartItemRepository implements ShoppingCartItemRepository {
 
     @Autowired
@@ -48,16 +48,6 @@ public class ORMShoppingCartItemRepository implements ShoppingCartItemRepository
         query.from(ProductShoppingCart.class);
         return sessionFactory.getCurrentSession().createQuery(query).getResultList();
         //return sessionFactory.getCurrentSession().createQuery("FROM ProductShoppingCart").getResultList();
-    }
-
-    @Override
-    public Optional<ProductShoppingCart> getById(Long id) {
-        ProductShoppingCart productShoppingCart = sessionFactory.getCurrentSession().get(ProductShoppingCart.class, id);
-        if (productShoppingCart == null) {
-            return Optional.empty();
-        } else {
-            return Optional.of(productShoppingCart);
-        }
     }
 
     @Override

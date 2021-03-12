@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.requests.product.ChangeProductNameRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.product.ChangeProductNameResponse;
@@ -13,10 +13,8 @@ import java.util.List;
 @Component
 public class ChangeProductNameService {
 
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ChangeProductNameValidator validator;
+    @Autowired private JpaProductRepository productRepository;
+    @Autowired private ChangeProductNameValidator validator;
 
     public ChangeProductNameResponse execute(ChangeProductNameRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -25,7 +23,10 @@ public class ChangeProductNameService {
 
         if (!errors.isEmpty()) {
             return new ChangeProductNameResponse(errors);
-        } else return new ChangeProductNameResponse(productRepository.changeProductName(id, newName));
+        }
+
+        boolean isChanged = productRepository.changeProductName(id, newName) == 1;
+        return new ChangeProductNameResponse(isChanged);
     }
 
 

@@ -51,3 +51,17 @@ ON books(bookTitle);
 
 CREATE INDEX indexTwo
 ON books(bookTitle,bookAuthor);
+
+
+ALTER TABLE `reader_books`
+ADD FOREIGN KEY (`book_id`) REFERENCES `books`(`id`);
+
+ALTER TABLE `reader_books`
+ADD FOREIGN KEY (`reader_id`) REFERENCES `readers`(`id`);
+
+
+CREATE INDEX ix_reader_books_reader_id
+ON reader_books (reader_id);
+
+CREATE INDEX ix_reader_books_book_id
+ON reader_books (book_id);

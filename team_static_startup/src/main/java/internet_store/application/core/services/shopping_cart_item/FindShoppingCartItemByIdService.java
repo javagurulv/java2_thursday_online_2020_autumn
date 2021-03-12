@@ -1,5 +1,6 @@
 package internet_store.application.core.services.shopping_cart_item;
 
+import internet_store.application.core.database.jpa.JpaShoppingCartItemRepository;
 import internet_store.application.core.database.shopping_cart_item.ShoppingCartItemRepository;
 import internet_store.application.core.domain.ProductShoppingCart;
 import internet_store.application.core.requests.shopping_cart_item.FindShoppingCartItemByIdRequest;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Component
 public class FindShoppingCartItemByIdService {
 
-    @Autowired private ShoppingCartItemRepository itemRepository;
+    @Autowired private JpaShoppingCartItemRepository itemRepository;
     @Autowired private FindShoppingCartItemByIdValidator validator;
 
     public FindShoppingCartItemByIdResponse execute(FindShoppingCartItemByIdRequest request) {

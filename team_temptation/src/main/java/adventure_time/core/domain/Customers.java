@@ -9,23 +9,20 @@ public class Customers {
 
     @Id                     // поле является первичным ключём
     @Column(name="id")      // указывает название колонки в таблице базы
-    @GeneratedValue(strategy = GenerationType.AUTO) // стратегия генерации первичного ключа
-    private Long customerID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // стратегия генерации первичного ключа
+    private Long customerId;
 
-    @Column(name="name", nullable = false)
+    @Column(name="name", nullable = false, length = 50)
     private String customerName;
 
-    @Column(name="email", unique = true, nullable = false)
+    @Column(name="email", unique = true, nullable = false, length = 30)
     private String customerEmail;
 
-    @Column(name="phone", unique = true, nullable = false)
+    @Column(name="phone", unique = true, nullable = false, length = 12)
     private String customerPhone;
 
-    @Column(name="password", nullable = false)
+    @Column(name="password", nullable = false, length = 20)
     private String customerPassword;
-
-    @Column(name="activity")
-    private Boolean activity;
 
     public Customers() {
     }
@@ -35,15 +32,14 @@ public class Customers {
         this.customerEmail = customerEmail;
         this.customerPhone = customerPhone;
         this.customerPassword = customerPassword;
-        this.activity = true;
     }
 
-    public Long getCustomerID() {
-        return customerID;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerID(Long customerID) {
-        this.customerID = customerID;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getCustomerName() {
@@ -70,14 +66,6 @@ public class Customers {
         this.customerPhone = customerPhone;
     }
 
-    public Boolean getActivity() {
-        return activity;
-    }
-
-    public void setActivity(Boolean activity) {
-        this.activity = activity;
-    }
-
     public String getCustomerPassword() {
         return customerPassword;
     }
@@ -91,28 +79,26 @@ public class Customers {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customers customers = (Customers) o;
-        return Objects.equals(customerID, customers.customerID) &&
+        return Objects.equals(customerId, customers.customerId) &&
                 Objects.equals(customerName, customers.customerName) &&
                 Objects.equals(customerEmail, customers.customerEmail) &&
                 Objects.equals(customerPhone, customers.customerPhone) &&
-                Objects.equals(customerPassword, customers.customerPassword) &&
-                Objects.equals(activity, customers.activity);
+                Objects.equals(customerPassword, customers.customerPassword);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerID, customerName, customerEmail, customerPhone, customerPassword, activity);
+        return Objects.hash(customerId, customerName, customerEmail, customerPhone, customerPassword);
     }
 
     @Override
     public String toString() {
         return "Customers{" +
-                "customerID=" + customerID +
+                "customerID=" + customerId +
                 ", customerName='" + customerName + '\'' +
                 ", customerEmail='" + customerEmail + '\'' +
                 ", customerPhone='" + customerPhone + '\'' +
                 ", customerPassword='" + customerPassword + '\'' +
-                ", activity=" + activity +
                 '}';
     }
 }

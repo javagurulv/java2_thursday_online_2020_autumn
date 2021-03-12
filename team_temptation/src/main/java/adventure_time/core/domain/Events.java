@@ -8,29 +8,29 @@ import java.util.Objects;
 public class Events {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id")
     private Long eventId;
 
-    @Column (name = "name", nullable = false, unique = true)
+    @Column (name = "name", nullable = false, unique = true, length = 50)
     private String eventName;
 
-    @Column (name = "kind", nullable = false)
+    @Column (name = "kind", nullable = false, length = 30)
     private String eventKind;
 
     @Column (name = "duration", nullable = false)
     private Integer durationHours;
 
-    @Column (name = "max_num_guys", nullable = false)
+    @Column (name = "max_guys", nullable = false)
     private Integer maxNumberParticipants;
 
-    @Column (name = "min_num_guys", nullable = false)
+    @Column (name = "min_guys", nullable = false)
     private Integer minNumberParticipants;
 
-    @Column (name = "route", nullable = false)
-    private String route; // List<StayPoint>
+    @Column (name = "route", nullable = false, length = 50)
+    private String route;
 
-    @Column (name = "detail", nullable = false)
+    @Column (name = "detail", nullable = false, length = 256)
     private String detailsDescription;
 
     public Events() {}

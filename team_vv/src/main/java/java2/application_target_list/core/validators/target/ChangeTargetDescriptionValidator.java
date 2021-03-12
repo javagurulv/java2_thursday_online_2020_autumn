@@ -1,36 +1,36 @@
 package java2.application_target_list.core.validators.target;
 
-import java2.application_target_list.core.database.target.TargetRepository;
 import java2.application_target_list.core.requests.target.ChangeTargetDescriptionRequest;
+import java2.application_target_list.core.validators.ErrorCreator;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.core.responses.CoreError;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ChangeTargetDescriptionValidator {
+public class ChangeTargetDescriptionValidator extends ErrorCreator {
 
-    public List<CoreError> validate(ChangeTargetDescriptionRequest request, TargetRepository targetRepository) {
+    public List<CoreError> validate(ChangeTargetDescriptionRequest changeTargetDescriptionRequest) {
         List<CoreError> errors = new ArrayList<>();
-
-        if (!targetRepository.isIdInTargetList(request.getTargetIdToChange())){
-            errors.add(new CoreError("Target ID;","no target with that ID"));
-        }
-
-
-        if (isTargetIdEmpty(request)){
-            errors.add(new CoreError("Target ID","must not be empty!"));
-        }
-        if (isTargetIdNegative(request)){
-            errors.add(new CoreError("Target ID","must not be negative!"));
-        }
-
-        if (isTargetDescriptionEmpty(request)){
-            errors.add(new CoreError("Target new description","must not be empty!"));
-        }
-
+        checkTargetId(changeTargetDescriptionRequest, errors);
+        checkTargetDescription(changeTargetDescriptionRequest, errors);
         return errors;
+    }
+
+    private void checkTargetDescription(ChangeTargetDescriptionRequest changeTargetDescriptionRequest, List<CoreError> errors){
+        if (isTargetDescriptionEmpty(changeTargetDescriptionRequest)) {
+            errors.add(createCoreError("Target new description", "must not be empty!"));
+        }
+    }
+
+    private void checkTargetId(ChangeTargetDescriptionRequest changeTargetDescriptionRequest, List<CoreError> errors){
+        if (isTargetIdEmpty(changeTargetDescriptionRequest)) {
+            errors.add(createCoreError("Target ID", "must not be empty!"));
+        }
+        if (isTargetIdNegative(changeTargetDescriptionRequest)) {
+            errors.add(createCoreError("Target ID", "must not be negative!"));
+        }
     }
 
     private boolean isTargetDescriptionEmpty(ChangeTargetDescriptionRequest request) {
@@ -41,7 +41,7 @@ public class ChangeTargetDescriptionValidator {
         return request.getTargetIdToChange() == null;
     }
 
-    private boolean isTargetIdNegative(ChangeTargetDescriptionRequest request){
+    private boolean isTargetIdNegative(ChangeTargetDescriptionRequest request) {
         return request.getTargetIdToChange() < 0;
     }
 

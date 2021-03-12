@@ -32,7 +32,7 @@ public class AdminConfiguration {
      private String driverClass;
      @Value("${database.user.name}") // database.user.name=root
      private String userName;
-     @Value("${database.user.password}") // database.user.password=89@<fpfLfyys[
+     @Value("${database.user.password}") // database.user.password= 
      private String password;
 
      @Bean

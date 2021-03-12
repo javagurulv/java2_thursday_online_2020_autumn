@@ -16,6 +16,8 @@ public class SpringWebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/");
         registry.addResourceHandler("/css/**")
                 .addResourceLocations("classpath:/static/css/");
         registry.addResourceHandler("/images/**")
@@ -32,7 +34,6 @@ public class SpringWebConfiguration implements WebMvcConfigurer {
         resourceViewResolver.setTemplateMode(TemplateMode.HTML);
         resourceViewResolver.setCharacterEncoding("UTF-8");
         resourceViewResolver.setCheckExistence(false);
-
         return resourceViewResolver;
     }
 

@@ -2,6 +2,7 @@ package electronic_library.ui;
 
 import electronic_library.ui.book.*;
 import electronic_library.ui.reader.*;
+import electronic_library.ui.reader_books.AddReaderBooksUICommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,13 +38,14 @@ public class ApplicationMenu {
         menuNumberToUICommandMap.put(27, findUICommand(uiCommands, FindReaderByLastNameUICommand.class));
         menuNumberToUICommandMap.put(28, findUICommand(uiCommands, FindReaderByPersonalCodeUICommand.class));
         menuNumberToUICommandMap.put(29, findUICommand(uiCommands, FindReaderByIdUICommand.class));
+
+        menuNumberToUICommandMap.put(30, findUICommand(uiCommands, AddReaderBooksUICommand.class));
         menuNumberToUICommandMap.put(0, findUICommand(uiCommands, ExitUICommand.class));
     }
 
     public int getMenuNumberFromUser() {
         System.out.println("Please enter menu item number:");
         Scanner scanner = new Scanner(System.in);
-
         return Integer.parseInt(scanner.nextLine());
     }
 
@@ -74,6 +76,10 @@ public class ApplicationMenu {
         System.out.println("27. Find all readers in reader's registry by second name");
         System.out.println("28. Find all readers in reader's registry by person code");
         System.out.println("29. Find reader by Id in reader's registry");
+        System.out.println("==============================================================");
+        System.out.println("                 R E A D E R   B O O K S");
+        System.out.println("==============================================================");
+        System.out.println("30. Registration of book issuance to the reader");
         System.out.println("==============================================================");
         System.out.println("0. Exit program menu");
         System.out.println("==============================================================");

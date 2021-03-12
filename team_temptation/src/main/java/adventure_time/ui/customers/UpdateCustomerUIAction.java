@@ -45,55 +45,35 @@ public class UpdateCustomerUIAction implements UIAction {
         System.out.println("Successful authentication!");
         System.out.println();
 
-        String name;
-        System.out.println("Would you like to change name (y/n)?");
-        if (scanner.nextLine().equals("y")) {
-            System.out.println("Enter new name (min 5, max 50 characters): ");
-            name = scanner.nextLine();
-        } else name = customer.getCustomerName();
+        System.out.println("If you would like to change the name, enter new one (min 5, max 50 characters).");
+        System.out.println("If not - just press Enter:");
+        String name = scanner.nextLine();
 
-        System.out.println("Would you like to change email (y/n)?");
-        if (scanner.nextLine().equals("y")) {
-            System.out.println("Enter new email (max 30 characters): ");
-            email = scanner.nextLine();
-        } else email = customer.getCustomerEmail();
+        System.out.println("If you would like to change the email, enter new one (max 30 characters ).");
+        System.out.println("If not - just press Enter:");
+        email = scanner.nextLine();
 
-        String phone;
-        System.out.println("Would you like to change phone (y/n)?");
-        if (scanner.nextLine().equals("y")) {
-            System.out.println("Enter new phone (starting with +371): ");
-            phone = scanner.nextLine();
-        } else phone = customer.getCustomerPhone();
+        System.out.println("If you would like to change the phone number, enter new one (without +).");
+        System.out.println("If not - just press Enter:");
+        String phone = scanner.nextLine();
 
-        String passwordOne;
-        String passwordTwo;
-        System.out.println("Would you like to change password (y/n)?");
-        if (scanner.nextLine().equals("y")) {
-            System.out.println("According to the security requirements the password must contain:");
-            System.out.println("  at least one digit [0-9], at least one lowercase Latin character [a-z],");
-            System.out.println("  at least one uppercase Latin character [A-Z], at least one special character like ! @ # & ( ).");
-            System.out.println("  Password must contain a length of at least 8 characters and a maximum of 20 characters.");
-            System.out.println("Enter new password: ");
-            passwordOne = scanner.nextLine();
-            System.out.println("Please repeat the password: ");
-            passwordTwo = scanner.nextLine();
-        } else {
-            passwordOne = customer.getCustomerPassword();
-            passwordTwo = passwordOne;
-        }
+        System.out.println("If you would like to change the password, enter new one (considering the following password security requirements):");
+        System.out.println("  at least one digit [0-9], at least one lowercase Latin character [a-z],");
+        System.out.println("  at least one uppercase Latin character [A-Z], at least one special character like ! @ # & ( ).");
+        System.out.println("  Password must contain a length of at least 8 characters and a maximum of 20 characters.");
+        System.out.println("If not - just press Enter:");
+        password = scanner.nextLine();
 
-        UpdateCustomerRequest requestUpdate = new UpdateCustomerRequest(name, email, phone, passwordOne, passwordTwo, customer.getCustomerID());
+        UpdateCustomerRequest requestUpdate = new UpdateCustomerRequest(name, email, phone, password, customer);
         UpdateCustomerResponse responseUpdate = updateService.updateCustomer(requestUpdate);
 
         if (responseUpdate.hasError()) {
             System.out.println("Ooops! Sooooomething went wrong! ");
             System.out.println("Your request could not be fulfilled for the reasons: ");
             responseUpdate.getErrors().forEach(System.out::println);
-            System.out.println();
-            return;
+        } else {
+            System.out.println("Your data is updated");
         }
-
-        System.out.println("Your data is updated");
         System.out.println();
     }
 }

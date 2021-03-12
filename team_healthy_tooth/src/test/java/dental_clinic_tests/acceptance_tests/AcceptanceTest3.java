@@ -33,17 +33,15 @@ public class AcceptanceTest3 {
 
     @Test
     public void test(){
-        PersonalData personalData1 = new PersonalData("Name", "Surname", "12345678", "25038910523");
-        PersonalData personalData2 = new PersonalData("NameA", "SurnameB", "12345675", "25038910527");
-        AddPatientRequest addPatientRequest1 = new AddPatientRequest(personalData1);
-        AddPatientRequest addPatientRequest2 = new AddPatientRequest(personalData2);
+        AddPatientRequest addPatientRequest1 = new AddPatientRequest("Name", "Surname", "12345678", "25038910523");
+        AddPatientRequest addPatientRequest2 = new AddPatientRequest("NameA", "SurnameB", "12345675", "25038910527");
         addPatientService().execute(addPatientRequest1);
         addPatientService().execute(addPatientRequest2);
 
         GetAllPatientsRequest getAllPatientsRequest = new GetAllPatientsRequest();
         GetAllPatientsResponse getAllPatientsResponse = getAllPatientsService().execute(getAllPatientsRequest);
 
-        SearchPatientRequest searchPatientRequest = new SearchPatientRequest("25038910523", new Ordering("name", OrderingDirection.ASC), new Paging(1, 100));
+        SearchPatientRequest searchPatientRequest = new SearchPatientRequest("25038910523", "name", OrderingDirection.ASC, 1, 100);
         SearchPatientResponse searchPatientResponse = searchPatientService().execute(searchPatientRequest);
         getAllPatientsResponse.getPatients().forEach(System.out::println);
         assertTrue(getAllPatientsResponse.getPatients().size() == 2);//???????????????????????????????????

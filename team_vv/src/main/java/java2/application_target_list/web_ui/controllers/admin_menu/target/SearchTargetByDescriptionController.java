@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SearchTargetByDescriptionController {
 
-    @Autowired private SearchTargetByDescriptionService searchTargetByDescriptionService;
+    @Autowired
+    private SearchTargetByDescriptionService searchTargetByDescriptionService;
 
     @GetMapping(value = "/admin_menu/target/searchTargetByDescription")
     public String showSearchTargetByDescriptionAdminPage(ModelMap modelMap) {

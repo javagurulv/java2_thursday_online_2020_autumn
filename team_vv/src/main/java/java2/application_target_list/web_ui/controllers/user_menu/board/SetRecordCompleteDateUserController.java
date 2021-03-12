@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SetRecordCompleteDateUserController {
 
-    @Autowired private SetRecordCompleteDateService setRecordCompleteDateService;
-    @Autowired private GetUnfinishedRecordsService getUnfinishedRecordsService;
+    @Autowired
+    private SetRecordCompleteDateService setRecordCompleteDateService;
+    @Autowired
+    private GetUnfinishedRecordsService getUnfinishedRecordsService;
 
     @GetMapping(value = "/user_menu/board/setRecordCompleteDate")
     public String showSetRecordCompleteDateUserPage(ModelMap modelMap) {

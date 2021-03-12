@@ -13,34 +13,19 @@
 
 <h3>Change Target description</h3>
 
-<table>
     <tr>
-        <td>Target id</td>
-        <td>Target name</td>
-        <td>Target description</td>
-        <td>Target deadline</td>
-    </tr>
-
-    <td th:if="${targets != null}">
-        <tr th:each="targets : ${targets}">
-            <td th:text="${targets.id}" />
-            <td th:text="${targets.name}" />
-            <td th:text="${targets.description}" />
-            <td th:text="${targets.deadline}" />
-        </tr>
-    </td>
-
-</table>
-
-<table>
-    <tr>
-        <td>Target id:</td>
-        <td>Target New Description:</td>
+        <td>Select target</td>
+        <td>Enter New Description</td>
     </tr>
 
     <tr>
         <form action="/admin_menu/target/changeTargetDescription" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.targetIdToChange}"/></td>
+            <SELECT th:field="${request.targetIdToChange}">
+                <option th:each="targets : ${targets}"
+                        th:value="${targets.id}"
+                        th:text="${targets.name}">
+                </option>
+            </SELECT>
             <td><input type="text" th:field="${request.newTargetDescription}"/></td>
             <td>
                 <input type="submit" value="OK"/>
@@ -48,7 +33,7 @@
             </td>
         </form>
     </tr>
-</table>
+
 
 <td th:if="${errors != null}">
     <tr th:each="error : ${errors}">

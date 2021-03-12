@@ -1,5 +1,6 @@
 package dental_clinic.core.services.doctor;
 
+import dental_clinic.core.domain.Doctor;
 import dental_clinic.core.requests.doctor.AddDoctorRequest;
 import dental_clinic.core.responses.CoreError;
 import dental_clinic.core.responses.doctor.AddDoctorResponse;
@@ -26,13 +27,15 @@ public class AddDoctorService {
             return new AddDoctorResponse(errors);
         }
 
-        if (doctorRepository.containsDoctor(addDoctorRequest.getDoctor())) {
+        Doctor doctor = new Doctor(addDoctorRequest.getName(), addDoctorRequest.getSurname(), addDoctorRequest.getPhone());
+
+        if (doctorRepository.containsDoctor(doctor)) {
             errors.add(new CoreError("database", "Database contains the same doctor"));
             return new AddDoctorResponse(errors);
         }
 
-        doctorRepository.addDoctor(addDoctorRequest.getDoctor());
-        return new AddDoctorResponse(addDoctorRequest.getDoctor());
+        doctorRepository.addDoctor(doctor);
+        return new AddDoctorResponse(doctor);
     }
 
 }

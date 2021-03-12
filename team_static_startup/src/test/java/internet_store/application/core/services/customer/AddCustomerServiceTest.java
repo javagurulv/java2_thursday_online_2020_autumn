@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.requests.customer.AddCustomerRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.customer.AddCustomerResponse;
@@ -25,7 +26,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 @RunWith(MockitoJUnitRunner.class)
 public class AddCustomerServiceTest {
 
-    @Mock private CustomerRepository customerRepository;
+    @Mock private JpaCustomerRepository customerRepository;
     @Mock private AddCustomerValidator validator;
     @InjectMocks private AddCustomerService service;
 
@@ -36,7 +37,7 @@ public class AddCustomerServiceTest {
 
         AddCustomerResponse response = service.execute(request);
         assertFalse(response.hasErrors());
-        Mockito.verify(customerRepository).addCustomer(argThat(new CustomerMatcher("Ivan",
+        Mockito.verify(customerRepository).save(argThat(new CustomerMatcher("Ivan",
                 "Ivanov")));
     }
 

@@ -1,33 +1,29 @@
 package java2.application_target_list.core.validators.user;
 
 
-import java2.application_target_list.core.database.user.UserRepository;
 import java2.application_target_list.core.requests.user.DeleteUserRequest;
 import java2.application_target_list.core.responses.CoreError;
+import java2.application_target_list.core.validators.ErrorCreator;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class DeleteUserValidator {
+public class DeleteUserValidator extends ErrorCreator {
 
-    public List<CoreError> validate(DeleteUserRequest request, UserRepository userRepository) {
+    public List<CoreError> validate(DeleteUserRequest deleteUserRequest) {
         List<CoreError> errors = new ArrayList<>();
-
-
-        if (!userRepository.isIdInUserList(request.getUserIdToDelete())){
-            errors.add(new CoreError("User ID;","no user with that ID"));
-        }
-
-        if (isUserIdEmpty(request)){
-            errors.add(new CoreError("User ID","must not be empty!"));
-        }
-        if (isUserIdNegative(request)){
-            errors.add(new CoreError("User ID","must not be negative!"));
-        }
-
+        checkUserId(deleteUserRequest, errors);
         return errors;
+    }
+
+    private void checkUserId(DeleteUserRequest deleteUserRequest, List<CoreError> errors){
+        if (isUserIdEmpty(deleteUserRequest)){
+            errors.add(createCoreError("User ID","must not be empty!"));
+        }
+        if (isUserIdNegative(deleteUserRequest)){
+            errors.add(createCoreError("User ID","must not be negative!"));
+        }
     }
 
     private boolean isUserIdEmpty(DeleteUserRequest request) {

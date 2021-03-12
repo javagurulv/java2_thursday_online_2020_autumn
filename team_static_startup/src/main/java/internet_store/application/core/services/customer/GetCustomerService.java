@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.requests.customer.GetCustomerRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.customer.GetCustomerResponse;
@@ -15,7 +16,7 @@ import java.util.List;
 public class GetCustomerService {
 
     @Autowired
-    private CustomerRepository ormCustomerRepository;
+    private JpaCustomerRepository ormCustomerRepository;
     @Autowired private GetCustomerValidator validator;
 
     public GetCustomerResponse execute(GetCustomerRequest request) {
@@ -23,7 +24,7 @@ public class GetCustomerService {
         if (!errors.isEmpty()) {
             return new GetCustomerResponse(errors);
         }
-        return ormCustomerRepository.getById(request.getId())
+        return ormCustomerRepository.findById(request.getId())
                 .map(GetCustomerResponse::new)
                 .orElseGet(() -> {
                     errors.add(new CoreError("id", "Not found!"));

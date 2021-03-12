@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user_menu/board")
 public class BoardRestUserController {
 
-    @Autowired private GetRecordService getRecordService;
-    @Autowired private AddRecordService addRecordService;
-    @Autowired private SetRecordCompleteDateService setRecordCompleteDateService;
-    @Autowired private GetUnfinishedRecordsService getUnfinishedRecordsService;
+    @Autowired
+    private GetRecordService getRecordService;
+    @Autowired
+    private AddRecordService addRecordService;
+    @Autowired
+    private SetRecordCompleteDateService setRecordCompleteDateService;
+    @Autowired
+    private GetUnfinishedRecordsService getUnfinishedRecordsService;
 
     @GetMapping(path = "{id}", produces = "application/json")
     public GetRecordResponse getRecord(@PathVariable Long id){

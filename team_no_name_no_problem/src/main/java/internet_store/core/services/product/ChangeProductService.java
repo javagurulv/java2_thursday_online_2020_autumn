@@ -5,6 +5,8 @@ import internet_store.core.requests.product.ChangeProductRequest;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.product.ChangeProductResponse;
 import internet_store.core.services.product.validators.ChangeProductValidator;
+
+import internet_store.database.jpa.ProductRepository;
 import internet_store.database.product.ProductDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ import java.util.Optional;
 @Transactional
 public class ChangeProductService {
 
-    @Autowired private ProductDatabase productDatabase;
+    @Autowired private ProductRepository productDatabase;
     @Autowired private ChangeProductValidator changeProductValidator;
 
     public ChangeProductResponse execute (ChangeProductRequest changeProductRequest){
@@ -27,7 +29,7 @@ public class ChangeProductService {
             return new ChangeProductResponse(errors);
         }
 
-        if (!productDatabase.containsId(changeProductRequest.getId())){
+        if (!productDatabase.existsById(changeProductRequest.getId())){
             errors.add(new CoreError("database", "Database doesn't contain product with id " +
                     changeProductRequest.getId()));
             return new ChangeProductResponse(errors);
@@ -49,7 +51,7 @@ public class ChangeProductService {
     }
 
     private Optional<Product> databaseContainsProductWithId(long id){
-        return productDatabase.getProducts().stream()
+        return productDatabase.findAll().stream()
                 .filter(product -> product.getId() == id)
                 .findAny();
     }

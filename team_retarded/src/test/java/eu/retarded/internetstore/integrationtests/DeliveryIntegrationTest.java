@@ -1,35 +1,42 @@
 package eu.retarded.internetstore.integrationtests;
 
-import eu.retarded.internetstore.config.ApplicationConfiguration;
+import eu.retarded.internetstore.core.domain.Delivery;
 import eu.retarded.internetstore.core.requests.delivery.AddDeliveryRequest;
 import eu.retarded.internetstore.core.requests.delivery.DeleteDeliveryRequest;
+import eu.retarded.internetstore.core.requests.delivery.UpdateDeliveryRequest;
 import eu.retarded.internetstore.core.responses.delivery.AddDeliveryResponse;
 import eu.retarded.internetstore.core.services.delivery.AddDeliveryService;
 import eu.retarded.internetstore.core.services.delivery.DeleteDeliveryService;
-import eu.retarded.internetstore.database.delivery.DeliveryDatabase;
+import eu.retarded.internetstore.core.services.delivery.UpdateDeliveryService;
+import eu.retarded.internetstore.database.DeliveryRepository;
+import eu.retarded.internetstore.database.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ApplicationConfiguration.class})
+@SpringBootTest
 public class DeliveryIntegrationTest {
 
     @Autowired
     private ApplicationContext context;
+
     @Autowired
-    private DeliveryDatabase deliveryDatabase;
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private DeliveryRepository deliveryRepository;
 
 
     @BeforeEach
     void setUp() {
-        deliveryDatabase.clear();
+        orderRepository.deleteAll();
+        deliveryRepository.deleteAll();
     }
 
     @Test
@@ -47,7 +54,7 @@ public class DeliveryIntegrationTest {
         service.execute(request3);
         service.execute(request4);
         service.execute(request5);
-        assertThat(deliveryDatabase.getList().size()).isEqualTo(5);
+        assertThat(deliveryRepository.findAll().size()).isEqualTo(5); // deliveryDatabase.getList().size()).isEqualTo(5)
     }
 
     @Test
@@ -60,19 +67,19 @@ public class DeliveryIntegrationTest {
         AddDeliveryRequest request3 = new AddDeliveryRequest("Sonny", "Zepniekalns", 159.0);
         AddDeliveryRequest request4 = new AddDeliveryRequest("LG43", "Imanta1212112", 450.0);
         AddDeliveryRequest request5 = new AddDeliveryRequest("Audi", "Mangalsala121212", 50000.0);
-        long id = addDeliveryService.execute(request).getDeliveryId();
-        long id1 = addDeliveryService.execute(request1).getDeliveryId();
-        long id2 = addDeliveryService.execute(request2).getDeliveryId();
-        long id3 = addDeliveryService.execute(request3).getDeliveryId();
-        long id4 = addDeliveryService.execute(request4).getDeliveryId();
-        long id5 = addDeliveryService.execute(request5).getDeliveryId();
-        deleteDeliveryService.execute(new DeleteDeliveryRequest(id));
-        deleteDeliveryService.execute(new DeleteDeliveryRequest(id1));
-        deleteDeliveryService.execute(new DeleteDeliveryRequest(id2));
-        assertThat(deliveryDatabase.getList().size()).isEqualTo(3);
-        assertThat(deliveryDatabase.isExist(id3)).isTrue();
-        assertThat(deliveryDatabase.isExist(id4)).isTrue();
-        assertThat(deliveryDatabase.isExist(id5)).isTrue();
+        Delivery id = addDeliveryService.execute(request).getDeliveryId(); // long id
+        Delivery id1 = addDeliveryService.execute(request1).getDeliveryId();
+        Delivery id2 = addDeliveryService.execute(request2).getDeliveryId();
+        Delivery id3 = addDeliveryService.execute(request3).getDeliveryId();
+        Delivery id4 = addDeliveryService.execute(request4).getDeliveryId();
+        Delivery id5 = addDeliveryService.execute(request5).getDeliveryId();
+        deleteDeliveryService.execute(new DeleteDeliveryRequest(id.getId())); // deleteDeliveryService.execute(new DeleteDeliveryRequest(id())
+        deleteDeliveryService.execute(new DeleteDeliveryRequest(id1.getId()));
+        deleteDeliveryService.execute(new DeleteDeliveryRequest(id2.getId()));
+        assertThat(deliveryRepository.findAll().size()).isEqualTo(3); // deliveryDatabase.getList().size()).isEqualTo(3)
+        assertThat(deliveryRepository.existsById(id3.getId())).isTrue(); // deliveryDatabase.isExist(id3)).isTrue()
+        assertThat(deliveryRepository.existsById(id4.getId())).isTrue(); // same
+        assertThat(deliveryRepository.existsById(id5.getId())).isTrue(); // same
     }
 
     @Test
@@ -84,7 +91,7 @@ public class DeliveryIntegrationTest {
         addDeliveryService.execute(request);
         addDeliveryService.execute(request1);
         addDeliveryService.execute(request2);
-        assertThat(deliveryDatabase.getList().size()).isEqualTo(3);
+        assertThat(deliveryRepository.findAll().size()).isEqualTo(3); // deliveryDatabase.getList().size()).isEqualTo(3)
     }
 
     @Test
@@ -102,7 +109,7 @@ public class DeliveryIntegrationTest {
         addDeliveryService.execute(request3);
         addDeliveryService.execute(request4);
         addDeliveryService.execute(request5);
-        assertThat(deliveryDatabase.getList().size()).isEqualTo(6);
+        assertThat(deliveryRepository.findAll().size()).isEqualTo(6); // deliveryDatabase.getList().size()).isEqualTo(6)
     }
 
     @Test
@@ -120,6 +127,21 @@ public class DeliveryIntegrationTest {
         assertThat(response1.hasErrors()).isTrue();
         assertThat(response2.hasErrors()).isTrue();
         assertThat(response3.hasErrors()).isFalse();
+    }
 
+    @Test
+    void update_delivery() {
+        AddDeliveryService deliveryService = context.getBean(AddDeliveryService.class);
+        UpdateDeliveryService updateDeliveryService = context.getBean(UpdateDeliveryService.class);
+        Delivery id = deliveryService.execute(new AddDeliveryRequest("APPLE", "region", 1890.00)).getDeliveryId();
+        Delivery id2 = deliveryService.execute(new AddDeliveryRequest("APPLE23", "region23", 450.00)).getDeliveryId();
+        updateDeliveryService.execute(new UpdateDeliveryRequest(id2.getId(), "APPLE45", "region45", 20.00)); // id or id.getId()
+        Delivery result = deliveryRepository.findById(id2.getId()).get(); // deliveryDatabase.getById(id2).get()
+        Delivery expecting = new Delivery();
+        expecting.setId(id2.getId()); // id
+        expecting.setTitle("APPLE45");
+        expecting.setRegion("region45");
+        expecting.setPrice(new BigDecimal("20.00"));
+        assertThat(result).isEqualTo(expecting);
     }
 }

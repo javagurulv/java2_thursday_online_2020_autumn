@@ -66,9 +66,7 @@ public class OrmDoctorRepositoryImpl implements DoctorRepository{
 
     @Override
     public Optional<Doctor> getDoctorById(Long id) {
-        Doctor doctor = (Doctor) sessionFactory.getCurrentSession().createCriteria(Doctor.class)
-                .add(Restrictions.eq("id", id))
-                .uniqueResult();
+        Doctor doctor = sessionFactory.getCurrentSession().get(Doctor.class, id);
         return Optional.ofNullable(doctor);
     }
 

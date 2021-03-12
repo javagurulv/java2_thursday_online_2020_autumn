@@ -11,13 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class GetAllUsersUIAction implements UIAction {
 
-    @Autowired GetAllUserService getAllUserService;
+    @Autowired
+    private GetAllUserService getAllUserService;
 
     @Override
     public void execute() {
 
-        GetAllUsersRequest getAllUserRequest = createRequest();
-        GetAllUsersResponse getAllUsersResponse = createResponse(getAllUserRequest);
+        GetAllUsersRequest getAllUserRequest = createGetAllUsersRequest();
+        GetAllUsersResponse getAllUsersResponse = validateGetAllUsersRequest(getAllUserRequest);
 
         if (isUsersListEmpty(getAllUsersResponse)) {
             printResponseMessage();
@@ -46,11 +47,11 @@ public class GetAllUsersUIAction implements UIAction {
         return getAllUsersResponse.getUsersList().isEmpty();
     }
 
-    private GetAllUsersResponse createResponse(GetAllUsersRequest getAllUserRequest){
+    private GetAllUsersResponse validateGetAllUsersRequest(GetAllUsersRequest getAllUserRequest){
         return getAllUserService.execute(getAllUserRequest);
     }
 
-    private GetAllUsersRequest createRequest(){
+    private GetAllUsersRequest createGetAllUsersRequest(){
         return new GetAllUsersRequest();
     }
 

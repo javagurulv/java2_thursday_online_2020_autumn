@@ -64,7 +64,7 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping(value = "service")
+    @GetMapping(value = "/service")
     public String logIn() {
         return "service/service";
     }

@@ -1,7 +1,6 @@
 package dental_clinic.console_ui.patient;
 
 import dental_clinic.console_ui.UIAction;
-import dental_clinic.core.domain.PersonalData;
 import dental_clinic.core.requests.patient.AddPatientRequest;
 import dental_clinic.core.responses.patient.AddPatientResponse;
 import dental_clinic.core.services.patient.AddPatientService;
@@ -27,9 +26,7 @@ public class AddPatientUIAction implements UIAction {
         System.out.println("Please enter personal code");
         String personalCode = in.nextLine().replace("-", "");
 
-        PersonalData personalData = new PersonalData(name, surname, phone, personalCode);
-
-        AddPatientRequest addPatientRequest = new AddPatientRequest(personalData);
+        AddPatientRequest addPatientRequest = new AddPatientRequest(name, surname, phone, personalCode);
         AddPatientResponse response = addPatientService.execute(addPatientRequest);
 
         if (response.hasErrors()){

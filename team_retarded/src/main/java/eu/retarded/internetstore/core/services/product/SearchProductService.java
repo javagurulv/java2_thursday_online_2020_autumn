@@ -1,28 +1,27 @@
 package eu.retarded.internetstore.core.services.product;
 
 import eu.retarded.internetstore.core.domain.Product;
-import eu.retarded.internetstore.core.requests.product.Ordering;
-import eu.retarded.internetstore.core.requests.product.Paging;
 import eu.retarded.internetstore.core.requests.product.SearchProductRequest;
-import eu.retarded.internetstore.core.responses.CoreError;
 import eu.retarded.internetstore.core.responses.product.SearchProductResponse;
-import eu.retarded.internetstore.core.services.validators.product.SearchProductValidator;
-import eu.retarded.internetstore.database.product.ProductDatabase;
+import eu.retarded.internetstore.database.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-@Component
+@Service
 public class SearchProductService {
 
     @Autowired
-    private ProductDatabase productDatabase;
+    private ProductRepository productRepository;
     @Autowired
-    private SearchProductValidator validator;
+    private Validator validator;
 
     @Value("${search.ordering.enabled}")
     private boolean orderingEnabled;
@@ -30,49 +29,19 @@ public class SearchProductService {
     @Value("${search.paging.enabled}")
     private boolean pagingEnabled;
 
+
+    @Transactional
     public SearchProductResponse execute(SearchProductRequest request) {
-        List<CoreError> errors = validator.validate(request);
+        Set<ConstraintViolation<SearchProductRequest>> errors = validator.validate(request);
         if (!errors.isEmpty()) {
-            return new SearchProductResponse(errors, null);
+            return new SearchProductResponse(errors);
         }
-
-        List<Product> products = productDatabase.filter(product ->
-                (product.getName().toLowerCase().contains(request.getName().toLowerCase())
-                        && !request.getName().isBlank()) ||
-                        (product.getDescription().toLowerCase().contains(request.getDescription().toLowerCase())
-                                && !request.getDescription().isBlank()));
-        products = order(products, request.getOrdering());
-        products = paging(products, request.getPaging());
-
-        return new SearchProductResponse(null, products);
-    }
-
-    private List<Product> order(List<Product> products, Ordering ordering) {
-        if (orderingEnabled && ordering != null) {
-            if (ordering.getOrderBy() != null) {
-                Comparator<Product> comparator = ordering.getOrderBy().equals("name")
-                        ? Comparator.comparing(Product::getName)
-                        : Comparator.comparing(Product::getDescription);
-                if (ordering.getOrderDirection().equals("DESCENDING")) {
-                    comparator = comparator.reversed();
-                }
-                return products.stream().sorted(comparator).collect(Collectors.toList());
-            }
+        List<Product> products;
+        if (request.getPageable() == null) {
+            products = productRepository.findByNameContaining(request.getKeyWord());
+            return new SearchProductResponse(null, products);
         }
-        return products;
-
-    }
-
-    private List<Product> paging(List<Product> products, Paging paging) {
-        if (pagingEnabled && paging != null) {
-            if (paging.getPageNumber() != null && paging.getPageSize() != null) {
-                int skip = (paging.getPageNumber() - 1) * paging.getPageSize();
-                return products.stream()
-                        .skip(skip)
-                        .limit(paging.getPageSize())
-                        .collect(Collectors.toList());
-            }
-        }
-        return products;
+        Page<Product> productsPage = productRepository.findByNameContaining(request.getKeyWord(), request.getPageable());
+        return new SearchProductResponse(productsPage, productsPage.toList());
     }
 }

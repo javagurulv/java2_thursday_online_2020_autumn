@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.responses.product.GetAllProductsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,10 @@ import java.util.List;
 @Component
 public class GetAllProductsService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    @Autowired private JpaProductRepository productRepository;
 
- public GetAllProductsResponse execute() {
-        List<Product> productList = productRepository.getProductList();
+    public GetAllProductsResponse execute() {
+        List<Product> productList = productRepository.findAll();
         return new GetAllProductsResponse(productList);
     }
 

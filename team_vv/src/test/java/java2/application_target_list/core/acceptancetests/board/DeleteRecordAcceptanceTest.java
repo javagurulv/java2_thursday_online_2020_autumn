@@ -1,47 +1,62 @@
 package java2.application_target_list.core.acceptancetests.board;
 
-import java2.application_target_list.config.SpringCoreConfiguration;
-import java2.application_target_list.core.DatabaseCleaner;
-import java2.application_target_list.core.database.target.TargetRepository;
-import java2.application_target_list.core.database.user.UserRepository;
+import java2.application_target_list.TargetListApplication;
+import java2.application_target_list.core.acceptancetests.DatabaseCleaner;
+import java2.application_target_list.core.database.jpa.JpaTargetRepository;
+import java2.application_target_list.core.database.jpa.JpaUserRepository;
 import java2.application_target_list.core.requests.board.AddRecordRequest;
 import java2.application_target_list.core.requests.board.DeleteRecordRequest;
 import java2.application_target_list.core.requests.board.GetAllRecordsRequest;
 import java2.application_target_list.core.requests.target.AddTargetRequest;
 import java2.application_target_list.core.requests.user.AddUserRequest;
+import java2.application_target_list.core.responses.board.AddRecordResponse;
 import java2.application_target_list.core.responses.board.DeleteRecordResponse;
 import java2.application_target_list.core.responses.board.GetAllRecordsResponse;
+import java2.application_target_list.core.responses.target.AddTargetResponse;
+import java2.application_target_list.core.responses.user.AddUserResponse;
 import java2.application_target_list.core.services.board.AddRecordService;
 import java2.application_target_list.core.services.board.DeleteRecordService;
 import java2.application_target_list.core.services.board.GetAllRecordsService;
 import java2.application_target_list.core.services.target.AddTargetService;
 import java2.application_target_list.core.services.user.AddUserService;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Optional;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TargetListApplication.class)
 public class DeleteRecordAcceptanceTest {
 
+    @Autowired
     private DeleteRecordService deleteRecordService;
+    @Autowired
     private GetAllRecordsService getAllRecordsService;
-    private ApplicationContext applicationContext;
+    @Autowired
     private AddRecordService addRecordService;
-    private UserRepository userRepository;
-    private TargetRepository targetRepository;
+    @Autowired
+    private JpaTargetRepository jpaTargetRepository;
+    @Autowired
+    private JpaUserRepository jpaUserRepository;
+    @Autowired
     private DatabaseCleaner databaseCleaner;
+    @Autowired
     private AddTargetService addTargetService;
+    @Autowired
     private AddUserService addUserService;
+
     private Long firstTargetId;
     private Long secondTargetId;
     private Long userId;
+    private Long firstRecordId;
+    private Long secondRecordId;
 
     @Before
     public void setup(){
-        createServices();
         databaseCleaner.clean();
         addUsersToDB();
         addTargetsToDB();
@@ -50,8 +65,7 @@ public class DeleteRecordAcceptanceTest {
 
     @Test
     public void shouldDeleteRecordFromList_v1() {
-        Long recordId = getAllRecordsService.execute(new GetAllRecordsRequest()).getRecordList().get(0).getRecordId();
-        DeleteRecordRequest deleteRecordRequest = new DeleteRecordRequest(recordId);
+        DeleteRecordRequest deleteRecordRequest = new DeleteRecordRequest(firstRecordId);
         DeleteRecordResponse deleteRecordResponse = deleteRecordService.execute(deleteRecordRequest);
         GetAllRecordsResponse getAllRecordsResponse = getAllRecordsService.execute(new GetAllRecordsRequest());
 
@@ -63,8 +77,7 @@ public class DeleteRecordAcceptanceTest {
 
     @Test
     public void shouldDeleteRecordFromList_v2() {
-        Long recordId = getAllRecordsService.execute(new GetAllRecordsRequest()).getRecordList().get(1).getRecordId();
-        DeleteRecordRequest deleteRecordRequest = new DeleteRecordRequest(recordId);
+        DeleteRecordRequest deleteRecordRequest = new DeleteRecordRequest(secondRecordId);
         DeleteRecordResponse deleteRecordResponse = deleteRecordService.execute(deleteRecordRequest);
         GetAllRecordsResponse getAllRecordsResponse = getAllRecordsService.execute(new GetAllRecordsRequest());
 
@@ -80,82 +93,34 @@ public class DeleteRecordAcceptanceTest {
         DeleteRecordResponse deleteRecordResponse = deleteRecordService.execute(deleteRecordRequest);
         Assert.assertTrue(deleteRecordResponse.hasErrors());
         Assert.assertEquals(deleteRecordResponse.getErrorList().size(), 2);
-        Assert.assertEquals(deleteRecordResponse.getErrorList().get(0).getField(), "Record ID");
-        Assert.assertEquals(deleteRecordResponse.getErrorList().get(0).getMessage(), "no record with that ID");
         Assert.assertEquals(deleteRecordResponse.getErrorList().get(1).getField(), "Record ID");
-        Assert.assertEquals(deleteRecordResponse.getErrorList().get(1).getMessage(), "must not be negative!");
+        Assert.assertEquals(deleteRecordResponse.getErrorList().get(1).getMessage(), "no record with that ID");
+        Assert.assertEquals(deleteRecordResponse.getErrorList().get(0).getField(), "Record ID");
+        Assert.assertEquals(deleteRecordResponse.getErrorList().get(0).getMessage(), "must not be negative!");
 
     }
 
     private void addRecordsToDB() {
-        firstTargetId = targetRepository.getTargetsList().get(0).getId();
-        secondTargetId = targetRepository.getTargetsList().get(1).getId();
-        userId = userRepository.getUsersList().get(0).getId();
-
         AddRecordRequest addRecordRequest1 = new AddRecordRequest(firstTargetId, userId);
         AddRecordRequest addRecordRequest2 = new AddRecordRequest(secondTargetId, userId);
-        addRecordService.execute(addRecordRequest1);
-        addRecordService.execute(addRecordRequest2);
+        AddRecordResponse addRecordResponse1 = addRecordService.execute(addRecordRequest1);
+        AddRecordResponse addRecordResponse2 = addRecordService.execute(addRecordRequest2);
+        firstRecordId = addRecordResponse1.getNewRecord().getRecordId();
+        secondRecordId = addRecordResponse2.getNewRecord().getRecordId();
     }
 
     private void addUsersToDB() {
         AddUserRequest addUserRequest = new AddUserRequest("name1", "surname1");
-        addUserService.execute(addUserRequest);
+        AddUserResponse addUserResponse = addUserService.execute(addUserRequest);
+        userId = addUserResponse.getNewUser().getId();
     }
 
     private void addTargetsToDB() {
         AddTargetRequest addTargetRequest1 = new AddTargetRequest("name", "description", 1L);
         AddTargetRequest addTargetRequest2 = new AddTargetRequest("name2", "description2", 2L);
-        addTargetService.execute(addTargetRequest1);
-        addTargetService.execute(addTargetRequest2);
-    }
-
-    private void createServices() {
-        applicationContext = createApplicationContext();
-        addRecordService = createAddRecordService();
-        getAllRecordsService = createGetAllRecordsService();
-        userRepository = createUserRepository();
-        targetRepository = createTargetRepository();
-        databaseCleaner = createDatabaseCleaner();
-        addTargetService = createAddTargetService();
-        addUserService = createAddUserService();
-        deleteRecordService = createDeleteRecordService();
-    }
-
-    private DeleteRecordService createDeleteRecordService() {
-        return applicationContext.getBean(DeleteRecordService.class);
-    }
-
-    private AddUserService createAddUserService() {
-        return applicationContext.getBean(AddUserService.class);
-    }
-
-    private AddTargetService createAddTargetService() {
-        return applicationContext.getBean(AddTargetService.class);
-    }
-
-    private DatabaseCleaner createDatabaseCleaner() {
-        return applicationContext.getBean(DatabaseCleaner.class);
-    }
-
-    private TargetRepository createTargetRepository() {
-        return applicationContext.getBean(TargetRepository.class);
-    }
-
-    private UserRepository createUserRepository() {
-        return applicationContext.getBean(UserRepository.class);
-    }
-
-    private GetAllRecordsService createGetAllRecordsService() {
-        return applicationContext.getBean(GetAllRecordsService.class);
-    }
-
-    private AddRecordService createAddRecordService() {
-        return applicationContext.getBean(AddRecordService.class);
-    }
-
-    private ApplicationContext createApplicationContext() {
-        return new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
-
+        AddTargetResponse addTargetResponse1 = addTargetService.execute(addTargetRequest1);
+        AddTargetResponse addTargetResponse2 = addTargetService.execute(addTargetRequest2);
+        firstTargetId = addTargetResponse1.getNewTarget().getId();
+        secondTargetId = addTargetResponse2.getNewTarget().getId();
     }
 }

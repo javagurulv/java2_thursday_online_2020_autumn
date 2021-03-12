@@ -11,9 +11,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@Profile("hibernate")
-@Transactional
+//@Component
+//@Profile("hibernate")
+//@Transactional
 public class ORMProductRepository implements ProductRepository {
 
     private final SessionFactory sessionFactory;

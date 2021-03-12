@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.requests.product.AddProductRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.product.AddProductResponse;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 @RunWith(MockitoJUnitRunner.class)
 public class AddProductServiceTest {
 
-    @Mock private ProductRepository productRepository;
+    @Mock private JpaProductRepository productRepository;
     @Mock private AddProductValidator validator;
     @InjectMocks private AddProductService service;
 
@@ -37,7 +37,7 @@ public class AddProductServiceTest {
                 new BigDecimal("399.99"));
         AddProductResponse response = service.execute(request);
         assertFalse(response.hasErrors());
-        Mockito.verify(productRepository).add(argThat(new ProductMatcher("tv", "nice tv",
+        Mockito.verify(productRepository).save(argThat(new ProductMatcher("tv", "nice tv",
                 new BigDecimal("399.99"))));
     }
 

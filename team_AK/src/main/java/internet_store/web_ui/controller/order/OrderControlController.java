@@ -1,15 +1,18 @@
 package internet_store.web_ui.controller.order;
 
-import internet_store.core.operation.Tax;
+import internet_store.core.operation.OrderSumProperty;
+import internet_store.core.operation.OpenOrderPdfFormat;
+import internet_store.core.persistence.CartRepository;
 import internet_store.core.service.ordering.OrderStatusService;
 import internet_store.core.service.ordering.paging.OrderControlPagingService;
-import internet_store.core.persistence.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
 
 @Controller
 public class OrderControlController {
@@ -18,9 +21,11 @@ public class OrderControlController {
     @Autowired
     private OrderControlPagingService paging;
     @Autowired
-    private Tax tax;
+    private OrderSumProperty orderSumProperty;
     @Autowired
     private OrderStatusService orderStatusService;
+    @Autowired
+    private OpenOrderPdfFormat openOrderPdfFormat;
 
     @GetMapping(value = "/service/order_control")
     public String getOrders(ModelMap modelMap) {
@@ -69,9 +74,18 @@ public class OrderControlController {
         return "order/order_control";
     }
 
+    @PostMapping(value = "/service/view_pdf")
+    public String showPdf(@RequestParam(value = "orderNumber") String orderNumber, ModelMap modelMap) throws IOException {
+
+        openOrderPdfFormat.showPdfOrder(orderNumber);
+        modelMap.addAttribute("info", "");
+        refreshData(modelMap);
+        return "order/order_control";
+    }
+
     private void refreshData(ModelMap modelMap) {
         modelMap.addAttribute("orders", paging.refreshTableContent());
-        modelMap.addAttribute("currency_symbol", tax.getCurrencySymbol());
+        modelMap.addAttribute("currency_symbol", orderSumProperty.getCurrencySymbol());
         modelMap.addAttribute("pages", "Page " + paging.getCurrentPage() + " of "
                 + paging.getPagesQuantity());
     }

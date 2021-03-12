@@ -16,16 +16,15 @@
     <tr>
         <td>Id:</td>
         <td>Customer:</td>
-        <td>Shopping cart:</td>
         <td>Sum:</td>
     </tr>
 
     <td th:if="${orders != null}">
         <tr th:each="order : ${orders}">
-            <td th:text="${id}"/>
-            <td th:text="${customer.name}" />
+            <td th:text="${order.id}"/>
+            <td th:text="${order.customer}" />
             <td th:text="${shoppingCart}"/>
-            <td th:text="${sum}" />
+            <td th:text="${order.sum}" />
         </tr>
     </td>
 

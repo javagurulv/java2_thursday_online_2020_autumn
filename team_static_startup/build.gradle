@@ -19,6 +19,9 @@ dependencies {
 	testCompile('junit:junit:4.13.1')
 	testCompile('org.mockito:mockito-core:3.6.0')
 	testCompile('org.springframework:spring-test:5.2.12.RELEASE')
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
+	testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.4.3'
+
 
 	compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.30'
 
@@ -27,5 +30,7 @@ dependencies {
 
 	//Documentation REST API: http://localhost:8080/documentation.html
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.2'
+
+	compile ('org.liquibase:liquibase-core:4.2.2')
 
 }

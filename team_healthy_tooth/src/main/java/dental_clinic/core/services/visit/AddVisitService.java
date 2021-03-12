@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class AddVisitService {
@@ -61,11 +62,16 @@ public class AddVisitService {
             return new AddVisitResponse(errors);
         }
 
-        Manipulation manipulation = manipulationRepository.getManipulationById(addVisitRequest.getManipulationId());
+        Manipulation manipulation = manipulationRepository.getManipulationById(addVisitRequest.getManipulationId()).get();
 
-        PersonalData personalData = patientRepository.getPersonalDataById(addVisitRequest.getPatientId());
+        Optional<PersonalData> personalData = patientRepository.getPersonalDataById(addVisitRequest.getPatientId());
 
-        Visit visit = new Visit(personalData, addVisitRequest.getToothNumber(), addVisitRequest.getComment(),
+        if (personalData.isEmpty()) {
+            errors.add(new CoreError("database", "Database doesn't contain personal data with id " + addVisitRequest.getPatientId()));
+            return new AddVisitResponse(errors);
+        }
+
+        Visit visit = new Visit(personalData.get(), addVisitRequest.getToothNumber(), addVisitRequest.getComment(),
                 addVisitRequest.getToothStatus(), doctor,
                 manipulation, new Date(), manipulation.getPrice());
 
@@ -75,16 +81,7 @@ public class AddVisitService {
 
         visitRepository.addVisit(visit);
 
-        return new AddVisitResponse(errors);
-    }
-
-    private boolean isIdAdded(String text) {
-        try {
-            Long.parseLong(text);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return new AddVisitResponse(visit);
     }
 
     private boolean isNewDoctor(Doctor doctor) {
@@ -93,6 +90,12 @@ public class AddVisitService {
 
     private List<CoreError> manipulationsDatabaseContainsIdAndIsActive(Long manipulationId) {
         List<CoreError>errors = new ArrayList<>();
+        Optional<Manipulation> manipulationOptional = manipulationRepository.getManipulationById(manipulationId);
+            if (manipulationOptional.isEmpty()) {
+                errors.add(new CoreError("manipulation", "Manipulation with id " +
+                        manipulationId + " isn't in database"));
+                return errors;
+            }
             if (!manipulationRepository.manipulationIsActive(manipulationId)) {
                 errors.add(new CoreError("manipulation", "Manipulation with id " +
                         manipulationId + " isn't active"));

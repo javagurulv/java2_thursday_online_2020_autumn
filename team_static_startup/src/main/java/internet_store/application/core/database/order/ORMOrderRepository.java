@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class ORMOrderRepository implements OrderRepository{
 
     @Autowired

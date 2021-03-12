@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.requests.customer.ChangeCustomerFirstNameRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.customer.ChangeCustomerFirstNameResponse;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ChangeCustomerFirstNameServiceTest {
 
-    @Mock private CustomerRepository repository;
+    @Mock private JpaCustomerRepository repository;
     @Mock private ChangeCustomerFirstNameValidator validator;
     @InjectMocks private ChangeCustomerFirstNameService service;
 
@@ -28,7 +29,7 @@ public class ChangeCustomerFirstNameServiceTest {
     public void shouldReturnResponseWithoutErrors() {
         ChangeCustomerFirstNameRequest request = new ChangeCustomerFirstNameRequest(1L, "newName");
         Mockito.when(validator.validate(request)).thenReturn(new ArrayList<>());
-        Mockito.when(repository.changeFirstName(1L, "newName")).thenReturn(true);
+        Mockito.when(repository.changeFirstName(1L, "newName")).thenReturn(1L);
 
         ChangeCustomerFirstNameResponse response = service.execute(request);
 

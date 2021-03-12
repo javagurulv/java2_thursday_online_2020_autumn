@@ -10,12 +10,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin_menu/target")
 public class TargetRestController {
 
-    @Autowired private GetTargetService getTargetService;
-    @Autowired private AddTargetService addTargetService;
-    @Autowired private UpdateTargetService updateTargetService;
-    @Autowired private DeleteTargetService deleteTargetService;
-    @Autowired private SearchTargetByNameService searchTargetByNameService;
-    @Autowired private SearchTargetByDescriptionService searchTargetByDescriptionService;
+    @Autowired
+    private GetTargetService getTargetService;
+    @Autowired
+    private AddTargetService addTargetService;
+    @Autowired
+    private UpdateTargetService updateTargetService;
+    @Autowired
+    private DeleteTargetService deleteTargetService;
+    @Autowired
+    private SearchTargetByNameService searchTargetByNameService;
+    @Autowired
+    private SearchTargetByDescriptionService searchTargetByDescriptionService;
 
     @GetMapping(path = "/{id}", produces = "application/json")
     public GetTargetResponse getTarget(@PathVariable Long id) {

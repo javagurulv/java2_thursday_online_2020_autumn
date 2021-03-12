@@ -1,7 +1,7 @@
 package java2.application_target_list.core.acceptancetests.user;
 
-import java2.application_target_list.config.SpringCoreConfiguration;
-import java2.application_target_list.core.DatabaseCleaner;
+import java2.application_target_list.TargetListApplication;
+import java2.application_target_list.core.acceptancetests.DatabaseCleaner;
 import java2.application_target_list.core.domain.User;
 import java2.application_target_list.core.requests.user.AddUserRequest;
 import java2.application_target_list.core.requests.user.ChangeUserFirstNameRequest;
@@ -15,23 +15,32 @@ import java2.application_target_list.core.services.user.GetAllUserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import java.util.List;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TargetListApplication.class)
 public class ChangeUserFirstNameAcceptanceTest {
 
-    private ApplicationContext applicationContext;
+    @Autowired
     private AddUserService addUserService;
+    @Autowired
     private GetAllUserService getAllUserService;
+    @Autowired
     private ChangeUserFirstNameService changeUserFirstNameService;
-    private Long userId;
-    private List<User> userList;
+    @Autowired
     private DatabaseCleaner databaseCleaner;
+
+    private List<User> userList;
+    private Long firstUserId;
+    private Long secondUserId;
 
     @Before
     public void setup() {
-        createServices();
         databaseCleaner.clean();
         addUsersToDatabase();
         userList = getAllUserService.execute(new GetAllUsersRequest()).getUsersList();
@@ -39,9 +48,9 @@ public class ChangeUserFirstNameAcceptanceTest {
 
     @Test
     public void shouldChangeUserFirstName() {
-        userId = userList.get(0).getId();
+
         ChangeUserFirstNameResponse changeUserFirstNameResponse =
-                changeUserFirstNameService.execute(new ChangeUserFirstNameRequest(userId, "New Name"));
+                changeUserFirstNameService.execute(new ChangeUserFirstNameRequest(firstUserId, "New Name"));
 
         GetAllUsersResponse getAllUsersResponse = getAllUserService.execute(new GetAllUsersRequest());
 
@@ -82,38 +91,12 @@ public class ChangeUserFirstNameAcceptanceTest {
         return new AddUserRequest(userFirstName, userLastName);
     }
 
-    private ApplicationContext createApplicationContext(){
-        return new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
-    }
-
-    private DatabaseCleaner createDatabaseCleaner() {
-        return applicationContext.getBean(DatabaseCleaner.class);
-    }
-
-    private GetAllUserService createGetAllUserService() {
-        return applicationContext.getBean(GetAllUserService.class);
-    }
-
-    private AddUserService createAddUserService() {
-        return applicationContext.getBean(AddUserService.class);
-    }
-
-    private ChangeUserFirstNameService createChangeUserFirstNameService() {
-        return applicationContext.getBean(ChangeUserFirstNameService.class);
-    }
-
     private void addUsersToDatabase() {
         AddUserRequest addUserRequest1 = createAddUserRequest("name", "surname");
         AddUserRequest addUserRequest2 = createAddUserRequest("name2", "surname2");
         AddUserResponse addUserResponse1 = createAddUserResponse(addUserRequest1);
         AddUserResponse addUserResponse2 = createAddUserResponse(addUserRequest2);
-    }
-
-    private void createServices() {
-        applicationContext = createApplicationContext();
-        addUserService = createAddUserService();
-        getAllUserService = createGetAllUserService();
-        changeUserFirstNameService = createChangeUserFirstNameService();
-        databaseCleaner = createDatabaseCleaner();
+        firstUserId = addUserResponse1.getNewUser().getId();
+        secondUserId = addUserResponse2.getNewUser().getId();
     }
 }

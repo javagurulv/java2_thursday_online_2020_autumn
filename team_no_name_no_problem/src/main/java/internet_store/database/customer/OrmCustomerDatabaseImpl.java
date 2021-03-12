@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class OrmCustomerDatabaseImpl implements CustomerDatabase{
 
     @Autowired private SessionFactory sessionFactory;
@@ -72,11 +72,16 @@ public class OrmCustomerDatabaseImpl implements CustomerDatabase{
 
     @Override
     public boolean containsCustomer(Customer customer) {
-        return sessionFactory.getCurrentSession().contains(customer);
+        return getCustomers().stream()
+                .filter(customer1 -> customer1.equals(customer))
+                .findAny().isPresent();
     }
 
     @Override
     public boolean containsId(Long id) {
-        return true;
+        Query query = sessionFactory.getCurrentSession().createQuery(
+                "SELECT c FROM Customer c WHERE id = :id");
+        query.setParameter("id", id);
+        return !query.getResultList().isEmpty();
     }
 }

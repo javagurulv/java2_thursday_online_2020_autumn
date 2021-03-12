@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ShowUnfinishedRecordsUserController {
 
-    @Autowired private GetUnfinishedRecordsService getUnfinishedRecordsService;
+    @Autowired
+    private GetUnfinishedRecordsService getUnfinishedRecordsService;
 
     @GetMapping(value = "/user_menu/board/showUnfinishedRecords")
     public String showUnfinishedRecordsUserPage(ModelMap modelMap) {

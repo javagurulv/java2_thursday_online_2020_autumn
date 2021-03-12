@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-@Component
+//@Component
 public class ProgramMenu {
 
     private final Map<Integer, UIAction> menuNumberToUIActionMap;

@@ -4,19 +4,17 @@ import java2.application_target_list.core.domain.Record;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class OrmBoardRepositoryImpl implements BoardRepository{
 
-    @Autowired private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void addToBoard(Record record) {
@@ -63,9 +61,6 @@ public class OrmBoardRepositoryImpl implements BoardRepository{
 
     @Override
     public List<Record> getFullInfoAboutRecords() {
-//        return sessionFactory.getCurrentSession()
-//                .createQuery("From Record", Record.class)
-//                .getResultList();
         return getAllRecordsList();
     }
 

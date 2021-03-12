@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -60,6 +61,17 @@ public class OrmVisitRepositoryImpl implements VisitRepository{
         } catch (ParseException e) {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public Optional<Visit> getVisitById(Long id) {
+        Visit visit = sessionFactory.getCurrentSession().get(Visit.class, id);
+        if (visit == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(visit);
+        }
+
     }
 
     private List<Visit> searchAllVisits() {

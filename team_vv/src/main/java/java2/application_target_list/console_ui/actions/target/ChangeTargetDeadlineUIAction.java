@@ -4,18 +4,16 @@ import java2.application_target_list.core.requests.target.ChangeTargetDeadlineRe
 import java2.application_target_list.core.services.target.ChangeTargetDeadlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.console_ui.UIAction;
 import java2.application_target_list.core.responses.target.ChangeTargetDeadlineResponse;
-
-
-import java.math.BigInteger;
 import java.util.Scanner;
 
 @Component
 public class ChangeTargetDeadlineUIAction implements UIAction {
 
-    @Autowired ChangeTargetDeadlineService changeTargetDeadlineService;
+    @Autowired
+    private ChangeTargetDeadlineService changeTargetDeadlineService;
+
     private final Scanner scr = new Scanner(System.in);
 
     @Override
@@ -24,11 +22,11 @@ public class ChangeTargetDeadlineUIAction implements UIAction {
             Long targetId = getIdFromUser();
             Long newTargetDeadline = getNewDeadlineFromUser();
 
-            ChangeTargetDeadlineRequest request = createRequest(targetId, newTargetDeadline);
-            ChangeTargetDeadlineResponse response = createResponse(request);
+            ChangeTargetDeadlineRequest changeTargetDeadlineRequest = createChangeTargetDeadlineRequest(targetId, newTargetDeadline);
+            ChangeTargetDeadlineResponse changeTargetDeadlineResponse = validateChangeTargetDeadlineRequest(changeTargetDeadlineRequest);
 
-            if (response.hasErrors()) {
-                printResponseErrors(response);
+            if (changeTargetDeadlineResponse.hasErrors()) {
+                printResponseErrors(changeTargetDeadlineResponse);
             } else {
                 printResponseResultMessage();
                 break;
@@ -46,11 +44,11 @@ public class ChangeTargetDeadlineUIAction implements UIAction {
         response.getErrorList().forEach(System.out::println);
     }
 
-    private ChangeTargetDeadlineResponse createResponse(ChangeTargetDeadlineRequest request){
-        return changeTargetDeadlineService.execute(request);
+    private ChangeTargetDeadlineResponse validateChangeTargetDeadlineRequest(ChangeTargetDeadlineRequest changeTargetDeadlineRequest){
+        return changeTargetDeadlineService.execute(changeTargetDeadlineRequest);
     }
 
-    private ChangeTargetDeadlineRequest createRequest(Long targetId, Long newTargetDeadline){
+    private ChangeTargetDeadlineRequest createChangeTargetDeadlineRequest(Long targetId, Long newTargetDeadline){
         return new ChangeTargetDeadlineRequest(targetId, newTargetDeadline);
     }
 
@@ -61,7 +59,6 @@ public class ChangeTargetDeadlineUIAction implements UIAction {
 
     private Long getNewDeadlineFromUser(){
         System.out.print("Enter new target deadline: ");
-//       return Integer.parseInt(scr.nextLine());
        return Long.parseLong(scr.nextLine());
     }
 

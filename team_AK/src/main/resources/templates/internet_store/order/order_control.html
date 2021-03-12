@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/add_product_for_cart"><b>Cart</b>
+                    <a class="nav-link" href="/estore/add_product_for_cart"><b>Cart</b>
                         <span class="badge badge-light" id="product_count"></span></a>
                 </li>
                 <li class="nav-item">
@@ -89,7 +89,7 @@
 
         <div class="col-lg-3">
 
-            <h3 class="my-4">Settings</h3>
+            <h6 class="my-4">Settings</h6>
             <ul id="settings">
                 <li><span class="caret">Client Control</span>
                     <ul class="nested">
@@ -154,7 +154,7 @@
                                     <td scope="row" class="text-center" style="vertical-align: middle;"
                                         th:text="${order.status}"></td>
                                     <td align="center">
-                                        <form>
+
                                             <div class="dropdown">
                                                 <button type="button" title="Change Status" data-toggle="dropdown"
                                                         class="btn btn-info  button-center">
@@ -199,7 +199,6 @@
                                                         >CLIENT INFO BY PHONE
                                                         </button>
                                                     </form>
-
                                                     <form>
                                                         <input type="hidden" name="order_status" value="DELIVERED">
                                                         <button name="delivered" class="dropdown-item" type="submit"
@@ -209,9 +208,17 @@
                                                         >DELIVERED
                                                         </button>
                                                     </form>
+                                                    <div class="dropdown-divider"></div>
+                                                    <form>
+                                                        <button name="pdf" class="dropdown-item" type="submit"
+                                                                formaction="/service/view_pdf" formmethod="post"
+                                                                th:name="orderNumber" th:value="${order.number}"
+                                                        >VIEW ORDER PDF
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
-                                        </form>
+
                                     </td>
                                 </tr>
                                 </tbody>

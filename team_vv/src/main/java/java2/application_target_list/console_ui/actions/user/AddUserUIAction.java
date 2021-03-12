@@ -6,13 +6,14 @@ import java2.application_target_list.core.responses.user.AddUserResponse;
 import java2.application_target_list.core.services.user.AddUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Scanner;
 
 @Component
 public class AddUserUIAction implements UIAction {
 
-    @Autowired AddUserService addUserService;
+    @Autowired
+    private AddUserService addUserService;
+
     private final Scanner scr = new Scanner(System.in);
 
     @Override
@@ -22,7 +23,7 @@ public class AddUserUIAction implements UIAction {
             String userLastName = getLastNameFromUser();
 
             AddUserRequest addUserRequest = createAddUserRequest(userFirstName, userLastName);
-            AddUserResponse addUserResponse = createAdduserResponse(addUserRequest);
+            AddUserResponse addUserResponse = validateAddUserRequest(addUserRequest);
 
             if (addUserResponse.hasErrors()) {
                 printResponseErrors(addUserResponse);
@@ -33,7 +34,7 @@ public class AddUserUIAction implements UIAction {
         }
     }
 
-    private AddUserResponse createAdduserResponse(AddUserRequest addUserRequest){
+    private AddUserResponse validateAddUserRequest(AddUserRequest addUserRequest){
         return addUserService.execute(addUserRequest);
     }
 

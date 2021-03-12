@@ -1,7 +1,7 @@
 package dental_clinic;
 
 import dental_clinic.console_ui.ProgramMenu.ProgramMenu;
-import dental_clinic.web_ui.config.SpringWebConfiguration;
+import web_ui.config.SpringWebConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
@@ -20,7 +20,6 @@ public class WebDentalClinicApplication {
             programMenu.executeMenuUIAction(menuNumber);
         }
     }
-
 }
 
 /*@SpringBootApplication - данная аннотация необходима для

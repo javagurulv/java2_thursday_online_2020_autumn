@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SearchUserByFirstNameUserController {
 
-    @Autowired private SearchUserByFirstNameService searchUserByFirstNameService;
+    @Autowired
+    private SearchUserByFirstNameService searchUserByFirstNameService;
 
     @GetMapping(value = "/user_menu/user/searchUserByFirstName")
     public String showSearchUserByFirstNameUserPage(ModelMap modelMap) {

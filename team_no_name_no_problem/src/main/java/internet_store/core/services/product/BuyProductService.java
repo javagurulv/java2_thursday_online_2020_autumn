@@ -5,6 +5,8 @@ import internet_store.core.requests.product.BuyProductRequest;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.product.BuyProductResponse;
 import internet_store.core.services.product.validators.BuyProductRequestValidator;
+
+import internet_store.database.jpa.ProductRepository;
 import internet_store.database.product.ProductDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +20,7 @@ import java.util.Map;
 @Transactional
 public class BuyProductService {
 
-    @Autowired private ProductDatabase productDatabase;
+    @Autowired private ProductRepository productDatabase;
     @Autowired private BuyProductRequestValidator buyProductRequestValidator;
     private Map<Product, Integer> shoppingCart = new HashMap<>();
 
@@ -29,12 +31,12 @@ public class BuyProductService {
             return new BuyProductResponse(errors);
         }
 
-        if (!productDatabase.containsId(buyProductRequest.getId())) {
+        if (!productDatabase.existsById(buyProductRequest.getId())) {
             errors.add(new CoreError("database", "Database doesn't contain id " +
                     buyProductRequest.getId()));
             return new BuyProductResponse(errors);
         }
 
-        return new BuyProductResponse(productDatabase.searchById(buyProductRequest.getId()).get(), buyProductRequest.getQuantity(), buyProductRequest.getEndOfShopping());
+        return new BuyProductResponse(productDatabase.findById(buyProductRequest.getId()).get(), buyProductRequest.getQuantity(), buyProductRequest.getEndOfShopping());
     }
 }

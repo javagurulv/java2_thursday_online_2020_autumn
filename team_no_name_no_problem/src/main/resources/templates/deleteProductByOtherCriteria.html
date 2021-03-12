@@ -24,8 +24,8 @@
         <form action="/deleteProductByOtherCriteria" th:object="${request}" method="post">
             <td><input type="text" th:field="${request.title}"/></td>
             <td><input type="text" th:field="${request.description}"/></td>
-            <td><input type="number" min= "1" th:field="${request.startPrice}"/></td>
-            <td><input type="number" min= "1" th:field="${request.endPrice}"/></td>
+            <td><input type="number" min= "0" th:field="${request.startPrice}"/></td>
+            <td><input type="number" min= "0" th:field="${request.endPrice}"/></td>
 
             <td>
                 <input type="submit" value="Delete product"/>

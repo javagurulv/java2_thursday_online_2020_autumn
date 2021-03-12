@@ -1,11 +1,10 @@
 package eu.retarded.internetstore.core.services.category;
 
+import eu.retarded.internetstore.core.domain.Category;
+
 import eu.retarded.internetstore.core.requests.category.DeleteCategoryRequest;
-import eu.retarded.internetstore.core.responses.CoreError;
 import eu.retarded.internetstore.core.responses.category.DeleteCategoryResponse;
-import eu.retarded.internetstore.core.services.validators.category.DeleteCategoryValidator;
-import eu.retarded.internetstore.database.category.CategoriesDatabase;
-import org.assertj.core.api.Assertions;
+import eu.retarded.internetstore.database.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,45 +12,36 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.Validator;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import java.util.HashSet;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class DeleteCategoryServiceTest {
+class DeleteCategoryServiceTest {
 
     @Mock
-    private CategoriesDatabase database;
+    private CategoryRepository categoryRepository;
     @Mock
-    private DeleteCategoryValidator validator;
+    private Validator validator;
     @InjectMocks
     private DeleteCategoryService subject;
 
     @Test
-    void should_return_response_with_errors_when_validation_fails() {
+    void delete_category() {
         DeleteCategoryRequest request = new DeleteCategoryRequest(1L);
-        List<CoreError> errors = new ArrayList<>();
-        errors.add(new CoreError("ID", "Must not be empty!"));
-        Mockito.when(validator.validate(request)).thenReturn(errors);
-
+        Mockito.when(validator.validate(request)).thenReturn(new HashSet<>());
+        Category category = new Category();
+        category.setName("Apple");
+        category.setId(1L);
+        Category result = new Category();
+        result.setName("Apple");
+        result.setId(1L);
+        Mockito.when(categoryRepository.existsById(1L)).thenReturn(false);
         DeleteCategoryResponse response = subject.execute(request);
-        Assertions.assertThat(response.hasErrors()).isTrue();
-        Assertions.assertThat(response.getErrors().size()).isEqualTo(1);
-        Assertions.assertThat(response.getErrors()).allMatch(coreError -> coreError.getField().equals("ID") ||
-                coreError.getMessage().equals("Must not be empty"));
-        Mockito.verifyNoInteractions(database);
+        Mockito.verify(categoryRepository).deleteById(1L);
+        assertThat(response.isDeleted()).isTrue();
 
     }
-
-    @Test
-    void should_delete_category_from_database() {
-        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
-        DeleteCategoryResponse response = subject.execute(new DeleteCategoryRequest(1L));
-        assertThat(response.isDeleted()).isFalse();
-        //  Mockito.verify(database).removeCategory(assertThat(new ListProductCategoryMatcher()));  - не дает написать  string name ;/
-    }
-
-
 }

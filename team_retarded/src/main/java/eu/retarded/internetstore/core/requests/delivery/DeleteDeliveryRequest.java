@@ -1,14 +1,12 @@
 package eu.retarded.internetstore.core.requests.delivery;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class DeleteDeliveryRequest {
 
-    private final long deliveryIdToDelete;
+    private final long deleteDeliveryId;
 
-    public DeleteDeliveryRequest(long deliveryIdToDelete) {
-        this.deliveryIdToDelete = deliveryIdToDelete;
-    }
-
-    public long getDeliveryIdToDelete() {
-        return deliveryIdToDelete;
-    }
 }

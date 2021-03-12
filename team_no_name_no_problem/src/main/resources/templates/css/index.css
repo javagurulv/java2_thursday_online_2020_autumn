@@ -1,6 +1,47 @@
-{
-margin: 0
-padding: 0
-box-sizing: border-box;
-color: #800040
+.header {
+    height: 200px;
+    font-family: italic, serif;
+    text-align: center;
+    font-size: 50px;
+    border-style: solid;
+    background-color: #f0f0f0;
+    box-align: center;
+}
+
+.page{
+    overflow: hidden;
+    background-color: #f0f0f0;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.ADM{
+    float: left;
+    width: 47%;
+    margin: 20px 1.15%;
+    height: 680px;
+    font-family: italic, serif;
+    text-align: center;
+    font-size: 1.5em;
+    border-box: solid;
+}
+
+.CM{
+    float: right;
+    width: 47%;
+    margin: 20px 1.15%;
+    height: 680px;
+    font-family: italic, serif;
+    text-align: center;
+    font-size: 1.5em;
+    border-box: solid;
+}
+
+body{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 20px;
+}
+.w3-top{
+
 }

@@ -1,6 +1,7 @@
 package internet_store.core.response.order;
 
 import internet_store.core.domain.Order;
+import internet_store.core.domain.OrderItem;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.CoreResponse;
 
@@ -8,9 +9,9 @@ import java.util.List;
 
 public class GetOrdersResponse extends CoreResponse {
 
-    private List<Order> orders;
+    private List<OrderItem> orders;
 
-    public GetOrdersResponse(List<Order> orders) {
+    public GetOrdersResponse(List<OrderItem> orders) {
         this.orders = orders;
     }
 
@@ -18,7 +19,7 @@ public class GetOrdersResponse extends CoreResponse {
         super(errors);
     }
 
-    public List<Order> getOrders() {
+    public List<OrderItem> getOrders() {
         return orders;
     }
 }

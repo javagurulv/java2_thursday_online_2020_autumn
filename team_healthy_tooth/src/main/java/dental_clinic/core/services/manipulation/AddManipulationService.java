@@ -1,5 +1,6 @@
 package dental_clinic.core.services.manipulation;
 
+import dental_clinic.core.domain.Manipulation;
 import dental_clinic.core.requests.manipulation.AddManipulationRequest;
 import dental_clinic.core.responses.CoreError;
 import dental_clinic.core.responses.manipulation.AddManipulationResponse;
@@ -25,12 +26,14 @@ public class AddManipulationService {
             return new AddManipulationResponse(errorList);
         }
 
-        if (manipulationRepository.containsTheSameManipulation(addManipulationRequest.getManipulation())) {
+        if (manipulationRepository.containsTheSameManipulation(addManipulationRequest.getManipulationType(), addManipulationRequest.getPrice())) {
             errorList.add(new CoreError("database", "Database contains the same manipulation"));
             return new AddManipulationResponse(errorList);
         }
 
-        manipulationRepository.addManipulation(addManipulationRequest.getManipulation());
-        return new AddManipulationResponse(addManipulationRequest.getManipulation());
+        Manipulation manipulation = new Manipulation(addManipulationRequest.getManipulationType(), addManipulationRequest.getPrice());
+        manipulation.setActive(true);
+        manipulationRepository.addManipulation(manipulation);
+        return new AddManipulationResponse(manipulation);
     }
 }

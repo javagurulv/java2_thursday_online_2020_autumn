@@ -4,18 +4,20 @@ import internet_store.core.requests.customer.AddCustomerRequest;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.customer.AddCustomerResponse;
 import internet_store.core.services.customer.validators.AddCustomerRequestValidator;
-import internet_store.database.customer.CustomerDatabase;
+import internet_store.database.jpa.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
 @Component
 @Transactional
 public class AddCustomerService {
 
-    @Autowired private CustomerDatabase customerDatabase;
+    @Autowired private CustomerRepository customerDatabase;
     @Autowired private AddCustomerRequestValidator addCustomerRequestValidator;
 
     public AddCustomerResponse execute (AddCustomerRequest addCustomerRequest){
@@ -25,11 +27,7 @@ public class AddCustomerService {
             return new AddCustomerResponse(errors);
         }
 
-        if (customerDatabase.containsCustomer(addCustomerRequest.getCustomer())){
-            errors.add(new CoreError("database", "Database contains the same customer"));
-            return new AddCustomerResponse(errors);
-        }
-        customerDatabase.addCustomer(addCustomerRequest.getCustomer());
+        customerDatabase.save(addCustomerRequest.getCustomer());
         return new AddCustomerResponse(addCustomerRequest.getCustomer());
     }
 }

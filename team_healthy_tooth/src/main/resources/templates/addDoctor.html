@@ -6,59 +6,15 @@
         <meta name="description" content="Dental Clinic demo project">
         <meta name="author" content="Valeria">
         <title>Dental clinic Healthy tooth</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                color: #800040;
-            }
-                page {
-                width: 900px;
-                margin: 0 auto;
-            }
-            #title {
-                height: 100px;
-                background-color: #ffe6f2;
-                font-family: "Brush Script MT", "Courier New", serif;
-                font-size: 4em;
-                color: white;
-                text-shadow: 2px 2px 5px #ffffff;
-                text-align: center;
-            }
-            #content{
-                float: left;
-                width: 1950px;
-                height: 80px;
-                background-color: #ffe6f2;
-            }
-            #footer{
-                overflow: hidden;
-                background-color: #660033;
-            }
-            #menu {
-                float: left;
-                width: 98%;
-                margin: 20px 1.15%;
-                height: 200px;
-                background-color: #ffe6f2;
-                font-family: "Brush Script MT", "Courier New", serif;
-                font-size: 2em;
-                text-align: center;
-            }
-            table {
-                margin-left: auto;
-                margin-right: auto;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
 
     <body>
-        <div id="title">
+        <div class="title">
             <h3>Add doctor</h3>
         </div>
 
-        <div id="menu">
+        <div class="menuFull">
             </br>
             <table>
                 <tr>
@@ -69,9 +25,9 @@
 
                 <tr>
                     <form action="/addDoctor" th:object="${request}" method="post">
-                        <td><input type="text" th:field="${request.doctor.name}"/></td>
-                        <td><input type="text" th:field="${request.doctor.surname}"/></td>
-                        <td><input type="text" th:field="${request.doctor.phone}"/></td>
+                        <td><input type="text" th:field="${request.name}"/></td>
+                        <td><input type="text" th:field="${request.surname}"/></td>
+                        <td><input type="text" th:field="${request.phone}"/></td>
                         <td>
                             <input type="submit" value="Add Doctor"/>
                             <input type="reset" value="Clear"/>

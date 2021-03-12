@@ -13,40 +13,26 @@
 
 <h3>Change User First name</h3>
 
-<table>
     <tr>
-        <td>User id</td>
-        <td>User first name</td>
-        <td>User last name</td>
-    </tr>
-
-    <td th:if="${users != null}">
-        <tr th:each="users : ${users}">
-            <td th:text="${users.id}" />
-            <td th:text="${users.firstName}" />
-            <td th:text="${users.lastName}" />
-        </tr>
-    </td>
-
-</table>
-
-<table>
-    <tr>
-        <td>User id:</td>
-        <td>User New Last Name:</td>
+        <td>Select user</td>
+        <td>Enter New Last Name:</td>
     </tr>
 
     <tr>
         <form action="/admin_menu/user/changeUserFirstName" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.userIdToChange}"/></td>
+            <SELECT th:field="${request.userIdToChange}">
+                <option th:each="users : ${users}"
+                        th:value="${users.id}"
+                        th:text="${users.firstName + ' ' + users.lastName}">
+                </option>
+            </SELECT>
             <td><input type="text" th:field="${request.newUserFirstName}"/></td>
             <td>
                 <input type="submit" value="OK"/>
-                <input type="reset" value="Clear"/>
             </td>
         </form>
     </tr>
-</table>
+
 
 <td th:if="${errors != null}">
     <tr th:each="error : ${errors}">

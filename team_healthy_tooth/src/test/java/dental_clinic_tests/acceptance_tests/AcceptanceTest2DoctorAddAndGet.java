@@ -27,10 +27,8 @@ public class AcceptanceTest2DoctorAddAndGet {
 
     @Test
     public void test(){
-        Doctor doctor1 = new Doctor("Name", "Surname", "12345678");
-        Doctor doctor2 = new Doctor("NameM", "SurnameM", "12345675");
-        AddDoctorRequest addDoctorRequest1 = new AddDoctorRequest(doctor1);
-        AddDoctorRequest addDoctorRequest2 = new AddDoctorRequest(doctor2);
+        AddDoctorRequest addDoctorRequest1 = new AddDoctorRequest("Name", "Surname", "12345678");
+        AddDoctorRequest addDoctorRequest2 = new AddDoctorRequest("NameM", "SurnameM", "12345675");
         addDoctorService().execute(addDoctorRequest1);
         addDoctorService().execute(addDoctorRequest2);
 

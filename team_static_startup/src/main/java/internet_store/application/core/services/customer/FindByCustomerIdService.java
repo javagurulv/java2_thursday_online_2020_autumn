@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.requests.customer.FindByCustomerIdRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.customer.FindByCustomerIdResponse;
@@ -13,7 +14,7 @@ import java.util.List;
 @Component
 public class FindByCustomerIdService {
 
-    @Autowired private CustomerRepository customerRepository;
+    @Autowired private JpaCustomerRepository customerRepository;
     @Autowired private FindByCustomerIdValidator validator;
 
     public FindByCustomerIdResponse execute(FindByCustomerIdRequest request) {
@@ -22,7 +23,7 @@ public class FindByCustomerIdService {
             return new FindByCustomerIdResponse(errors);
         }
         Long id = Long.valueOf(request.getCustomerId());
-        return new FindByCustomerIdResponse(customerRepository.findByCustomerId(id));
+        return new FindByCustomerIdResponse(customerRepository.findById(id));
     }
 
 }

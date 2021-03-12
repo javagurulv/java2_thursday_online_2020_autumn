@@ -41,7 +41,7 @@ public class SearchByProductPricePagingService {
         currentPage = FIRST_PAGE;
         calculatePagesQuantity();
         listOnePage = productRepository.searchByPrice(this.searchPrice, RECORDS_COUNT_ON_PAGE, startRecordOffset);
-        if ((startRecordOffset + RECORDS_COUNT_ON_PAGE) >= productRepository.searcByProductPriceCount(this.searchPrice)) {
+        if ((startRecordOffset + RECORDS_COUNT_ON_PAGE) >= productRepository.searchByProductPriceCount(this.searchPrice)) {
             isLastPage = true;
         }
     }
@@ -87,7 +87,7 @@ public class SearchByProductPricePagingService {
     private void calculatePagesQuantity() {
         final int NO_EXTRA_PAGE = 0;
 
-        long searchResultCount = productRepository.searcByProductPriceCount(searchPrice);
+        long searchResultCount = productRepository.searchByProductPriceCount(searchPrice);
 
         if (isAllRecordsCanSetOnePage(searchResultCount)) return;
 

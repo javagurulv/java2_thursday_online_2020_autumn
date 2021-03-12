@@ -1,7 +1,7 @@
 package internet_store.web_ui.controller.cart;
 
 import internet_store.core.domain.Client;
-import internet_store.core.operation.Tax;
+import internet_store.core.operation.OrderSumProperty;
 import internet_store.core.persistence.CartRepository;
 import internet_store.core.request.cart.DeleteProductFromCartRequest;
 import internet_store.core.service.cart.CartProductsCountService;
@@ -29,7 +29,7 @@ public class CartController {
     @Autowired
     private TotalSumCartService totalSumCartService;
     @Autowired
-    private Tax tax;
+    private OrderSumProperty orderSumProperty;
     @Autowired
     private DeleteProductFromCartService service;
     @Autowired
@@ -42,8 +42,8 @@ public class CartController {
         paging.startPaging();
 
         if (countProductInCart == 0) {
-            tax.setTaxAmount(new BigDecimal("0.00"));
-            tax.setAmountWithTax(new BigDecimal("0.00"));
+            orderSumProperty.setTaxAmount(new BigDecimal("0.00"));
+            orderSumProperty.setAmountWithTax(new BigDecimal("0.00"));
         }
         modelMap.addAttribute("info", "");
         refreshData(modelMap);
@@ -95,11 +95,11 @@ public class CartController {
         modelMap.addAttribute("pages", "Page " + paging.getCurrentPage() + " of "
                 + paging.getPagesQuantity());
         modelMap.addAttribute("cartCount", cartCountService.getCartCount());
-        modelMap.addAttribute("currencySymbol", tax.getCurrencySymbol());
-        modelMap.addAttribute("taxRate", tax.getTaxRate());
+        modelMap.addAttribute("currencySymbol", orderSumProperty.getCurrencySymbol());
+        modelMap.addAttribute("taxRate", orderSumProperty.getTaxRate());
         modelMap.addAttribute("totalSum", totalSumCartService.calculateTotalSum());
-        modelMap.addAttribute("taxAmount", tax.getTaxAmount(totalSumCartService.calculateTotalSum()));
-        modelMap.addAttribute("total", tax.getAmountWithTax(totalSumCartService.calculateTotalSum()));
-        modelMap.addAttribute("currency_symbol", tax.getCurrencySymbol());
+        modelMap.addAttribute("taxAmount", orderSumProperty.getTaxAmount(totalSumCartService.calculateTotalSum()));
+        modelMap.addAttribute("total", orderSumProperty.getAmountWithTax(totalSumCartService.calculateTotalSum()));
+        modelMap.addAttribute("currency_symbol", orderSumProperty.getCurrencySymbol());
     }
 }

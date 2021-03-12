@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ChangeUserLastNameController {
 
-    @Autowired private ChangeUserLastNameService changeUserLastNameService;
-    @Autowired private GetAllUserService getAllUserService;
+    @Autowired
+    private ChangeUserLastNameService changeUserLastNameService;
+    @Autowired
+    private GetAllUserService getAllUserService;
 
     @GetMapping(value = "/admin_menu/user/changeUserLastName")
     public String showChangeUserLastNamePage(ModelMap modelMap) {

@@ -1,36 +1,37 @@
 package java2.application_target_list.core.validators.target;
 
-import java2.application_target_list.core.database.target.TargetRepository;
 import java2.application_target_list.core.requests.target.ChangeTargetNameRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import java2.application_target_list.core.validators.ErrorCreator;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.core.responses.CoreError;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ChangeTargetNameValidator {
+public class ChangeTargetNameValidator extends ErrorCreator {
 
-    public List<CoreError> validate(ChangeTargetNameRequest request, TargetRepository targetRepository) {
+    public List<CoreError> validate(ChangeTargetNameRequest changeTargetNameRequest) {
         List<CoreError> errors = new ArrayList<>();
-
-        if (!targetRepository.isIdInTargetList(request.getTargetIdToChange())){
-            errors.add(new CoreError("Target ID;","no target with that ID"));
-        }
-
-        if (isTargetIdEmpty(request)){
-            errors.add(new CoreError("Target ID","must not be empty!"));
-        }
-        if (isTargetIdNegative(request)){
-            errors.add(new CoreError("Target ID","must not be negative!"));
-        }
-
-        if (isTargetNameEmpty(request)){
-            errors.add(new CoreError("Target new name","must not be empty!"));
-        }
-
+        checkTargetId(changeTargetNameRequest, errors);
+        checkTargetName(changeTargetNameRequest, errors);
         return errors;
+    }
+
+    private void checkTargetName(ChangeTargetNameRequest changeTargetNameRequest, List<CoreError> errors){
+        if (isTargetNameEmpty(changeTargetNameRequest)){
+            errors.add(createCoreError("Target new name","must not be empty!"));
+        }
+    }
+
+    private void checkTargetId(ChangeTargetNameRequest changeTargetNameRequest, List<CoreError> errors){
+        if (isTargetIdEmpty(changeTargetNameRequest)){
+            errors.add(createCoreError("Target ID","must not be empty!"));
+        }
+        if (isTargetIdNegative(changeTargetNameRequest)){
+            errors.add(createCoreError("Target ID","must not be negative!"));
+        }
     }
 
     private boolean isTargetNameEmpty(ChangeTargetNameRequest request) {
@@ -44,6 +45,5 @@ public class ChangeTargetNameValidator {
     private boolean isTargetIdNegative(ChangeTargetNameRequest request){
         return request.getTargetIdToChange() < 0;
     }
-
 
 }

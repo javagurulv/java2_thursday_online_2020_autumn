@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AddRecordToListController {
 
-    @Autowired private AddRecordService addRecordService;
-    @Autowired private GetAllTargetsService getAllTargetsService;
-    @Autowired private GetAllUserService getAllUserService;
+    @Autowired
+    private AddRecordService addRecordService;
+    @Autowired
+    private GetAllTargetsService getAllTargetsService;
+    @Autowired
+    private GetAllUserService getAllUserService;
 
     @GetMapping(value = "/admin_menu/board/addRecordToList")
     public String showAddRecordToListAdminPage(ModelMap modelMap) {

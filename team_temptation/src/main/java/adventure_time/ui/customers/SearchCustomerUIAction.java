@@ -23,7 +23,7 @@ public class SearchCustomerUIAction implements UIAction {
 
         System.out.println("Would you like to find the customer by: ");
         System.out.println("   1. ID ");
-        System.out.println("   2. email (login)");
+        System.out.println("   2. Email (login)");
 
         if (scanner.nextLine().equals("1")) {
             System.out.println("Enter customer ID: ");

@@ -17,7 +17,8 @@ public class AddPatientRequestValidator {
 
         addPatientRequest.setPersonalCode(addPatientRequest.getPersonalCode().replace("-", ""));
 
-        PersonalData personalData = addPatientRequest.getPersonalData();
+        PersonalData personalData = new PersonalData(addPatientRequest.getName(), addPatientRequest.getSurname(),
+                addPatientRequest.getPhone(), addPatientRequest.getPersonalCode());
         errors.addAll(isValidPersonalData(personalData));
 
         return errors;

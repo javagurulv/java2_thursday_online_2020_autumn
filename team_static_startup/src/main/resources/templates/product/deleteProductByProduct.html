@@ -40,6 +40,26 @@
     </td>
 </table>
 
+<br>
+<td th:if="${products != null}">
+    <h4>Product was successfully deleted</h4>
+</td>
+<td th:if="${products != null}">
+    <table>
+        <tr>
+            <td>Product Name:</td>
+            <td>Product Description:</td>
+            <td>Product Price:</td>
+        </tr>
+
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.price}"></td>
+        </tr>
+    </table>
+</td>
+
 <form action="/" method="get">
     <input type="submit" value="Go to main page" name="Submit" />
 </form>

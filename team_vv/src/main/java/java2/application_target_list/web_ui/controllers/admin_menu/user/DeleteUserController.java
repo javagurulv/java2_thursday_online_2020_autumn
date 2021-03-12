@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class DeleteUserController {
 
-    @Autowired private DeleteUserService deleteUserService;
-    @Autowired private GetAllUserService getAllUserService;
+    @Autowired
+    private DeleteUserService deleteUserService;
+    @Autowired
+    private GetAllUserService getAllUserService;
 
     @GetMapping(value = "/admin_menu/user/deleteUserFromList")
     public String showDeleteUserPage(ModelMap modelMap) {

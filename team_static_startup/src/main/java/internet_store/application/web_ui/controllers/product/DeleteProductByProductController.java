@@ -28,10 +28,10 @@ public class DeleteProductByProductController {
         DeleteByProductResponse response = deleteProductByProductService.execute(deleteByProductRequest);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
-            return "/product/deleteProductByProduct";
         } else {
-            return "redirect:/";
+            modelMap.addAttribute("products", response.getDeletedProduct());
         }
+        return "/product/deleteProductByProduct";
     }
 
 

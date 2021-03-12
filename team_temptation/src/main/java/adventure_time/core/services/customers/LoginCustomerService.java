@@ -31,13 +31,13 @@ public class LoginCustomerService {
         if (customer.isPresent()) {
             if (customer.get().
                     getCustomerPassword().
-                    equals(request.getEmail())) {
+                    equals(request.getPassword())) {
                 return new LoginCustomerResponse(customer.get());   // customer found, passwords matched
             } else {
                 errors.add
                         (new CoreError(
                                 "customerPassword",
-                                "Passwords did not match"
+                                "Log in: Passwords did not match"
                         ));
                 return new LoginCustomerResponse(errors);   // customer found, passwords mismatched
             }
@@ -45,7 +45,7 @@ public class LoginCustomerService {
             errors.add(
                     new CoreError(
                             "customerEmail",
-                            "Customer not found"
+                            "Log in: Customer not found"
                     ));
             return new LoginCustomerResponse(errors);   // customer not found
         }

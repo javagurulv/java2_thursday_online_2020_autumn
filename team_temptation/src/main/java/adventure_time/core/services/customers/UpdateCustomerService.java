@@ -26,20 +26,26 @@ public class UpdateCustomerService {
         }
 
         Customers customer = new Customers(
-                request.getName(),
-                request.getEmail(),
-                request.getPhone(),
-                request.getPasswordOne()
+                choseValue(request.getName(), request.getCustomer().getCustomerName()),
+                choseValue(request.getEmail(), request.getCustomer().getCustomerEmail()),
+                choseValue(request.getPhone(), request.getCustomer().getCustomerPhone()),
+                choseValue(request.getPassword(), request.getCustomer().getCustomerPassword())
         );
-        customer.setCustomerID(request.getId());
-        if (database.updateCustomer(customer, request.getId())) {
+
+        if (database.updateCustomer(customer, request.getCustomer().getCustomerId())) {
             return new UpdateCustomerResponse();
         }
 
-        CoreError error = new CoreError("customerEmail", "Email " + customer.getCustomerEmail() + " is not valid");
+        CoreError error = new CoreError("customerEmail", "Sorry, in DB already exist the user with email" +
+                customer.getCustomerEmail() +
+                ". You have to choose another one.");
         errors.add(error);
         return new UpdateCustomerResponse(errors);
 
+    }
+
+    private String choseValue (String newValue, String oldValue) {
+        return newValue.equals("") ? oldValue : newValue;
     }
 
 }

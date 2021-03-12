@@ -10,12 +10,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin_menu/user")
 public class UserRestController {
 
-    @Autowired private GetUserService getUserService;
-    @Autowired private AddUserService addUserService;
-    @Autowired private DeleteUserService deleteUserService;
-    @Autowired private UpdateUserService updateUserService;
-    @Autowired private SearchUserByFirstNameService searchUserByFirstNameService;
-    @Autowired private SearchUserByLastNameService searchUserByLastNameService;
+    @Autowired
+    private GetUserService getUserService;
+    @Autowired
+    private AddUserService addUserService;
+    @Autowired
+    private DeleteUserService deleteUserService;
+    @Autowired
+    private UpdateUserService updateUserService;
+    @Autowired
+    private SearchUserByFirstNameService searchUserByFirstNameService;
+    @Autowired
+    private SearchUserByLastNameService searchUserByLastNameService;
 
     @GetMapping(path = "{id}", produces = "application/json")
     public GetUserResponse getUser(@PathVariable Long id) {

@@ -3,12 +3,14 @@ package dental_clinic.core.database.planned_visit;
 import dental_clinic.core.domain.PlannedVisit;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 public interface PlannedVisitsRepository {
 
     List <PlannedVisit> getPlannedVisits();
+
+    Optional<PlannedVisit>getPlannedVisitById(Long id);
 
     void addPlannedVisit(PlannedVisit plannedVisit);
 

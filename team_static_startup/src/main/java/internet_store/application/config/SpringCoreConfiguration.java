@@ -1,42 +1,45 @@
 package internet_store.application.config;
 
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Value;
+import liquibase.integration.spring.SpringLiquibase;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
 
 @Configuration
+@EnableAutoConfiguration
 @ComponentScan(basePackages = "internet_store.application.core")
 @PropertySource(value = "classpath:application.properties")
 @EnableTransactionManagement
+@EntityScan(basePackages = "internet_store.application.core.domain")
+@EnableJpaRepositories(value = "internet_store.application.core.database.jpa")
 public class SpringCoreConfiguration {
 
-    @Value("${database.username}")
-    private String username;
-    @Value("${database.password}")
-    private String userPassword;
-    @Value("${database.url}")
-    private String databaseUrl;
-    @Value("${database.driverName}")
-    private String databaseDriverName;
+    @Bean
+    public SpringLiquibase springLiquibase(DataSource dataSource) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:/db/changelog/changelog-master.xml");
+        liquibase.setShouldRun(true);
+        liquibase.setDataSource(dataSource);
+        return liquibase;
+    }
 
-/*    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }*/
+
+/*    @Value("${spring.database.username}")
+    private String username;
+    @Value("${spring.database.password}")
+    private String userPassword;
+    @Value("${spring.database.url}")
+    private String databaseUrl;
+    @Value("${spring.database.driverName}")
+    private String databaseDriverName;
 
     @Bean
     public DataSource dataSource() {
@@ -46,6 +49,10 @@ public class SpringCoreConfiguration {
         dataSource.setPassword(userPassword);
         dataSource.setDriverClassName(databaseDriverName);
         return dataSource;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Bean
@@ -82,5 +89,5 @@ public class SpringCoreConfiguration {
     public PlatformTransactionManager transactionManager(SessionFactory sessionFactory) {
         return new HibernateTransactionManager(sessionFactory);
     }
-
+*/
 }

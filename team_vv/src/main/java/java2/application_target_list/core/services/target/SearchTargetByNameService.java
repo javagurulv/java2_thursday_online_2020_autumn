@@ -1,24 +1,23 @@
 package java2.application_target_list.core.services.target;
 
-import java2.application_target_list.core.database.target.TargetRepository;
+import java2.application_target_list.core.database.jpa.JpaTargetRepository;
 import java2.application_target_list.core.requests.Ordering;
 import java2.application_target_list.core.requests.Paging;
 import java2.application_target_list.core.requests.target.SearchTargetByNameRequest;
 import java2.application_target_list.core.validators.target.SearchTargetByNameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java2.application_target_list.core.domain.Target;
 import java2.application_target_list.core.responses.CoreError;
 import java2.application_target_list.core.responses.target.SearchTargetByNameResponse;
-
-
+import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
+@Transactional
 public class SearchTargetByNameService {
 
     @Value("${search.ordering.enabled}")
@@ -27,22 +26,43 @@ public class SearchTargetByNameService {
     @Value("${search.paging.enabled}")
     private boolean pagingEnabled;
 
-    @Autowired private TargetRepository targetRepository;
-    @Autowired private SearchTargetByNameValidator validator;
+    @Autowired
+    private JpaTargetRepository jpaTargetRepository;
+    @Autowired
+    private SearchTargetByNameValidator validator;
 
-    public SearchTargetByNameResponse execute(SearchTargetByNameRequest request){
-        List<CoreError> errors = validator.validate(request);
+    public SearchTargetByNameResponse execute(SearchTargetByNameRequest searchTargetByNameRequest){
+        List<CoreError> errors = checkRequestForErrors(searchTargetByNameRequest);
 
-        if (!errors.isEmpty()) {
-            return new SearchTargetByNameResponse(errors, null);
+        if (requestHaveErrors(errors)) {
+            return createSearchTargetByNameResponseWithErrors(errors);
         }
 
-        List<Target> targets = targetRepository.findByTargetName(request.getName());
-        targets = order(targets, request.getOrdering());
-        targets = paging(targets, request.getPaging());
+        List<Target> targets = findAllTargetByName(searchTargetByNameRequest);
+        targets = order(targets, searchTargetByNameRequest.getOrdering());
+        targets = paging(targets, searchTargetByNameRequest.getPaging());
 
+        return createSearchTargetByNameResponse(targets);
+    }
 
+    private List<Target> findAllTargetByName(SearchTargetByNameRequest searchTargetByNameRequest){
+        return jpaTargetRepository.findByName(searchTargetByNameRequest.getName());
+    }
+
+    private SearchTargetByNameResponse createSearchTargetByNameResponse(List<Target> targets){
         return new SearchTargetByNameResponse(null, targets);
+    }
+
+    private SearchTargetByNameResponse createSearchTargetByNameResponseWithErrors(List<CoreError> errors) {
+        return new SearchTargetByNameResponse(errors, null);
+    }
+
+    private boolean requestHaveErrors(List<CoreError> errors){
+        return !errors.isEmpty();
+    }
+
+    private List<CoreError> checkRequestForErrors(SearchTargetByNameRequest searchTargetByNameRequest){
+        return validator.validate(searchTargetByNameRequest);
     }
 
     private List<Target> paging(List<Target> targets, Paging paging) {

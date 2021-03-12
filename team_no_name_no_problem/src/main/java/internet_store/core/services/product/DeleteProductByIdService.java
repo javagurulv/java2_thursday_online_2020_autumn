@@ -4,6 +4,8 @@ import internet_store.core.requests.product.DeleteProductByIdRequest;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.product.DeleteProductByIdResponse;
 import internet_store.core.services.product.validators.DeleteProductByIdRequestValidator;
+
+import internet_store.database.jpa.ProductRepository;
 import internet_store.database.product.ProductDatabase;
 import internet_store.core.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import java.util.List;
 @Transactional
 public class DeleteProductByIdService {
 
-    @Autowired private ProductDatabase productDatabase;
+    @Autowired private ProductRepository productDatabase;
     @Autowired private DeleteProductByIdRequestValidator deleteProductRequestValidator;
 
     public DeleteProductByIdResponse execute(DeleteProductByIdRequest deleteProductRequest) {
@@ -27,8 +29,8 @@ public class DeleteProductByIdService {
             return new DeleteProductByIdResponse(errors);
         }
 
-        if (productDatabase.containsId(deleteProductRequest.getId())){
-            for (int i = 0; i < productDatabase.getProducts().size(); i++) {
+        if (productDatabase.existsById(deleteProductRequest.getId())){
+            for (int i = 0; i < productDatabase.findAll().size(); i++) {
                 if (getCurrentProduct(i).getId() == deleteProductRequest.getId()) {
                     productDatabase.deleteById(deleteProductRequest.getId());
                     return new DeleteProductByIdResponse(deleteProductRequest.getId());
@@ -42,6 +44,6 @@ public class DeleteProductByIdService {
     }
 
     private Product getCurrentProduct (int index){
-        return productDatabase.getProducts().get(index);
+        return productDatabase.findAll().get(index);
     }
 }

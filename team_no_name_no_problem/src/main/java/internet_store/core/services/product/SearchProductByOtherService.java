@@ -7,6 +7,8 @@ import internet_store.core.requests.product.SearchProductByOtherRequest;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.product.SearchProductByOtherResponse;
 import internet_store.core.services.product.validators.SearchProductRequestValidator;
+
+import internet_store.database.jpa.ProductRepository;
 import internet_store.database.product.ProductDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +31,7 @@ public class SearchProductByOtherService {
     private boolean pagingEnabled;
 
     @Autowired
-    private ProductDatabase productDatabase;
+    private ProductRepository productDatabase;
     @Autowired
     private SearchProductRequestValidator searchProductRequestValidator;
 
@@ -102,7 +104,8 @@ public class SearchProductByOtherService {
 
     private SearchProductByOtherResponse searchByTitleAndDescriptionAndPriceIsProvided(SearchProductByOtherRequest searchProductRequest){
         List <CoreError>errors = new ArrayList<>();
-        List <Product> products = productDatabase.searchAllByTitleAndDescription(searchProductRequest.getTitle(), searchProductRequest.getDescription());
+        List <Product> products = productDatabase.searchAllByTitleAndDescriptionAndPriceRange(searchProductRequest.getTitle(), searchProductRequest.getDescription(),
+                                                                                              searchProductRequest.getStartPrice(),searchProductRequest.getEndPrice());
         if (products.isEmpty()){
             errors.add(new CoreError("database", "Database doesn't contain product with title: " +
                     searchProductRequest.getTitle() + ", description: " + searchProductRequest.getDescription() +

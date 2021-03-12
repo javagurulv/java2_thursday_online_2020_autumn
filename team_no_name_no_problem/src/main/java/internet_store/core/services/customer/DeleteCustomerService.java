@@ -5,18 +5,20 @@ import internet_store.core.requests.customer.DeleteCustomerRequest;
 import internet_store.core.response.CoreError;
 import internet_store.core.response.customer.DeleteCustomerResponse;
 import internet_store.core.services.customer.validators.DeleteCustomerRequestValidator;
-import internet_store.database.customer.CustomerDatabase;
+import internet_store.database.jpa.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
 @Component
 @Transactional
 public class DeleteCustomerService {
 
-    @Autowired private CustomerDatabase customerDatabase;
+    @Autowired private CustomerRepository customerDatabase;
     @Autowired private DeleteCustomerRequestValidator deleteCustomerRequestValidator;
 
     public DeleteCustomerResponse execute (DeleteCustomerRequest deleteCustomerRequest){
@@ -26,10 +28,10 @@ public class DeleteCustomerService {
             return new DeleteCustomerResponse(errors);
         }
 
-        if (customerDatabase.containsId(deleteCustomerRequest.getId())) {
-            for (int i = 0; i < customerDatabase.getCustomers().size(); i++) {
+        if (customerDatabase.existsById(deleteCustomerRequest.getId())) {
+            for (int i = 0; i < customerDatabase.findAll().size(); i++) {
                 if (getCurrentCustomer(i).getId() == deleteCustomerRequest.getId()) {
-                    customerDatabase.deleteCustomerById(deleteCustomerRequest.getId());
+                    customerDatabase.deleteById(deleteCustomerRequest.getId());
                     return new DeleteCustomerResponse(deleteCustomerRequest.getId());
                 }
             }
@@ -41,6 +43,6 @@ public class DeleteCustomerService {
     }
 
     private Customer getCurrentCustomer (int index){
-        return customerDatabase.getCustomers().get(index);
+        return customerDatabase.findAll().get(index);
     }
 }

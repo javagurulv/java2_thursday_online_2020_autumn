@@ -13,40 +13,26 @@
 
 <h3>Delete target from list</h3>
 
-<table>
     <tr>
-        <td>Target id</td>
-        <td>Target name</td>
-        <td>Target description</td>
-        <td>Target deadline</td>
-    </tr>
-
-    <td th:if="${targets != null}">
-        <tr th:each="targets : ${targets}">
-            <td th:text="${targets.id}" />
-            <td th:text="${targets.name}" />
-            <td th:text="${targets.description}" />
-            <td th:text="${targets.deadline}" />
-        </tr>
-    </td>
-
-</table>
-
-<table>
-    <tr>
-        <td>Target id:</td>
+        <td>Select target:</td>
     </tr>
 
     <tr>
         <form action="/admin_menu/target/deleteTargetFromList" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.targetIdToDelete}"/></td>
+
+            <SELECT th:field="${request.targetIdToDelete}">
+                <option th:each="targets : ${targets}"
+                        th:value="${targets.id}"
+                        th:text="${targets.name}">
+                </option>
+            </SELECT>
+
             <td>
                 <input type="submit" value="OK"/>
-                <input type="reset" value="Clear"/>
             </td>
         </form>
     </tr>
-</table>
+
 
 <td th:if="${errors != null}">
     <tr th:each="error : ${errors}">

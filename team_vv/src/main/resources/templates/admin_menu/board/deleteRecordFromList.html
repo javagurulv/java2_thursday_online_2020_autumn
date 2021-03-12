@@ -13,43 +13,22 @@
 
 <h3>Delete record from list</h3>
 
-<table>
-    <tr>
-        <td><b>Record id</b></td>
-        <td><b>Target name</b></td>
-        <td><b>Target description</b></td>
-        <td><b>Target deadline</b></td>
-        <td><b>User first name</b></td>
-        <td><b>User last name</b></td>
-        <td><b>Target added date</b></td>
-        <td><b>Target date of completion</b></td>
-    </tr>
-
-    <td th:if="${records != null}">
-        <tr th:each="records : ${records}">
-            <td th:text="${records.recordId}" />
-            <td th:text="${records.target.name}" />
-            <td th:text="${records.target.description}" />
-            <td th:text="${records.target.deadline}" />
-            <td th:text="${records.user.firstName}" />
-            <td th:text="${records.user.lastName}" />
-            <td th:text="${records.dateAdded}" />
-            <td th:text="${records.dateComplete}" />
-        </tr>
-    </td>
-
-</table>
 
     <tr>
-        <td><b>Enter Record id:</b></td>
+        <td>Select Record:</td>
     </tr>
 
     <tr>
         <form action="/admin_menu/board/deleteRecordFromList" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.recordIdToDelete}"/></td>
+
+            <SELECT th:field="${request.recordIdToDelete}">
+                <option th:each="records : ${records}"
+                        th:value="${records.recordId}"
+                        th:text="'Target name:' +' '+${records.target.name}+ '. ' + 'User:' + ' ' + ${records.user.firstName} + ' ' + ${records.user.lastName}">
+                </option>
+            </SELECT>
             <td>
                 <input type="submit" value="OK"/>
-                <input type="reset" value="Clear"/>
             </td>
         </form>
     </tr>

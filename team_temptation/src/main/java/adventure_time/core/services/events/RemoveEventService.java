@@ -31,14 +31,14 @@ public class RemoveEventService {
             return new RemoveEventResponse(errors);
         }
 
-        boolean isSuccessRemoval;
-        if (request.getDeletionWay().equals("byName")) {
-            isSuccessRemoval = databaseEvents.removeByName(request.getEventName());
-        } else {
-            isSuccessRemoval = databaseEvents.removeById(request.getEventId());
-        }
+//        boolean isSuccessRemoval;
+//        if (request.getDeletionWay().equals("byName")) {
+//            isSuccessRemoval = databaseEvents.removeByName(request.getEventName());
+//        } else {
+//            isSuccessRemoval = databaseEvents.removeById(request.getEventId());
+//        }
 
-        return new RemoveEventResponse(isSuccessRemoval);
+        return new RemoveEventResponse(true); //isSuccessRemoval);
 
     }
 }

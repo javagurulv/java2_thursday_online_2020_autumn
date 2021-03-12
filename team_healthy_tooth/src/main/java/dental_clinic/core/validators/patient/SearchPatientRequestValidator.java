@@ -1,6 +1,8 @@
 package dental_clinic.core.validators.patient;
 
 import dental_clinic.core.domain.OrderingDirection;
+import dental_clinic.core.requests.Ordering;
+import dental_clinic.core.requests.Paging;
 import dental_clinic.core.requests.patient.SearchPatientRequest;
 import dental_clinic.core.responses.CoreError;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,8 @@ public class SearchPatientRequestValidator {
 
     public List<CoreError> validate (SearchPatientRequest searchPatientRequest) {
         List<CoreError> errors = new ArrayList<>();
+        Ordering ordering = new Ordering(searchPatientRequest.getOrderBy(), searchPatientRequest.getOrderDirection());
+        Paging paging = new Paging(searchPatientRequest.getPageNumber(), searchPatientRequest.getPageSize());
 
         errors.addAll(searchRequestIsEmptyError(searchPatientRequest));
 
@@ -22,11 +26,11 @@ public class SearchPatientRequestValidator {
             errors.addAll(searchRequestIsNotValidErrors(searchPatientRequest));
         }
 
-        if (isNotValidInputForOrdering(searchPatientRequest)){
-            errors.addAll(updateErrorsListForOrdering(searchPatientRequest));
+        if (isNotValidInputForOrdering(searchPatientRequest, ordering)){
+            errors.addAll(updateErrorsListForOrdering(ordering));
         }
-        if (isNotValidRequestForPaging(searchPatientRequest)){
-            errors.addAll(updateErrorsListForPaging(searchPatientRequest));
+        if (isNotValidRequestForPaging(paging)){
+            errors.addAll(updateErrorsListForPaging(paging));
         }
         return errors;
     }
@@ -73,73 +77,73 @@ public class SearchPatientRequestValidator {
 
     }
 
-    private boolean isNotValidInputForOrdering(SearchPatientRequest searchPatientRequest){
-        if (searchPatientRequest.getOrdering().emptyBothFields()) {
+    private boolean isNotValidInputForOrdering(SearchPatientRequest searchPatientRequest, Ordering ordering){
+        if (ordering.emptyBothFields()) {
             return false;
-        } else if (searchPatientRequest.getOrdering().filledBoth()) {
-            return isNotValidInputForOrderBy(searchPatientRequest)
-                    || isNotValidInputForOrderDirection(searchPatientRequest);
+        } else if (ordering.filledBoth()) {
+            return isNotValidInputForOrderBy(ordering)
+                    || isNotValidInputForOrderDirection(ordering);
         } else {
             return true;
         }
     }
 
-    private boolean isNotValidRequestForPaging(SearchPatientRequest searchPatientRequest){
-        if (searchPatientRequest.getPaging().isEmptyBoth()) {
+    private boolean isNotValidRequestForPaging(Paging paging){
+        if (paging.isEmptyBoth()) {
             return false;
-        } else if (searchPatientRequest.getPaging().isFilledBoth()) {
-            return (isNotValidInputForPageNumber(searchPatientRequest)) ||
-                    isNotValidInputForPageSize(searchPatientRequest);
+        } else if (paging.isFilledBoth()) {
+            return (isNotValidInputForPageNumber(paging)) ||
+                    isNotValidInputForPageSize(paging);
         } else {
             return true;
         }
     }
 
-    private boolean isNotValidInputForOrderBy(SearchPatientRequest searchPatientRequest){
-        return !searchPatientRequest.getOrdering().getOrderBy().equals("name") &&
-                !searchPatientRequest.getOrdering().getOrderBy().equals("surname");
+    private boolean isNotValidInputForOrderBy(Ordering ordering){
+        return !ordering.getOrderBy().equals("name") &&
+                !ordering.getOrderBy().equals("surname");
     }
 
-    private boolean isNotValidInputForOrderDirection(SearchPatientRequest searchPatientRequest){
-        return searchPatientRequest.getOrdering().getOrderDirection().equals(OrderingDirection.NOT_VALID);
+    private boolean isNotValidInputForOrderDirection(Ordering ordering){
+        return ordering.getOrderDirection().equals(OrderingDirection.NOT_VALID);
     }
 
-    private boolean isNotValidInputForPageNumber(SearchPatientRequest searchPatientRequest){
-        return searchPatientRequest.getPaging().getPageNumber() <= 0;
+    private boolean isNotValidInputForPageNumber(Paging paging){
+        return paging.getPageNumber() <= 0;
     }
 
-    private boolean isNotValidInputForPageSize(SearchPatientRequest searchPatientRequest){
-        return searchPatientRequest.getPaging().getPageSize() <= 0;
+    private boolean isNotValidInputForPageSize(Paging paging){
+        return paging.getPageSize() <= 0;
     }
 
-    private List<CoreError> updateErrorsListForOrdering(SearchPatientRequest searchPatientRequest){
+    private List<CoreError> updateErrorsListForOrdering(Ordering ordering){
 
         List<CoreError>errors = new ArrayList<>();
 
-        if (searchPatientRequest.getOrdering().filledOne()) {
+        if (ordering.filledOne()) {
             errors.add(new CoreError("search", "Not valid input for ordering parameters"));
         }else {
-            if (isNotValidInputForOrderBy(searchPatientRequest) && searchPatientRequest.getOrdering().filledBoth()) {
+            if (isNotValidInputForOrderBy(ordering) && ordering.filledBoth()) {
                 errors.add(new CoreError("orderBy", "Not valid input for orderBy"));
             }
-            if (isNotValidInputForOrderDirection(searchPatientRequest) && searchPatientRequest.getOrdering().filledBoth()) {
+            if (isNotValidInputForOrderDirection(ordering) && ordering.filledBoth()) {
                 errors.add(new CoreError("orderDirection", "Not valid input for orderDirection"));
             }
         }
         return  errors;
     }
 
-    private List<CoreError> updateErrorsListForPaging(SearchPatientRequest searchPatientRequest){
+    private List<CoreError> updateErrorsListForPaging(Paging paging){
 
         List<CoreError>errors = new ArrayList<>();
 
-        if (searchPatientRequest.getPaging().isFilledOne()) {
+        if (paging.isFilledOne()) {
             errors.add(new CoreError("search", "Not valid input for paging parameters"));
         }else {
-            if (isNotValidInputForPageNumber(searchPatientRequest)) {
+            if (isNotValidInputForPageNumber(paging)) {
                 errors.add(new CoreError("pageNumber", "Not valid input for page number"));
             }
-            if (isNotValidInputForPageSize(searchPatientRequest)) {
+            if (isNotValidInputForPageSize(paging)) {
                 errors.add(new CoreError("pageSize", "Not valid input for page size"));
             }
         }

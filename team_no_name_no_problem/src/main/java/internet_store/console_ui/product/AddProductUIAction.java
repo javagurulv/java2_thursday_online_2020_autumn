@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@Component public class AddProductUIAction implements UIAction {
+//@Component
+ public class AddProductUIAction implements UIAction {
 
     @Autowired private AddProductService addProductService;
 

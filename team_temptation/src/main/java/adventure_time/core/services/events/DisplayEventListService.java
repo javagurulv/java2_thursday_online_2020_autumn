@@ -13,7 +13,7 @@ public class DisplayEventListService {
 private EventRepository databaseEvents;
 
     public List<Events> getEventsList () {
-        return databaseEvents.getEventsList();
+        return null; //databaseEvents.getEventsList();
     }
 
 }

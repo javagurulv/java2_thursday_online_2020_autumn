@@ -1,15 +1,9 @@
 package eu.retarded.internetstore.core.services.delivery;
 
+import eu.retarded.internetstore.core.domain.Delivery;
 import eu.retarded.internetstore.core.requests.delivery.AddDeliveryRequest;
-import eu.retarded.internetstore.core.responses.CoreError;
-
 import eu.retarded.internetstore.core.responses.delivery.AddDeliveryResponse;
-import eu.retarded.internetstore.core.services.validators.delivery.AddDeliveryValidator;
-import eu.retarded.internetstore.database.delivery.DeliveryDatabase;
-import eu.retarded.internetstore.matchers.DeliveryMatcher;
-
-import org.junit.jupiter.api.Assertions;
-
+import eu.retarded.internetstore.database.DeliveryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,42 +11,38 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.Validator;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
+import java.math.BigDecimal;
+import java.util.HashSet;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class AddDeliveryServiceTest {
+class AddDeliveryServiceTest {
 
-    @Mock private DeliveryDatabase deliveryDatabase;
-    @Mock private AddDeliveryValidator validator;
+    @Mock private DeliveryRepository deliveryRepository;
+    @Mock private Validator validator;
     @InjectMocks private AddDeliveryService subject;
 
     @Test
-    public void should_return_response_with_errors_when_validation_fails() {
-        AddDeliveryRequest request = new AddDeliveryRequest("123", "region123", 55.5);
-        List<CoreError> errors = new ArrayList<>();
-        errors.add(new CoreError("Title", "Must be between 4 and 10 characters"));
-        Mockito.when(validator.validate(request)).thenReturn(errors);
-
+    void add_delivery_success() {
+        AddDeliveryRequest request = new AddDeliveryRequest("SIA RG","Centre",4566.00);
+        Mockito.when(validator.validate(request)).thenReturn(new HashSet<>());
+        Delivery delivery = new Delivery();
+        delivery.setTitle("SIA RG");
+        delivery.setRegion("Centre");
+        delivery.setPrice(new BigDecimal("4566.00"));
+        Delivery result = new Delivery();
+        result.setTitle("SIA RG");
+        result.setRegion("Centre");
+        result.setPrice(new BigDecimal("4566.00"));
+        Mockito.when(deliveryRepository.save(delivery)).thenReturn(delivery);
         AddDeliveryResponse response = subject.execute(request);
-        Assertions.assertTrue(response.hasErrors());
-        Assertions.assertEquals(response.getErrors().size(), 1);
-        Assertions.assertEquals(response.getErrors().get(0).getField(), "Title");
-        Assertions.assertEquals(response.getErrors().get(0).getMessage(), "Must be between 4 and 10 characters");
-        Mockito.verifyNoInteractions(deliveryDatabase);
-        Mockito.verify(validator).validate(request);
+        Mockito.verify(deliveryRepository).save(new Delivery(request.getTitle(),request.getRegion(),request.getPrice()));
+        assertThat(response.getDeliveryId()).isEqualTo(result);
+
+
     }
 
-    @Test
-    public void add_product_to_database() {
-        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
-        AddDeliveryRequest request = new AddDeliveryRequest("Title", "Region", 55.5);
-        AddDeliveryResponse response = subject.execute(request);
-        Assertions.assertFalse(response.hasErrors());
-        Mockito.verify(deliveryDatabase).add(argThat(new DeliveryMatcher("Title", "Region")));
-    }
 }

@@ -29,6 +29,8 @@ public class OrderStatusService {
     private EmailServiceImpl emailService;
     @Autowired
     private PrintService printService;
+    @Autowired
+    private CreatePdfOrder pdfOrder;
     private Order order;
 
     public void changeOrderStatus(String orderNumber, String orderStatus) {
@@ -59,17 +61,11 @@ public class OrderStatusService {
     }
 
     private void sendEmailAboutConfirmationOrder() {
-        Thread sendMailConfirmationThread = new Thread(() -> emailService.sendSimpleMessage(order
-                .getClient().getEmail(), "Order confirmed", printService.createPrintReport(order)));
-        sendMailConfirmationThread.setDaemon(true);
-        sendMailConfirmationThread.start();
-    }
-
-    private void sendEmailAboutChangedStatus() {
-        Thread sendMailThread = new Thread(() -> emailService.sendSimpleMessage(order.getClient()
-                .getEmail(), "Order status changed", printService.createPrintReport(order)));
-        sendMailThread.setDaemon(true);
-        sendMailThread.start();
+        Thread sendEmailConfirmationThread = new Thread(() ->
+                emailService.sendSimpleMessage(order.getClient().getEmail(), "Order confirmed",
+                        printService.createPrintReport(order) + "\n\n<< Please find our Telegram bot " +
+                                "EStoreBot for more information >>"));
+        sendEmailConfirmationThread.start();
     }
 
     public void telegramNotification() {
@@ -78,9 +74,15 @@ public class OrderStatusService {
 
         optionalClientChatId.ifPresent(listChatid -> {
             Thread sendTelegramNotificationThread = new Thread(() ->
-                    listChatid.forEach(id -> printService.printOrder(order, id.getChatId())));
-            sendTelegramNotificationThread.setDaemon(true);
+                    listChatid.forEach(id -> printService.printTelegramNotification(id.getChatId(),
+                            printService.createPrintReport(order))));
             sendTelegramNotificationThread.start();
         });
+    }
+
+    private void sendEmailAboutChangedStatus() {
+        Thread sendMailThread = new Thread(() -> emailService.sendSimpleMessage(order.getClient()
+                .getEmail(), "Order status changed", printService.createPrintReport(order)));
+        sendMailThread.start();
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet author="vv" id="3">
+        <createTable tableName="targets_board">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="target_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_added_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target_date_of_completion" type="DATETIME"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="targets_board"
+                       cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+
+
+    <changeSet author="vv" id="4">
+        <addForeignKeyConstraint baseTableName="targets_board"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_targets_board_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="targets_board"
+                                      constraintName="fk_targets_board_user_id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="vv" id="5">
+        <addForeignKeyConstraint baseTableName="targets_board"
+                                 baseColumnNames="target_id"
+                                 constraintName="fk_targets_board_target_id"
+                                 referencedTableName="targets"
+                                 referencedColumnNames="id"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="targets_board"
+                                      constraintName="fk_targets_board_user_id"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

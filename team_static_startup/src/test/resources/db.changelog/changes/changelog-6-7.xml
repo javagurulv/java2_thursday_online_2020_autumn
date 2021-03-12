@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet author="staticstartup" id="6">
+        <addForeignKeyConstraint baseTableName="shopping_cart_items"
+                                 baseColumnNames="shopping_cart_id"
+                                 constraintName="fk_cart_item_cart"
+                                 referencedTableName="shopping_carts"
+                                 referencedColumnNames="id"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableSchemaName="internet_store_test"
+                                      baseTableName="shopping_cart_items"
+                                      constraintName="fk_cart_item_cart"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="staticstartup" id="7">
+        <addForeignKeyConstraint baseTableName="shopping_cart_items"
+                                 baseColumnNames="product_id"
+                                 constraintName="fk_cart_item_product"
+                                 referencedTableName="products"
+                                 referencedColumnNames="id"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableSchemaName="internet_store_test"
+                                      baseTableName="shopping_cart_items"
+                                      constraintName="fk_cart_item_product"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

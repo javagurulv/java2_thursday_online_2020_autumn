@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 import java.util.Scanner;
 
-@Component
+//@Component
 public class FindByCustomerIdUIAction implements UIAction {
 
     @Autowired FindByCustomerIdService findService;

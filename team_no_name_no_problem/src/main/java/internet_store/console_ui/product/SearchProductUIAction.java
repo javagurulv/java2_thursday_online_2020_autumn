@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@Component public class SearchProductUIAction implements UIAction {
+//@Component
+public class SearchProductUIAction implements UIAction {
 
     @Autowired private SearchProductByOtherService searchProductService;
 

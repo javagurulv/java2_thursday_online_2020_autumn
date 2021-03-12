@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@Component
-@Transactional
-public class OrmOrderRepository implements OrderDatabase{
+//@Component
+//@Transactional
+public class OrmOrderRepository implements OrderItemDatabase{
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -19,12 +19,14 @@ public class OrmOrderRepository implements OrderDatabase{
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
         List<ShoppingCart> shoppingCarts = sessionFactory.getCurrentSession()
-                .createQuery("SELECT s FROM Shopping_cart s", ShoppingCart.class)
+                .createQuery("SELECT s FROM ShoppingCart s", ShoppingCart.class)
                 .getResultList();
         for (ShoppingCart shoppingCart : shoppingCarts){
-            List<ShoppingCartItem> shoppingCartItems = (List<ShoppingCartItem>) sessionFactory.getCurrentSession()
-                    .createQuery("SELECT s FROM Shopping_cart_item s WHERE shopping_cart_id = " +
-                            shoppingCart.getId());
+            List<ShoppingCartItem> shoppingCartItems =  sessionFactory.getCurrentSession()
+                    .createQuery("SELECT s FROM ShoppingCartItem s WHERE shopping_cart_id = " +
+                            shoppingCart.getId(), ShoppingCartItem.class)
+                    .getResultList();
+
             Order order = new Order(shoppingCart.getCustomer(), saveShoppingCartToMap(shoppingCartItems), shoppingCart.getSumTotal());
             orders.add(order);
         }

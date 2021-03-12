@@ -1,119 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="Dental Clinic demo project">
-    <meta name="author" content="Valeria">
-    <title>Dental clinic Healthy tooth</title>
-    <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                color: #800040;
-            }
-                page {
-                width: 900px;
-                margin: 0 auto;
-            }
-            #title {
-                height: 100px;
-                background-color: #ffe6f2;
-                font-family: "Brush Script MT", "Courier New", serif;
-                font-size: 4em;
-                color: white;
-                text-shadow: 2px 2px 5px #ffffff;
-                text-align: center;
-            }
-            #content{
-                float: left;
-                width: 1950px;
-                height: 80px;
-                background-color: #ffe6f2;
-            }
-            #footer{
-                overflow: hidden;
-                background-color: #660033;
-            }
-            #menu {
-                float: left;
-                width: 98%;
-                margin: 20px 1.15%;
-                height: 900px;
-                background-color: #ffe6f2;
-                font-family: "Brush Script MT", "Courier New", serif;
-                font-size: 2em;
-                text-align: center;
-            }
-            table {
-                margin-left: auto;
-                margin-right: auto;
-            }
-        </style>
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Dental Clinic demo project">
+        <meta name="author" content="Valeria">
+        <title>Dental clinic Healthy tooth</title>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+    </head>
 
-<body>
+    <body>
 
-    <div id="title">
-        <h3>Search planned visit by personal code</h3>
-    </div>
+        <div class="title">
+            <h3>Search planned visit by personal code</h3>
+        </div>
 
-    <div id="menu">
-        <table>
-            <tr>
-                <td>Personal code:</td>
-            </tr>
-
-            <tr>
-                <form action="/searchPlannedVisitsByPersonalCode" th:object="${request}" method="post">
-                    <td><input type="text" th:field="${request.personalCode}"/></td>
-                    <td>
-                        <input type="submit" value="Search planned visit by personal code"/>
-                        <input type="reset" value="Clear"/>
-                    </td>
-                </form>
-            </tr>
-        </table>
-
-        <td th:if="${errors != null}">
-            <tr th:each="error : ${errors}">
-                <td th:text="${error.field}" />
-                <td th:text="${error.message}" /> </br>
-            </tr>
-        </td>
-
-        <td th:if="${visits != null}">
-            <h4>Planned visits</h4>
+        <div class="menuLong">
             <table>
                 <tr>
-                    <td>Name:</td>
-                    <td>Surname:</td>
-                    <td>Phone:</td>
-                    <td>PersonalCode:</td>
-                    <td>Visit time:</td>
-                    <td>Doctor's name:</td>
-                    <td>Doctor's surname:</td>
+                    <td>Personal code:</td>
                 </tr>
-                <td th:if="${visits != null}">
-                    <tr th:each="info : ${visits}">
-                        <td th:text="${info.personalData.name}" />
-                        <td th:text="${info.personalData.surname}" />
-                        <td width = 100 th:text="${info.personalData.phone}" />
-                        <td width = 200 th:text="${info.personalData.personalCode}" />
-                        <td th:text="${info.visitTime}" />
-                        <td th:text="${info.doctor.name}" />
-                        <td th:text="${info.doctor.surname}" />
-                    </tr>
-                </td>
+
+                <tr>
+                    <form action="/searchPlannedVisitsByPersonalCode" th:object="${request}" method="post">
+                        <td><input type="text" th:field="${request.personalCode}"/></td>
+                        <td>
+                            <input type="submit" value="Search planned visit by personal code"/>
+                            <input type="reset" value="Clear"/>
+                        </td>
+                    </form>
+                </tr>
             </table>
-        </td>
 
-        <form action="/" method="get">
-            <input type="submit" value="Go to main page" name="Submit" />
-        </form>
-    </div>
+            <td th:if="${errors != null}">
+                <tr th:each="error : ${errors}">
+                    <td th:text="${error.field}" />
+                    <td th:text="${error.message}" /> </br>
+                </tr>
+            </td>
 
-</body>
+            <td th:if="${visits != null}">
+                <h4>Planned visits</h4>
+                <table>
+                    <tr>
+                        <td>Name:</td>
+                        <td>Surname:</td>
+                        <td>Phone:</td>
+                        <td>PersonalCode:</td>
+                        <td>Visit time:</td>
+                        <td>Doctor's name:</td>
+                        <td>Doctor's surname:</td>
+                    </tr>
+                    <td th:if="${visits != null}">
+                        <tr th:each="info : ${visits}">
+                            <td th:text="${info.personalData.name}" />
+                            <td th:text="${info.personalData.surname}" />
+                            <td width = 100 th:text="${info.personalData.phone}" />
+                            <td width = 200 th:text="${info.personalData.personalCode}" />
+                            <td th:text="${info.visitTime}" />
+                            <td th:text="${info.doctor.name}" />
+                            <td th:text="${info.doctor.surname}" />
+                        </tr>
+                    </td>
+                </table>
+            </td>
+
+            <form action="/" method="get">
+                <input type="submit" value="Go to main page" name="Submit" />
+            </form>
+        </div>
+
+    </body>
 
 </html>

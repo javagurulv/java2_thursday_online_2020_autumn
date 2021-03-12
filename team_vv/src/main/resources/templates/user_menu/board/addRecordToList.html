@@ -12,59 +12,32 @@
 
 <h3>Add record to list</h3>
 
-<h4>Targets list</h4>
-
-<table>
     <tr>
-        <td>Target id</td>
-        <td>Target name</td>
-    </tr>
-
-    <td th:if="${targets != null}">
-        <tr th:each="targets : ${targets}">
-            <td th:text="${targets.id}" />
-            <td th:text="${targets.name}" />
-        </tr>
-    </td>
-</table>
-
-<h4>Users list</h4>
-
-<table>
-    <tr>
-        <td>User id</td>
-        <td>User first name</td>
-        <td>User last name</td>
-    </tr>
-
-    <td th:if="${users != null}">
-        <tr th:each="users : ${users}">
-            <td th:text="${users.id}" />
-            <td th:text="${users.firstName}" />
-            <td th:text="${users.lastName}" />
-        </tr>
-    </td>
-</table>
-
-
-
-<table>
-    <tr>
-        <td>Target id:</td>
-        <td>User id:</td>
+        <td>Select Target</td>
+        <td>Select User</td>
     </tr>
 
     <tr>
         <form action="/user_menu/board/addRecordToList" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.targetId}"/></td>
-            <td><input type="text" th:field="${request.userId}"/></td>
+            <SELECT th:field="${request.targetId}">
+                <option th:each="targets : ${targets}"
+                        th:value="${targets.id}"
+                        th:text="${targets.name}">
+                </option>
+            </SELECT>
+
+            <SELECT th:field="${request.userId}">
+                <option th:each="users : ${users}"
+                        th:value="${users.id}"
+                        th:text="${users.firstName + ' ' + users.lastName}">
+                </option>
+            </SELECT>
             <td>
                 <input type="submit" value="OK"/>
-                <input type="reset" value="Clear"/>
             </td>
         </form>
     </tr>
-</table>
+
 
 <td th:if="${errors != null}">
     <tr th:each="error : ${errors}">

@@ -1,60 +1,43 @@
 package java2.application_target_list.core.validators.board;
 
-import java2.application_target_list.core.database.target.TargetRepository;
-import java2.application_target_list.core.database.user.UserRepository;
 import java2.application_target_list.core.requests.board.AddRecordRequest;
 import java2.application_target_list.core.responses.CoreError;
-import org.springframework.beans.factory.annotation.Autowired;
+import java2.application_target_list.core.validators.ErrorCreator;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AddRecordValidator {
+public class AddRecordValidator extends ErrorCreator {
 
-    @Autowired
-    TargetRepository targetRepository;
-    @Autowired
-    UserRepository userRepository;
-
-    public List<CoreError> validate(AddRecordRequest request) {
+    public List<CoreError> validate(AddRecordRequest addRecordRequest) {
         List<CoreError> errors = new ArrayList<>();
-
-        if (isTargetIdEmpty(request)){
-            errors.add(new CoreError("Target ID","must not be empty!"));
-        }
-
-        if (isTargetIdNegative(request)){
-            errors.add(new CoreError("Target ID","must not be negative!"));
-        }
-
-        if (isUserIdEmpty(request)){
-            errors.add(new CoreError("User ID", "must not be empty!"));
-        }
-
-        if (isUserIdNegative(request)){
-            errors.add(new CoreError("User ID","must not be negative!"));
-        }
-
-        if (!isTargetIdIDB(request)){
-            errors.add(new CoreError("Target ID","no target with that ID!"));
-        }
-
-        if (!isUserIdIDB(request)){
-            errors.add(new CoreError("User ID","no user with that ID!"));
-        }
-
+        checkTargetId(addRecordRequest, errors);
+        checkUserId(addRecordRequest, errors);
         return errors;
     }
 
-    private boolean isTargetIdIDB(AddRecordRequest request){
-        return targetRepository.isIdInTargetList(request.getTargetId());
+    private void checkUserId(AddRecordRequest addRecordRequest, List<CoreError> errors){
+        if (isUserIdEmpty(addRecordRequest)){
+            errors.add(createCoreError("User ID", "must not be empty!"));
+        }
+
+        if (isUserIdNegative(addRecordRequest)){
+            errors.add(createCoreError("User ID","must not be negative!"));
+        }
     }
 
-    private boolean isUserIdIDB(AddRecordRequest request){
-        return userRepository.isIdInUserList(request.getUserId());
+    private void checkTargetId(AddRecordRequest addRecordRequest, List<CoreError> errors){
+        if (isTargetIdEmpty(addRecordRequest)){
+            errors.add(createCoreError("Target ID","must not be empty!"));
+        }
+
+        if (isTargetIdNegative(addRecordRequest)){
+            errors.add(createCoreError("Target ID","must not be negative!"));
+        }
     }
+
 
     private boolean isTargetIdEmpty(AddRecordRequest request) {
         return request.getTargetId() == null;

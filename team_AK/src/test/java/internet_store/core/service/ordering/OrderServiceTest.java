@@ -2,7 +2,7 @@ package internet_store.core.service.ordering;
 
 import internet_store.core.domain.Client;
 import internet_store.core.domain.Order;
-import internet_store.core.operation.Tax;
+import internet_store.core.operation.OrderSumProperty;
 import internet_store.core.service.cart.TotalSumCartService;
 import internet_store.core.service.session.SessionService;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class OrderServiceTest {
     @Mock
     private SessionService sessionService;
     @Mock
-    private Tax tax;
+    private OrderSumProperty orderSumProperty;
     @InjectMocks
     private OrderService orderService;
 
@@ -34,8 +34,8 @@ public class OrderServiceTest {
         Mockito.when(totalSumCartService.calculateTotalSum()).thenReturn(new BigDecimal("10.00"));
         Mockito.when(numberService.getOrderHaveNumber()).thenReturn(false);
         Mockito.when(numberService.createOrderNumber()).thenReturn("5");
-        Mockito.when(tax.getTaxAmount(new BigDecimal("10.00"))).thenReturn(new BigDecimal("2.10"));
-        Mockito.when(tax.getAmountWithTax(new BigDecimal("10.00"))).thenReturn(new BigDecimal("12.10"));
+        Mockito.when(orderSumProperty.getTaxAmount(new BigDecimal("10.00"))).thenReturn(new BigDecimal("2.10"));
+        Mockito.when(orderSumProperty.getAmountWithTax(new BigDecimal("10.00"))).thenReturn(new BigDecimal("12.10"));
         Mockito.when(sessionService.getSessionClient()).thenReturn(new Client());
 
         Order newOrder = orderService.createOrder();

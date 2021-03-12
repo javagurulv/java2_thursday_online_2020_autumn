@@ -6,21 +6,23 @@ import java2.application_target_list.core.responses.board.SetRecordCompleteDateR
 import java2.application_target_list.core.services.board.SetRecordCompleteDateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Scanner;
 
 @Component
 public class SetRecordCompleteDateUIAction implements UIAction {
 
-    @Autowired SetRecordCompleteDateService setRecordCompleteDateService;
+    @Autowired
+    private SetRecordCompleteDateService setRecordCompleteDateService;
+
     private final Scanner scr = new Scanner(System.in);
 
     @Override
     public void execute() {
         while (true) {
             Long recordId = getIdFromUser();
-            SetRecordCompleteDateRequest setRecordCompleteDateRequest = new SetRecordCompleteDateRequest(recordId);
-            SetRecordCompleteDateResponse setRecordCompleteDateResponse = setRecordCompleteDateService.execute(setRecordCompleteDateRequest);
+
+            SetRecordCompleteDateRequest setRecordCompleteDateRequest = createSetRecordCompleteDateRequest(recordId);
+            SetRecordCompleteDateResponse setRecordCompleteDateResponse = validateSetRecordCompleteDateRequest(setRecordCompleteDateRequest);
 
             if (setRecordCompleteDateResponse.hasErrors()) {
                 printResponseErrors(setRecordCompleteDateResponse);
@@ -29,6 +31,14 @@ public class SetRecordCompleteDateUIAction implements UIAction {
                 break;
             }
         }
+    }
+
+    private SetRecordCompleteDateResponse validateSetRecordCompleteDateRequest(SetRecordCompleteDateRequest setRecordCompleteDateRequest){
+        return setRecordCompleteDateService.execute(setRecordCompleteDateRequest);
+    }
+
+    private SetRecordCompleteDateRequest createSetRecordCompleteDateRequest(Long recordId){
+        return new SetRecordCompleteDateRequest(recordId);
     }
 
     private Long getIdFromUser(){

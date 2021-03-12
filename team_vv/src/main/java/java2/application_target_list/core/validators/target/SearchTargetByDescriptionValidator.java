@@ -1,58 +1,66 @@
 package java2.application_target_list.core.validators.target;
 
+import java2.application_target_list.core.validators.ErrorCreator;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.core.requests.target.SearchTargetByDescriptionRequest;
 import java2.application_target_list.core.responses.CoreError;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SearchTargetByDescriptionValidator {
+public class SearchTargetByDescriptionValidator extends ErrorCreator {
 
-    public List<CoreError> validate(SearchTargetByDescriptionRequest request){
+    public List<CoreError> validate(SearchTargetByDescriptionRequest searchTargetByDescriptionRequest){
         List<CoreError> errors = new ArrayList<>();
-
-        if (isTargetDescriptionEmpty(request)) {
-            errors.add(new CoreError("Target description", "must not be empty!"));
-        }
-
-        if (isOrdering(request)){
-            if (isOrderByEmpty(request)){
-                errors.add(new CoreError("Order by", "must not be empty"));
-            }
-            if (isOrderByIncorrect(request)){
-                errors.add(new CoreError("Order by", "must contain NAME, DESCRIPTION or DEADLINE only!"));
-            }
-            if (isOrderDirectionEmpty(request)){
-                errors.add(new CoreError("Order direction", "must not be empty"));
-            }
-            if (isOrderDirectionIncorrect(request)){
-                errors.add(new CoreError("Order direction", "must contain ASCENDING or DESCENDING only!"));
-            }
-        }
-
-
-        if (isPaging(request)){
-            if (!isPageNumberCorrect(request)) {
-                errors.add(new CoreError("Page number", "must be greater then 0!"));
-            }
-
-            if (isPageNumberEmpty(request)){
-                errors.add(new CoreError("Page number", "must not be empty"));
-            }
-
-            if (!isPageSizeCorrect(request)){
-                errors.add(new CoreError("Page size", "must be greater then 0!"));
-            }
-
-            if (isPageSizeEmpty(request)){
-                errors.add(new CoreError("Page size", "must not be empty"));
-            }
-
-        }
-
+        checkTargetDescription(searchTargetByDescriptionRequest, errors);
+        checkOrdering(searchTargetByDescriptionRequest, errors);
+        checkPaging(searchTargetByDescriptionRequest, errors);
         return errors;
+    }
+
+    private void checkOrdering(SearchTargetByDescriptionRequest searchTargetByDescriptionRequest, List<CoreError> errors){
+        if (isOrdering(searchTargetByDescriptionRequest)){
+            if (isOrderByEmpty(searchTargetByDescriptionRequest)){
+                errors.add(createCoreError("Order by", "must not be empty"));
+            }
+            if (isOrderByIncorrect(searchTargetByDescriptionRequest)){
+                errors.add(createCoreError("Order by", "must contain NAME, DESCRIPTION or DEADLINE only!"));
+            }
+            if (isOrderDirectionEmpty(searchTargetByDescriptionRequest)){
+                errors.add(createCoreError("Order direction", "must not be empty"));
+            }
+            if (isOrderDirectionIncorrect(searchTargetByDescriptionRequest)){
+                errors.add(createCoreError("Order direction", "must contain ASCENDING or DESCENDING only!"));
+            }
+        }
+    }
+
+    private void checkPaging(SearchTargetByDescriptionRequest searchTargetByDescriptionRequest, List<CoreError> errors){
+        if (isPaging(searchTargetByDescriptionRequest)){
+            if (!isPageNumberCorrect(searchTargetByDescriptionRequest)) {
+                errors.add(createCoreError("Page number", "must be greater then 0!"));
+            }
+
+            if (isPageNumberEmpty(searchTargetByDescriptionRequest)){
+                errors.add(createCoreError("Page number", "must not be empty"));
+            }
+
+            if (!isPageSizeCorrect(searchTargetByDescriptionRequest)){
+                errors.add(createCoreError("Page size", "must be greater then 0!"));
+            }
+
+            if (isPageSizeEmpty(searchTargetByDescriptionRequest)){
+                errors.add(createCoreError("Page size", "must not be empty"));
+            }
+        }
+    }
+
+    private void checkTargetDescription(SearchTargetByDescriptionRequest searchTargetByDescriptionRequest, List<CoreError> errors){
+        if (isTargetDescriptionEmpty(searchTargetByDescriptionRequest)) {
+            errors.add(createCoreError("Target description", "must not be empty!"));
+        }
     }
 
     private boolean isOrdering(SearchTargetByDescriptionRequest request){

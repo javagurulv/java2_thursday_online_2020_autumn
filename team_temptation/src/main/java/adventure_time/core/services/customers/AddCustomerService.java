@@ -1,10 +1,10 @@
 package adventure_time.core.services.customers;
 
+import adventure_time.core.database.customers.CustomerRepository;
 import adventure_time.core.domain.Customers;
 import adventure_time.core.requests.customers.AddCustomerRequest;
 import adventure_time.core.responses.CoreError;
 import adventure_time.core.responses.customer.AddCustomerResponse;
-import adventure_time.core.database.customers.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

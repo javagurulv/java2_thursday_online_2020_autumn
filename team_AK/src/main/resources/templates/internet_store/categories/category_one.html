@@ -25,6 +25,9 @@
     .header-h3_center {
         text-align: center;
     }
+    .text_align_right {
+        text-align: right
+    }
     </style>
 </head>
 
@@ -107,11 +110,9 @@
         </div>
         <!-- /.col-lg-3 -->
         <div class="col-lg-9">
-
             <div class="header-h3_center">
                 <p class="h3"><small>Products Category #1</small></p>
             </div>
-
             <div class="text_align_center">
                 <div th:if="${error.length>0}">
                     <div class="alert alert-warning" role="alert">

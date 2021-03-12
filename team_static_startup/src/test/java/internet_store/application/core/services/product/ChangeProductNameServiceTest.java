@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.requests.product.ChangeProductNameRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.product.ChangeProductNameResponse;
@@ -20,20 +20,22 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ChangeProductNameServiceTest {
 
-    @Mock private ProductRepository productRepository;
+    @Mock private JpaProductRepository productRepository;
     @Mock private ChangeProductNameValidator validator;
     @InjectMocks private ChangeProductNameService service;
+
 
     @Test
     public void shouldReturnResponseWithoutErrors() {
         ChangeProductNameRequest request = new ChangeProductNameRequest(1L, "newName");
         Mockito.when(validator.validate(request)).thenReturn(new ArrayList<>());
-        Mockito.when(productRepository.changeProductName(1L, "newName")).thenReturn(true);
+        Mockito.when(productRepository.changeProductName(1L, "newName")).thenReturn(1);
 
         ChangeProductNameResponse response = service.execute(request);
 
         assertTrue(response.isNameChanged());
     }
+
 
     @Test
     public void shouldReturnResponseWithError_whenValidationFails() {

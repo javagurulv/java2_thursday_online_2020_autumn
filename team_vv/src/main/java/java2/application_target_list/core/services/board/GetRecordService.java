@@ -1,33 +1,49 @@
 package java2.application_target_list.core.services.board;
 
-import java2.application_target_list.core.database.board.BoardRepository;
+import java2.application_target_list.core.database.jpa.JpaBoardRepository;
+import java2.application_target_list.core.domain.Record;
 import java2.application_target_list.core.requests.board.GetRecordRequest;
 import java2.application_target_list.core.responses.CoreError;
 import java2.application_target_list.core.responses.board.GetRecordResponse;
+import java2.application_target_list.core.validators.ErrorCreator;
 import java2.application_target_list.core.validators.board.GetRecordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
-public class GetRecordService {
+@Service
+@Transactional
+public class GetRecordService extends ErrorCreator {
 
-    @Autowired private GetRecordValidator getRecordValidator;
-    @Autowired private BoardRepository boardRepository;
+    @Autowired
+    private GetRecordValidator getRecordValidator;
+    @Autowired
+    private JpaBoardRepository jpaBoardRepository;
 
     public GetRecordResponse execute(GetRecordRequest getRecordRequest){
-        List<CoreError> errors = getRecordValidator.validate(getRecordRequest);
+        List<CoreError> errors = checkRequestForErrors(getRecordRequest);
 
-        if (!errors.isEmpty()) {
-            return new GetRecordResponse(errors);
+        if (requestHaveErrors(errors)) {
+            return createResponseWithErrors(errors);
         }
 
-        return boardRepository.getById(getRecordRequest.getId())
-                .map(GetRecordResponse::new)
+        return jpaBoardRepository.findById(getRecordRequest.getId()).map(GetRecordResponse::new)
                 .orElseGet(() -> {
-                     errors.add(new CoreError("id", "Not found"));
-                    return new GetRecordResponse(errors);});
+                    errors.add(createCoreError("id", "Not found"));
+                    return createResponseWithErrors(errors);});
+    }
+
+    private GetRecordResponse createResponseWithErrors(List<CoreError> errors) {
+        return new GetRecordResponse(errors);
+    }
+
+    private boolean requestHaveErrors(List<CoreError> errors){
+        return !errors.isEmpty();
+    }
+
+    private List<CoreError> checkRequestForErrors(GetRecordRequest getRecordRequest){
+        return getRecordValidator.validate(getRecordRequest);
     }
 
 }

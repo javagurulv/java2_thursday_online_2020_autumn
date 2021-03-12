@@ -47,7 +47,7 @@ public class UpdateClientController {
 
         if (clientsResultList.size() > 1) {
             modelMap.addAttribute("error", "Search criterion "
-                    + searchClient + " heve more one result. Please change search criterion and try again.");
+                    + searchClient + " have more one result. Please change search criterion and try again.");
             return "client/update_client";
         }
 

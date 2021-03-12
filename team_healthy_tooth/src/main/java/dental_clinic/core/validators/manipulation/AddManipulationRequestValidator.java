@@ -13,13 +13,13 @@ public class AddManipulationRequestValidator {
     public List<CoreError> validate (AddManipulationRequest addManipulationRequest) {
         List <CoreError> errorList = new ArrayList<>();
 
-        if (addManipulationRequest.getManipulation().getManipulationType() == null ||
-            addManipulationRequest.getManipulation().getManipulationType().isEmpty()) {
+        if (addManipulationRequest.getManipulationType() == null ||
+            addManipulationRequest.getManipulationType().isEmpty()) {
             errorList.add(new CoreError("manipulation type", "Not valid manipulation type"));
         }
 
-        if (addManipulationRequest.getManipulation().getPrice() == null ||
-        addManipulationRequest.getManipulation().getPrice() < 0) {
+        if (addManipulationRequest.getPrice() == null ||
+        addManipulationRequest.getPrice() < 0) {
             errorList.add(new CoreError("price", "Not valid price"));
         }
 

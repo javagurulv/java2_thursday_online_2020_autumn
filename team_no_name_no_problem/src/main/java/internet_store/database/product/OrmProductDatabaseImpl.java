@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class OrmProductDatabaseImpl implements ProductDatabase{
 
     @Autowired private SessionFactory sessionFactory;
@@ -122,25 +122,29 @@ public class OrmProductDatabaseImpl implements ProductDatabase{
 
     @Override
     public void changeTitle(Long id, String newTitle) {
-        Product product = new Product();
-        product.getId();
-        product.setTitle(newTitle);
-        sessionFactory.getCurrentSession().update(product);
-
+        Query query = sessionFactory.getCurrentSession().createQuery("UPDATE Product SET title = :newTitle WHERE " +
+                "id = :id");
+        query.setParameter("newTitle", newTitle);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @Override
     public void changeDescription(Long id, String newDescription) {
-        Product product = new Product();
-        product.setDescription(newDescription);
-        sessionFactory.getCurrentSession().update(product);
+        Query query = sessionFactory.getCurrentSession().createQuery("UPDATE Product SET description = :newDescription " +
+                "WHERE id = :id");
+        query.setParameter("newDescription", newDescription);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @Override
     public void changePrice(Long id, Integer newPrice) {
-        Product product = new Product();
-        product.setPrice(newPrice);
-        sessionFactory.getCurrentSession().update(product);
+        Query query = sessionFactory.getCurrentSession().createQuery("UPDATE Product SET price = :newPrice " +
+                "WHERE id = :id");
+        query.setParameter("newPrice", newPrice);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @Override

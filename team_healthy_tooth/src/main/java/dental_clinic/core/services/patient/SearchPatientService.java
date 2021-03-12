@@ -61,8 +61,10 @@ public class SearchPatientService {
                     searchPatientRequest.getInputForSearch()));
             return new SearchPatientResponse(errors, new ArrayList<>());
         }
-        patients = order(patients, searchPatientRequest.getOrdering());
-        patients = paging(patients, searchPatientRequest.getPaging());
+        Ordering ordering = new Ordering(searchPatientRequest.getOrderBy(), searchPatientRequest.getOrderDirection());
+        Paging paging = new Paging(searchPatientRequest.getPageNumber(), searchPatientRequest.getPageSize());
+        patients = order(patients, ordering);
+        patients = paging(patients, paging);
         return new SearchPatientResponse(patients);
     }
 
@@ -74,8 +76,11 @@ public class SearchPatientService {
                     searchPatientRequest.getInputForSearch()));
             return new SearchPatientResponse(errors, new ArrayList<>());
         }
-        patients = order(patients, searchPatientRequest.getOrdering());
-        patients = paging(patients, searchPatientRequest.getPaging());
+        Ordering ordering = new Ordering(searchPatientRequest.getOrderBy(), searchPatientRequest.getOrderDirection());
+        Paging paging = new Paging(searchPatientRequest.getPageNumber(), searchPatientRequest.getPageSize());
+
+        patients = order(patients, ordering);
+        patients = paging(patients, paging);
         return new SearchPatientResponse(patients);
     }
 

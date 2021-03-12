@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/customer")
 public class CustomerRestController {
 
-    @Autowired
-    private GetCustomerService getCustomerService;
+    @Autowired private GetCustomerService getCustomerService;
+    @Autowired private AddCustomerService addCustomerService;
+    @Autowired private UpdateCustomerService updateCustomerService;
+    @Autowired private DeleteByCustomerIdService deleteByCustomerIdService;
 
     @GetMapping(path = "/{id}", produces = "application/json")
     public GetCustomerResponse getCustomer(@PathVariable Long id) {
@@ -19,15 +21,12 @@ public class CustomerRestController {
         return getCustomerService.execute(request);
     }
 
-    @Autowired private AddCustomerService addCustomerService;
-
     @PostMapping(path = "/",
             consumes = "application/json",
             produces = "application/json")
     public AddCustomerResponse addCustomer(@RequestBody AddCustomerRequest request) {
         return addCustomerService.execute(request);
     }
-    @Autowired private UpdateCustomerService updateCustomerService;
 
     @PutMapping(path = "/{id}",
             consumes = "application/json",
@@ -35,8 +34,6 @@ public class CustomerRestController {
     public UpdateCustomerResponse updateCustomer(@RequestBody UpdateCustomerRequest request) {
         return updateCustomerService.execute(request);
     }
-
-    @Autowired private DeleteByCustomerIdService deleteByCustomerIdService;
 
     @DeleteMapping(path = "/{id}", produces = "application/json")
     public DeleteByCustomerIdResponse deleteBook(@PathVariable Long id) {

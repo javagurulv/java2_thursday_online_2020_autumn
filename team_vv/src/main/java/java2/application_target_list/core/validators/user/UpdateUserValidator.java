@@ -1,44 +1,42 @@
 package java2.application_target_list.core.validators.user;
 
-import java2.application_target_list.core.database.user.UserRepository;
-import java2.application_target_list.core.requests.user.ChangeUserFirstNameRequest;
-import java2.application_target_list.core.requests.user.ChangeUserLastNameRequest;
 import java2.application_target_list.core.requests.user.UpdateUserRequest;
 import java2.application_target_list.core.responses.CoreError;
-import org.springframework.beans.factory.annotation.Autowired;
+import java2.application_target_list.core.validators.ErrorCreator;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UpdateUserValidator {
+public class UpdateUserValidator extends ErrorCreator {
 
-    public List<CoreError> validate(UpdateUserRequest updateUserRequest,
-                                    UserRepository userRepository) {
+    public List<CoreError> validate(UpdateUserRequest updateUserRequest) {
         List<CoreError> errors = new ArrayList<>();
+        checkUserId(updateUserRequest, errors);
+        checkUserFirstName(updateUserRequest, errors);
+        checkUserLastName(updateUserRequest, errors);
+        return errors;
+    }
 
-        if (!userRepository.isIdInUserList(updateUserRequest.getUserIdToChange())){
-            errors.add(new CoreError("User ID;","no user with that ID"));
-        }
-
+    private void checkUserId(UpdateUserRequest updateUserRequest, List<CoreError> errors){
         if (isUserIdEmpty(updateUserRequest)){
-            errors.add(new CoreError("User ID","must not be empty!"));
+            errors.add(createCoreError("User ID","must not be empty!"));
         }
         if (isUserIdNegative(updateUserRequest)){
-            errors.add(new CoreError("User ID","must not be negative!"));
+            errors.add(createCoreError("User ID","must not be negative!"));
         }
+    }
 
+    private void checkUserFirstName(UpdateUserRequest updateUserRequest, List<CoreError> errors){
         if (isUserLastNameEmpty(updateUserRequest)){
-            errors.add(new CoreError("User new last name","must not be empty!"));
+            errors.add(createCoreError("User new last name","must not be empty!"));
         }
+    }
 
+    private void checkUserLastName(UpdateUserRequest updateUserRequest, List<CoreError> errors){
         if (isUserFirstNameEmpty(updateUserRequest)){
-            errors.add(new CoreError("User new first name","must not be empty!"));
+            errors.add(createCoreError("User new first name","must not be empty!"));
         }
-
-        return errors;
-
     }
 
     private boolean isUserFirstNameEmpty(UpdateUserRequest request) {

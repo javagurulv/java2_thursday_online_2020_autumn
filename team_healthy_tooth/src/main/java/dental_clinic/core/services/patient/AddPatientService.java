@@ -1,6 +1,7 @@
 package dental_clinic.core.services.patient;
 
 import dental_clinic.core.domain.Patient;
+import dental_clinic.core.domain.PersonalData;
 import dental_clinic.core.requests.patient.AddPatientRequest;
 import dental_clinic.core.responses.patient.AddPatientResponse;
 import dental_clinic.core.responses.CoreError;
@@ -25,7 +26,10 @@ public class AddPatientService {
             return new AddPatientResponse(errors);
         }
 
-        Patient patient = new Patient((addPatientRequest.getPersonalData()));
+        PersonalData personalData = new PersonalData(addPatientRequest.getName(), addPatientRequest.getSurname(),
+                addPatientRequest.getPhone(), addPatientRequest.getPersonalCode());
+
+        Patient patient = new Patient(personalData);
 
         if (patientRepository.containsSpecificPersonalData(patient.getPersonalData())){
             errors.add(new CoreError("database", "Database contains the same patient"));

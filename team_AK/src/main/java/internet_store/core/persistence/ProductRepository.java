@@ -36,14 +36,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Long getCategoryThreeCount();
 
     @Query(value = "SELECT COUNT(*) FROM product WHERE title LIKE :productTitle%", nativeQuery = true)
-    Long searcByProductTitleCount(@Param("productTitle") String productTitle);
+    Long searchByProductTitleCount(@Param("productTitle") String productTitle);
 
     @Query(value = "SELECT * FROM product WHERE title LIKE :productTitle% limit :limit offset :offset", nativeQuery = true)
     List<Product> searchByTitle(@Param("productTitle") String productTitle,@Param("limit") int limit,
                                 @Param("offset") int offset);
 
     @Query(value = "SELECT COUNT(*) FROM product WHERE price LIKE :productPrice%", nativeQuery = true)
-    Long searcByProductPriceCount(@Param("productPrice") String productTitle);
+    Long searchByProductPriceCount(@Param("productPrice") String productTitle);
 
     @Query(value = "SELECT * FROM product WHERE price LIKE :productPrice% limit :limit offset :offset", nativeQuery = true)
     List<Product> searchByPrice(@Param("productPrice") String productTitle,@Param("limit") int limit,

@@ -1,6 +1,5 @@
 package internet_store.core.persistence;
 
-import internet_store.core.domain.ProductInCart;
 import internet_store.core.domain.Session;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +13,4 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     @Query(value = "SELECT * FROM session WHERE session_id=?", nativeQuery = true)
     List<Session> getSessionBySessionId(String sessionId);
-
-    @Query(value = "SELECT * FROM session WHERE deleted=false AND ordered=false limit ? offset ?", nativeQuery = true)
-    List<ProductInCart> getLimitsCartRecords(int limit, int offset);
 }

@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ChangeTargetDeadlineController {
 
-    @Autowired private GetAllTargetsService getAllTargetsService;
-    @Autowired private ChangeTargetDeadlineService changeTargetDeadlineService;
+    @Autowired
+    private GetAllTargetsService getAllTargetsService;
+    @Autowired
+    private ChangeTargetDeadlineService changeTargetDeadlineService;
 
     @GetMapping(value = "/admin_menu/target/changeTargetDeadline")
     public String showChangeTargetDeadlinePage(ModelMap modelMap){

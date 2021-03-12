@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user_menu/user")
 public class UserRestUserController {
 
-    @Autowired private GetUserService getUserService;
-    @Autowired private SearchUserByFirstNameService searchUserByFirstNameService;
-    @Autowired private SearchUserByLastNameService searchUserByLastNameService;
+    @Autowired
+    private GetUserService getUserService;
+    @Autowired
+    private SearchUserByFirstNameService searchUserByFirstNameService;
+    @Autowired
+    private SearchUserByLastNameService searchUserByLastNameService;
 
     @GetMapping(path = "{id}", produces = "application/json")
     public GetUserResponse getUser(@PathVariable Long id) {

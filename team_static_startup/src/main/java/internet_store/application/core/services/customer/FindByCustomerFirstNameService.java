@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.requests.customer.FindByCustomerFirstNameRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.customer.FindByCustomerFirstNameResponse;
@@ -16,7 +17,7 @@ public class FindByCustomerFirstNameService {
     @Autowired
     FindByCustomerFirstNameValidator validator;
     @Autowired
-    CustomerRepository customerRepository;
+    JpaCustomerRepository customerRepository;
 
     public FindByCustomerFirstNameResponse execute(FindByCustomerFirstNameRequest request) {
         List<CoreError> errors = validator.validate(request);

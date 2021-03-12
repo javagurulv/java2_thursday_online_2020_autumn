@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity
+//@Entity
 @Table (name = "tours")
 public class Tours {
 
@@ -12,7 +12,7 @@ public class Tours {
 
     @Id
     @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -20,47 +20,50 @@ public class Tours {
     private Events event;       // foreign key
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "release_date", nullable = false)
-    private Date releaseDate;
+    @Column(name = "tour_start", nullable = false)
+    private Date tourStart;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "starting_date", nullable = false)
-    private Date startingDate;
-
-    @Column (name = "ticket_coast", nullable = false)
+    @Column (name = "ticket_coast", nullable = false, precision = 8, scale = 2)
     private Double ticketCoast;
+
+    @Column (name = "available_tickets", nullable = false)
+    private Integer availableTickets;
 
     @Column (name = "completed")
     private Boolean completed;
 
-    @Column (name = "sold_tickets")
-    private Integer soldTickets;
-
     public Tours () {}
 
-    public Tours(Events event, Date releaseDate, Date startingDate, Double ticketCoast) {
+    public Tours(Events event, Date tourStart, Double ticketCoast) {
         this.event = event;
-        this.releaseDate = releaseDate;
-        this.startingDate = startingDate;
+        this.tourStart = tourStart;
         this.ticketCoast = ticketCoast;
+        this.availableTickets = event.getMaxNumberParticipants();
+        this.completed = false;
+
     }
 
     public Boolean isCompleted() {
-        return event.getMaxNumberParticipants().equals(soldTickets);
+        return this.completed;
     }
 
     public Boolean isComing() {
         Date now = new Date();
-        return (startingDate.getTime() - now.getTime()) < TWELVE_HOURS;
+        return (this.tourStart.getTime() - now.getTime()) < TWELVE_HOURS;
     }
 
-    public Boolean incTicketAmount() {
-        if (this.soldTickets >= event.getMaxNumberParticipants()) return false;
-        this.soldTickets++;
-        return true;
+    public Boolean decAvailableTickets() {
+        if (this.availableTickets > 0) {
+            if (--this.availableTickets == 0) {
+                this.completed = true;
+            }
+            return true;
+        }
+        return false;
     }
 
     //*******************************************
+
 
     public Long getId() {
         return id;
@@ -78,20 +81,12 @@ public class Tours {
         this.event = event;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
+    public Date getTourStart() {
+        return tourStart;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public Date getStartingDate() {
-        return startingDate;
-    }
-
-    public void setStartingDate(Date startingDate) {
-        this.startingDate = startingDate;
+    public void setTourStart(Date tourStart) {
+        this.tourStart = tourStart;
     }
 
     public Double getTicketCoast() {
@@ -102,20 +97,20 @@ public class Tours {
         this.ticketCoast = ticketCoast;
     }
 
+    public Integer getAvailableTickets() {
+        return availableTickets;
+    }
+
+    public void setAvailableTickets(Integer availableTickets) {
+        this.availableTickets = availableTickets;
+    }
+
     public Boolean getCompleted() {
         return completed;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setCompleted(Boolean completed) {
         this.completed = completed;
-    }
-
-    public Integer getSoldTickets() {
-        return soldTickets;
-    }
-
-    public void setSoldTickets(Integer soldTickets) {
-        this.soldTickets = soldTickets;
     }
 
     @Override
@@ -125,16 +120,15 @@ public class Tours {
         Tours tours = (Tours) o;
         return Objects.equals(id, tours.id) &&
                 Objects.equals(event, tours.event) &&
-                Objects.equals(releaseDate, tours.releaseDate) &&
-                Objects.equals(startingDate, tours.startingDate) &&
+                Objects.equals(tourStart, tours.tourStart) &&
                 Objects.equals(ticketCoast, tours.ticketCoast) &&
-                Objects.equals(completed, tours.completed) &&
-                Objects.equals(soldTickets, tours.soldTickets);
+                Objects.equals(availableTickets, tours.availableTickets) &&
+                Objects.equals(completed, tours.completed);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, event, releaseDate, startingDate, ticketCoast, completed, soldTickets);
+        return Objects.hash(id, event, tourStart, ticketCoast, availableTickets, completed);
     }
 
     @Override
@@ -142,11 +136,10 @@ public class Tours {
         return "Tours{" +
                 "id=" + id +
                 ", event=" + event +
-                ", releaseDate=" + releaseDate +
-                ", startingDate=" + startingDate +
+                ", tourStart=" + tourStart +
                 ", ticketCoast=" + ticketCoast +
+                ", availableTickets=" + availableTickets +
                 ", completed=" + completed +
-                ", soldTickets=" + soldTickets +
                 '}';
     }
 }

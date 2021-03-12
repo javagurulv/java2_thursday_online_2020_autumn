@@ -1,12 +1,9 @@
 package eu.retarded.internetstore.core.services.product;
 
+import eu.retarded.internetstore.core.domain.Product;
 import eu.retarded.internetstore.core.requests.product.AddProductRequest;
-import eu.retarded.internetstore.core.responses.CoreError;
 import eu.retarded.internetstore.core.responses.product.AddProductResponse;
-import eu.retarded.internetstore.core.services.validators.product.AddProductValidator;
-import eu.retarded.internetstore.database.product.ProductDatabase;
-import eu.retarded.internetstore.matchers.ProductMatcher;
-import org.junit.jupiter.api.Assertions;
+import eu.retarded.internetstore.database.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,46 +11,42 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.util.HashSet;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @ExtendWith(MockitoExtension.class)
-public class AddProductServiceTest {
-
+class AddProductServiceTest {
     @Mock
-    private ProductDatabase database;
+    private ProductRepository productRepository;
     @Mock
-    private AddProductValidator validator;
+    private Validator validator;
     @InjectMocks
     private AddProductService subject;
 
     @Test
-    public void should_return_response_with_errors_when_validation_fails() {
-        AddProductRequest request = new AddProductRequest("nam", "description", 225.5);
-        List<CoreError> errors = new ArrayList<>();
-        errors.add(new CoreError("Name", "Must be between 4 and 10 characters"));
-        Mockito.when(validator.validate(request)).thenReturn(errors);
-
-        AddProductResponse response = subject.execute(request);
-        Assertions.assertTrue(response.hasErrors());
-        Assertions.assertEquals(response.getErrors().size(), 1);
-        Assertions.assertEquals(response.getErrors().get(0).getField(), "Name");
-        Assertions.assertEquals(response.getErrors().get(0).getMessage(), "Must be between 4 and 10 characters");
-        Mockito.verifyNoInteractions(database);
-        Mockito.verify(validator).validate(request);
+    void add_product_success() {
+        AddProductRequest request = new AddProductRequest("Igor12345",
+                "1234567890qwertyuiopasdfghjklzxcvbnm1234567890", 345.25,5);
+       Mockito.when(validator.validate(request)).thenReturn(new HashSet<ConstraintViolation<AddProductRequest>>());
+        Product product = new Product("Igor12345", "1234567890qwertyuiopasdfghjklzxcvbnm1234567890",
+                345.25,5);
+        //product.setId(1L);
+        product.setStatus(1);
+        Product result = new Product();
+        result.setName("Igor12345");
+        result.setDescription("1234567890qwertyuiopasdfghjklzxcvbnm1234567890");
+        result.setPrice(BigDecimal.valueOf(345.25));
+        result.setCount(5);
+        result.setId(1L);
+        result.setStatus(1);
+        Mockito.when(productRepository.save(product)).thenReturn(result);
+        AddProductResponse addProductResponse = subject.execute(request);
+        assertThat(addProductResponse.getProduct()).isEqualTo(result);
+        Mockito.verify(productRepository).save(product);
     }
 
-    @Test
-    public void should_add_product_to_database() {
-        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
-        AddProductRequest request = new AddProductRequest("Name", "Description", 222.2);
-        AddProductResponse response = subject.execute(request);
-        Assertions.assertFalse(response.hasErrors());
-        Mockito.verify(database).add(argThat(new ProductMatcher("Name", "Description")));
-
-    }
 }

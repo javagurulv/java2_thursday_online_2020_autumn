@@ -2,7 +2,7 @@ package internet_store.web_ui.controller.order;
 
 import internet_store.core.domain.Client;
 import internet_store.core.domain.Order;
-import internet_store.core.operation.Tax;
+import internet_store.core.operation.OrderSumProperty;
 import internet_store.core.persistence.ClientRepository;
 import internet_store.core.request.session.SaveClientSesionRequest;
 import internet_store.core.service.cart.CartProductsCountService;
@@ -40,7 +40,7 @@ public class CompleteOrderController {
     @Autowired
     private CreateOrderNumberService numberService;
     @Autowired
-    private Tax tax;
+    private OrderSumProperty orderSumProperty;
     @Autowired
     private SaveSessionService saveSessionService;
     @Autowired
@@ -94,6 +94,6 @@ public class CompleteOrderController {
     private void refreshData(ModelMap modelMap) {
         modelMap.addAttribute("cartCount", cartCountService.getCartCount());
         modelMap.addAttribute("orderNumber", numberService.getFullOrderNumber());
-        modelMap.addAttribute("currency_symbol", tax.getCurrencySymbol());
+        modelMap.addAttribute("currency_symbol", orderSumProperty.getCurrencySymbol());
     }
 }

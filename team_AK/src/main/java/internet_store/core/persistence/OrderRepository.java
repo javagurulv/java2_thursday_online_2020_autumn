@@ -16,4 +16,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "SELECT COUNT(DISTINCT number) FROM order_for_client", nativeQuery = true)
     long countUniqOrders();
+
+    boolean existsByNumber(String orderNumber);
+
+    boolean existsByClientPhoneNumber(String phoneNumber);
 }

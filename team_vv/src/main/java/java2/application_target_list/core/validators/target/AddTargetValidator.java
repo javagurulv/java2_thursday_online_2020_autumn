@@ -1,33 +1,40 @@
 package java2.application_target_list.core.validators.target;
 
 import java2.application_target_list.core.requests.target.AddTargetRequest;
+import java2.application_target_list.core.validators.ErrorCreator;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.core.responses.CoreError;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AddTargetValidator {
+public class AddTargetValidator extends ErrorCreator {
 
-    public List<CoreError> validate(AddTargetRequest request) {
+    public List<CoreError> validate(AddTargetRequest addTargetRequest) {
         List<CoreError> errors = new ArrayList<>();
-
-        if (isTargetNameEmpty(request)){
-            errors.add(new CoreError("Target name","must not be empty!"));
-        }
-
-        if (isTargetDescriptionEmpty(request)){
-            errors.add(new CoreError("Target description", "must not be empty!"));
-        }
-
-        if (isDeadlineNegative(request)) {
-            errors.add(new CoreError("Target deadline", "must not be negative!"));
-        }
-
+        checkTargetName(addTargetRequest, errors);
+        checkTargetDescription(addTargetRequest, errors);
+        checkTargetDeadline(addTargetRequest, errors);
         return errors;
+    }
+
+    private void checkTargetDeadline(AddTargetRequest addTargetRequest, List<CoreError> errors){
+        if (isDeadlineNegative(addTargetRequest)) {
+            errors.add(createCoreError("Target deadline", "must not be negative!"));
+        }
+    }
+
+    private void checkTargetDescription(AddTargetRequest addTargetRequest, List<CoreError> errors){
+        if (isTargetDescriptionEmpty(addTargetRequest)){
+            errors.add(createCoreError("Target description", "must not be empty!"));
+        }
+    }
+
+    private void checkTargetName(AddTargetRequest addTargetRequest, List<CoreError> errors){
+        if (isTargetNameEmpty(addTargetRequest)){
+            errors.add(createCoreError("Target name","must not be empty!"));
+        }
     }
 
     private boolean isTargetNameEmpty(AddTargetRequest request) {
@@ -41,5 +48,4 @@ public class AddTargetValidator {
     private boolean isDeadlineNegative(AddTargetRequest request){
         return request.getDeadline() < 0;
     }
-
 }

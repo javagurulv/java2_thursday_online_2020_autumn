@@ -6,7 +6,7 @@ import internet_store.application.core.services.shopping_cart.FindAllShoppingCar
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class FindAllShoppingCartsUIAction implements UIAction {
 
     @Autowired

@@ -1,7 +1,7 @@
 package internet_store.application.core.services.product;
 
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.requests.product.DeleteProductRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.product.DeleteProductResponse;
@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class DeleteProductService {
 
-    @Autowired private ProductRepository productRepository;
+    @Autowired private JpaProductRepository productRepository;
     @Autowired private DeleteProductValidator validator;
 
     public DeleteProductResponse execute(DeleteProductRequest request){
@@ -26,7 +26,7 @@ public class DeleteProductService {
         }
         return productRepository.findById(request.getId())
                 .map(product -> {
-                    productRepository.deleteByProductId(request.getId());
+                    productRepository.deleteById(request.getId());
                     return new DeleteProductResponse(product);
                 })
                 .orElseGet(() -> {

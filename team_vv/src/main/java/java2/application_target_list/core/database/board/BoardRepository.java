@@ -1,7 +1,6 @@
 package java2.application_target_list.core.database.board;
 
 import java2.application_target_list.core.domain.Record;
-
 import java.util.List;
 import java.util.Optional;
 

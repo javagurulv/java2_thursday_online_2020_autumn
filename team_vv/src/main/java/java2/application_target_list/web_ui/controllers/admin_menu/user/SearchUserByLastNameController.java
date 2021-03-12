@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SearchUserByLastNameController {
 
-    @Autowired private SearchUserByLastNameService searchUserByLastNameService;
+    @Autowired
+    private SearchUserByLastNameService searchUserByLastNameService;
 
     @GetMapping(value = "/admin_menu/user/searchUserByLastName")
     public String showSearchUserByFirstNameAdminPage(ModelMap modelMap) {

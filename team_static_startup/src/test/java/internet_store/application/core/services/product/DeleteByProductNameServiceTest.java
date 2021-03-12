@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.requests.product.DeleteByProductNameRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.product.DeleteByProductNameResponse;
@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 @RunWith(MockitoJUnitRunner.class)
 public class DeleteByProductNameServiceTest {
 
-    @Mock private ProductRepository productRepository;
+    @Mock private JpaProductRepository productRepository;
     @Mock private DeleteByProductNameValidator validator;
     @InjectMocks private DeleteByProductNameService service;
 
@@ -56,7 +56,7 @@ public class DeleteByProductNameServiceTest {
     @Test
     public void shouldDeleteProductWithProductNameFromDatabase() {
         Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
-        Mockito.when(productRepository.deleteByProductName("Receiver")).thenReturn(true);
+        Mockito.when(productRepository.deleteByProductName("Receiver")).thenReturn(1);
         DeleteByProductNameRequest request = new DeleteByProductNameRequest("Receiver");
         DeleteByProductNameResponse response = service.execute(request);
         assertFalse(response.hasErrors());

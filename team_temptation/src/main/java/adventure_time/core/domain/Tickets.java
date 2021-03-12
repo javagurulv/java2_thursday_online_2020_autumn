@@ -4,46 +4,35 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity
+//@Entity
 @Table (name = "tickets")
 public class Tickets {
 
     @Id
     @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column (name = "number", unique = true, nullable = false)
-    private String number;
 
     @ManyToOne
     @JoinColumn (name = "tour", nullable = false)
     private Tours tour;
 
     @ManyToOne
-    @JoinColumn (name = "customer", nullable = false)
+    @JoinColumn (name = "customer")
     private Customers customer;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "issue_date", nullable = false)
-    private Date issueDate;
+    @Column(name = "sale_date")
+    private Date saleDate;
 
-    @Column (name = "validity")
-    private Boolean validity;
+    @Column (name = "available")
+    private Boolean available;
 
     public Tickets() {}
 
-    public Tickets(String number, Tours tour, Customers customer) {
-        this.number = number;
+    public Tickets(Tours tour) {
         this.tour = tour;
-        this.customer = customer;
-        this.issueDate = new Date();
-        this.validity = true;
     }
-
-    public Boolean isValid () { return this.validity;}
-
-    /*------------------------------------------------------*/
 
     public Long getId() {
         return id;
@@ -51,14 +40,6 @@ public class Tickets {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public Tours getTour() {
@@ -77,20 +58,31 @@ public class Tickets {
         this.customer = customer;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
+    public Date getSaleDate() {
+        return saleDate;
     }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
+    public void setSaleDate(Date saleDate) {
+        this.saleDate = saleDate;
     }
 
-    public Boolean getValidity() {
-        return validity;
+    public Boolean getAvailable() {
+        return available;
     }
 
-    public void setValidity(Boolean validity) {
-        this.validity = validity;
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    @Override
+    public String toString() {
+        return "Tickets{" +
+                "id=" + id +
+                ", tour=" + tour +
+                ", customer=" + customer +
+                ", saleDate=" + saleDate +
+                ", available=" + available +
+                '}';
     }
 
     @Override
@@ -99,27 +91,14 @@ public class Tickets {
         if (o == null || getClass() != o.getClass()) return false;
         Tickets tickets = (Tickets) o;
         return Objects.equals(id, tickets.id) &&
-                Objects.equals(number, tickets.number) &&
                 Objects.equals(tour, tickets.tour) &&
                 Objects.equals(customer, tickets.customer) &&
-                Objects.equals(issueDate, tickets.issueDate) &&
-                Objects.equals(validity, tickets.validity);
+                Objects.equals(saleDate, tickets.saleDate) &&
+                Objects.equals(available, tickets.available);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, tour, customer, issueDate, validity);
-    }
-
-    @Override
-    public String toString() {
-        return "Tickets{" +
-                "id=" + id +
-                ", number='" + number + '\'' +
-                ", tour=" + tour +
-                ", customer=" + customer +
-                ", issueDate=" + issueDate +
-                ", validity=" + validity +
-                '}';
+        return Objects.hash(id, tour, customer, saleDate, available);
     }
 }

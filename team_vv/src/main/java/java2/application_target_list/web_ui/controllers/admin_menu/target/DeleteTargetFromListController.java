@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class DeleteTargetFromListController {
 
-    @Autowired private GetAllTargetsService getAllTargetsService;
-    @Autowired private DeleteTargetService deleteTargetService;
+    @Autowired
+    private GetAllTargetsService getAllTargetsService;
+    @Autowired
+    private DeleteTargetService deleteTargetService;
 
     @GetMapping(value = "/admin_menu/target/deleteTargetFromList")
     public String showDeleteTargetPage(ModelMap modelMap) {

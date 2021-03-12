@@ -1,11 +1,11 @@
 package eu.retarded.internetstore.core.services.product;
 
+import eu.retarded.internetstore.core.domain.Category;
+import eu.retarded.internetstore.core.domain.Product;
 import eu.retarded.internetstore.core.requests.product.AddProductToCategoryRequest;
-import eu.retarded.internetstore.core.responses.CoreError;
 import eu.retarded.internetstore.core.responses.product.AddProductToCategoryResponse;
-import eu.retarded.internetstore.core.services.validators.product.AddProductToCategoryValidator;
-import eu.retarded.internetstore.database.category.CategoriesDatabase;
-import eu.retarded.internetstore.database.product.ProductDatabase;
+import eu.retarded.internetstore.database.CategoryRepository;
+import eu.retarded.internetstore.database.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,62 +13,48 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.util.HashSet;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class AddProductToCategoryServiceTest {
     @Mock
-    private CategoriesDatabase categoriesDatabase;
+    private ProductRepository productRepository;
     @Mock
-    private ProductDatabase productDatabase;
+    private CategoryRepository categoryRepository;
     @Mock
-    private AddProductToCategoryValidator validator;
+    private Validator validator;
     @InjectMocks
     private AddProductToCategoryService subject;
 
     @Test
-    void should_return_response_with_errors_when_validation_fails() {
-        AddProductToCategoryRequest request = new AddProductToCategoryRequest(-1, -1);
-        List<CoreError> errors = new ArrayList<>();
-        errors.add(new CoreError("ProductID", "Must not be empty or negative"));
-        errors.add(new CoreError("CategoryID", "Must not be empty or negative"));
-        Mockito.when(validator.validate(request)).thenReturn(errors);
-
-        AddProductToCategoryResponse response = subject.execute(request);
-        assertThat(response.hasErrors()).isTrue();
-        assertThat(response.getErrors().size()).isEqualTo(2);
-        assertThat(response.getErrors()).allMatch(coreError -> coreError.getField().equals("ProductID") ||
-                coreError.getMessage().equals("Must not be empty or negative"));
-        Mockito.verifyNoInteractions(categoriesDatabase);
-        Mockito.verifyNoInteractions(productDatabase);
+    void add_product_to_category_success() {
+        AddProductToCategoryRequest request = new AddProductToCategoryRequest(1L, 1L);
+        Mockito.when(validator.validate(request))
+                .thenReturn(new HashSet<ConstraintViolation<AddProductToCategoryRequest>>());
+        Category category = new Category();
+        category.setName("Cars");
+        Product product = new Product("Igor12345", "1234567890qwertyuiopasdfghjklzxcvbnm1234567890",
+                345,5);
+        product.setCategory(category);
+        product.setStatus(1);
+        Product result = new Product();
+        result.setName("Igor12345");
+        result.setDescription("1234567890qwertyuiopasdfghjklzxcvbnm1234567890");
+        result.setPrice(BigDecimal.valueOf(345));
+        result.setCount(5);
+        result.setId(1L);
+        result.setStatus(1);
+        result.setCategory(category);
+        Mockito.when(categoryRepository.getOne(1l)).thenReturn(category);
+        Mockito.when(productRepository.getOne(1l)).thenReturn(product);
+        Mockito.when(productRepository.save(product)).thenReturn(result);
+        AddProductToCategoryResponse addProductToCategoryResponse = subject.execute(request);
+        assertThat(addProductToCategoryResponse.productInCategory()).isEqualTo(true);
+        Mockito.verify(productRepository).save(product);
     }
-
-    @Test
-    void should_return_response_with_errors_when_validation_fails_notInDataBase() {
-        AddProductToCategoryRequest request = new AddProductToCategoryRequest(1, 1);
-        List<CoreError> errors = new ArrayList<>();
-        errors.add(new CoreError("ProductID", "Product with this ID does not exist"));
-        errors.add(new CoreError("CategoryID", "Product with this ID does not exist"));
-        Mockito.when(validator.validate(request)).thenReturn(errors);
-
-        AddProductToCategoryResponse response = subject.execute(request);
-        assertThat(response.hasErrors()).isTrue();
-        assertThat(response.getErrors().size()).isEqualTo(2);
-        assertThat(response.getErrors()).allMatch(coreError -> coreError.getField().equals("ProductID") ||
-                coreError.getMessage().equals("Product with this ID does not exist"));
-        Mockito.verifyNoInteractions(categoriesDatabase);
-        Mockito.verifyNoInteractions(productDatabase);
-    }
-
-    @Test
-    void should_add_product_to_category() {
-        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
-        AddProductToCategoryResponse response = subject.execute(new AddProductToCategoryRequest(1, 1));
-        assertThat(response.hasErrors()).isFalse();
-    }
-
 }

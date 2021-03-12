@@ -24,7 +24,7 @@ public class RemoveCustomerService {
             return new RemoveCustomerResponse(errors);
         }
 
-        if (!database.deactivate(request.getCustomerId())) {
+        if (!database.delete(request.getCustomerId())) {
             errors.add(new CoreError("customerId",
                     "There is no customer with ID: " + request.getCustomerId() + " in the database"));
             return new RemoveCustomerResponse(errors);

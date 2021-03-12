@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ShowAllTargetsController {
 
-    @Autowired private GetAllTargetsService getAllTargetsService;
+    @Autowired
+    private GetAllTargetsService getAllTargetsService;
 
     @GetMapping(value = "/admin_menu/target/showAllTargets")
     public String showAllTargetsAdminPage(ModelMap modelMap) {

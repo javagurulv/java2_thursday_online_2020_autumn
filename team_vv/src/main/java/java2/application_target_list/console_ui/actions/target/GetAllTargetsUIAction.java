@@ -3,7 +3,6 @@ package java2.application_target_list.console_ui.actions.target;
 import java2.application_target_list.core.requests.target.GetAllTargetsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.core.domain.Target;
 import java2.application_target_list.console_ui.UIAction;
 import java2.application_target_list.core.responses.target.GetAllTargetsResponse;
@@ -13,17 +12,18 @@ import java2.application_target_list.core.services.target.GetAllTargetsService;
 @Component
 public class GetAllTargetsUIAction implements UIAction {
 
-    @Autowired GetAllTargetsService getAllTargetsService;
+    @Autowired
+    private GetAllTargetsService getAllTargetsService;
 
     @Override
     public void execute() {
-        GetAllTargetsRequest request = createRequest();
-        GetAllTargetsResponse response = createResponse(request);
+        GetAllTargetsRequest getAllTargetsRequest = createGetAllTargetsRequest();
+        GetAllTargetsResponse getAllTargetsResponse = validateGetAllTargetsRequest(getAllTargetsRequest);
 
-        if (isTargetListEmpty(response)) {
+        if (isTargetListEmpty(getAllTargetsResponse)) {
             printResponseMessage();
         } else {
-           printTargetList(response);
+           printTargetList(getAllTargetsResponse);
         }
 
     }
@@ -48,11 +48,11 @@ public class GetAllTargetsUIAction implements UIAction {
         return response.getTargetList().isEmpty();
     }
 
-    private GetAllTargetsResponse createResponse(GetAllTargetsRequest request){
-        return getAllTargetsService.execute(request);
+    private GetAllTargetsResponse validateGetAllTargetsRequest(GetAllTargetsRequest getAllTargetsRequest){
+        return getAllTargetsService.execute(getAllTargetsRequest);
     }
 
-    private GetAllTargetsRequest createRequest(){
+    private GetAllTargetsRequest createGetAllTargetsRequest(){
         return new GetAllTargetsRequest();
     }
 

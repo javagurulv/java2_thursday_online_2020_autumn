@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.requests.customer.UpdateCustomerRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.customer.UpdateCustomerResponse;
@@ -16,7 +17,7 @@ import java.util.List;
 public class UpdateCustomerService {
 
     @Autowired
-    private CustomerRepository ormCustomerRepository;
+    private JpaCustomerRepository ormCustomerRepository;
     @Autowired private UpdateCustomerRequestValidator validator;
 
     public UpdateCustomerResponse execute(UpdateCustomerRequest request) {
@@ -25,7 +26,7 @@ public class UpdateCustomerService {
             return new UpdateCustomerResponse(errors);
         }
 
-        return ormCustomerRepository.getById(request.getId())
+        return ormCustomerRepository.findById(request.getId())
                 .map(customer -> {
                     customer.setCustomerFirstName(request.getNewFirstName());
                     customer.setCustomerSecondName(request.getNewSecondName());

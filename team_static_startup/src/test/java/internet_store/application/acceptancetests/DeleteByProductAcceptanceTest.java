@@ -9,14 +9,13 @@ import internet_store.application.core.services.product.AddProductService;
 import internet_store.application.core.services.product.DeleteProductByProductService;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Profile;
 import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 
-@Profile("hibernate")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DeleteByProductAcceptanceTest {
 
     private ApplicationContext appContext;

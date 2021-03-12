@@ -36,19 +36,15 @@ public class AcceptanceTest6 {
 
     @Test
     public void test(){
-        PersonalData personalData1 = new PersonalData("Name", "Surname", "12345678", "25038910523");
-        PersonalData personalData2 = new PersonalData("NameC", "SurnameC", "12345679", "25038910525");
-
-        AddPatientRequest addPatientRequest1 = new AddPatientRequest(personalData1);
+        AddPatientRequest addPatientRequest1 = new AddPatientRequest("Name", "Surname", "12345678", "25038910523");
         addPatientService().execute(addPatientRequest1);
 
-        AddPatientRequest addPatientRequest2 = new AddPatientRequest(personalData2);
+        AddPatientRequest addPatientRequest2 = new AddPatientRequest("NameC", "SurnameC", "12345679", "25038910525");
         addPatientService().execute(addPatientRequest2);
 
         SearchPatientRequest searchPatientRequest =
                 new SearchPatientRequest("SurnameC",
-                        new Ordering("name", OrderingDirection.ASC),
-                        new Paging(1, 100));
+                        "name", OrderingDirection.ASC, 1, 100);
         SearchPatientResponse searchPatientResponse = searchPatientService().execute(searchPatientRequest);
 
         Long id = searchPatientResponse.getPatients().get(0).getId();

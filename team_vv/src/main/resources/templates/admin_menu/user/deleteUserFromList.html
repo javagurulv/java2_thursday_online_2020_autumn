@@ -13,38 +13,23 @@
 
 <h3>Delete user from list</h3>
 
-<table>
     <tr>
-        <td>User id</td>
-        <td>User first name</td>
-        <td>User last name</td>
-    </tr>
-
-    <td th:if="${users != null}">
-        <tr th:each="users : ${users}">
-            <td th:text="${users.id}" />
-            <td th:text="${users.firstName}" />
-            <td th:text="${users.lastName}" />
-        </tr>
-    </td>
-
-</table>
-
-<table>
-    <tr>
-        <td>User id:</td>
+        <td>Select user</td>
     </tr>
 
     <tr>
         <form action="/admin_menu/user/deleteUserFromList" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.userIdToDelete}"/></td>
+            <SELECT th:field="${request.userIdToDelete}">
+                <option th:each="users : ${users}"
+                        th:value="${users.id}"
+                        th:text="${users.firstName + ' ' + users.lastName}">
+                </option>
+            </SELECT>
             <td>
                 <input type="submit" value="OK"/>
-                <input type="reset" value="Clear"/>
             </td>
         </form>
     </tr>
-</table>
 
 <td th:if="${errors != null}">
     <tr th:each="error : ${errors}">

@@ -27,25 +27,21 @@ public class SearchCustomerService {
         }
 
         Optional<Customers> customer;
+        String field;
+        String criteria;
         if (request.getCustomerID() == null) {
             customer = database.findByEmail(request.getCustomerEmail());
+            field = "customerEmail";
+            criteria = request.getCustomerEmail();
         } else {
             customer = database.findById(request.getCustomerID());
+            field = "customerID";
+            criteria = request.getCustomerID().toString();
         }
 
         if (customer.isPresent()) {
             return new SearchCustomerResponse(customer.get(), null);
         } else {
-            String field;
-            String criteria;
-            if (request.getCustomerID() == null) {
-                field = "customerEmail";
-                criteria = request.getCustomerEmail();
-            } else {
-                field = "customerID";
-                criteria = request.getCustomerID().toString();
-            }
-
             CoreError error = new CoreError(field, "The customer with " + field + " \"" + criteria + "\" is not present in DB");
             errors.add(error);
             return new SearchCustomerResponse(null, errors);

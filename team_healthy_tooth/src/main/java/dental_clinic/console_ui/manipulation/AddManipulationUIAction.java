@@ -28,9 +28,7 @@ public class AddManipulationUIAction implements UIAction {
 
         Integer price = inputFormatsValidator.inputInteger("Please enter manipulation's price");
 
-        Manipulation manipulation = new Manipulation(manipulationType, price);
-
-        AddManipulationRequest addManipulationRequest = new AddManipulationRequest(manipulation);
+        AddManipulationRequest addManipulationRequest = new AddManipulationRequest(manipulationType, price);
         AddManipulationResponse addManipulationResponse = addManipulationService.execute(addManipulationRequest);
 
         if (addManipulationResponse.hasErrors()) {

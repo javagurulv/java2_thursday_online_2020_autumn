@@ -1,57 +1,93 @@
 package eu.retarded.internetstore.core.services.user;
 
+import eu.retarded.internetstore.core.domain.Cart;
+import eu.retarded.internetstore.core.domain.Role;
+import eu.retarded.internetstore.core.domain.User;
 import eu.retarded.internetstore.core.requests.user.AddUserRequest;
-import eu.retarded.internetstore.core.responses.CoreError;
+import eu.retarded.internetstore.core.responses.cart.AddCartResponse;
 import eu.retarded.internetstore.core.responses.user.AddUserResponse;
-import eu.retarded.internetstore.core.services.validators.user.AddUserValidator;
-import eu.retarded.internetstore.database.user.UsersDatabase;
-import eu.retarded.internetstore.matchers.UserMatcher;
-import org.junit.jupiter.api.Assertions;
+import eu.retarded.internetstore.core.services.cart.AddCartService;
+import eu.retarded.internetstore.database.RoleRepository;
+import eu.retarded.internetstore.database.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
+
 
 @ExtendWith(MockitoExtension.class)
-public class AddUserServiceTest {
+class AddUserServiceTest {
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
-    private UsersDatabase userDatabase;
+    private RoleRepository roleRepository;
+
     @Mock
-    private AddUserValidator validator;
+    private PasswordEncoder encoder;
+
+    @Mock
+    private Validator validator;
+
+    @Mock
+    private AddCartService addCartService;
+
     @InjectMocks
     private AddUserService subject;
 
     @Test
-    public void should_return_response_with_errors_when_validation_fails() {
-        AddUserRequest request = new AddUserRequest("123", "region123456");
-        List<CoreError> errors = new ArrayList<>();
-        errors.add(new CoreError("Login", "Must be between 3 and 32 characters"));
-        Mockito.when(validator.validate(request)).thenReturn(errors);
+    void add_user_success() {
+        Set<Long> roles= new HashSet<>();
+        roles.add(1L);
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(new Role());
+        AddUserRequest request = new AddUserRequest("Igor12345", "1234567890",
+                "1234567890","Ivan12345", "Ivanko123","jupiter@lmr.lv",roles);
+        Mockito.when(validator.validate(request)).thenReturn(new HashSet<ConstraintViolation<AddUserRequest>>());
+        Cart cart = new Cart();
+        cart.setId(1L);
+        User user = new User();
+        user.setUsername(request.getUserName());
+        user.setName(request.getName());
+        user.setSurname(request.getSurname());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        user.setRoles(new HashSet<>(roleList));
+        user.setCart(cart);
+        user.setStatus(1);
 
-        AddUserResponse response = subject.execute(request);
-        Assertions.assertTrue(response.hasErrors());
-        Assertions.assertEquals(response.getErrors().size(), 1);
-        Assertions.assertEquals(response.getErrors().get(0).getField(), "Login");
-        Assertions.assertEquals(response.getErrors().get(0).getMessage(), "Must be between 3 and 32 characters");
-        Mockito.verifyNoInteractions(userDatabase);
-        Mockito.verify(validator).validate(request);
-    }
+        User result = new User();
+        result.setId(1L);
+        result.setUsername("Igor12345");
+        result.setPassword("1234567890");
+        result.setCart(cart);
+        result.setName("Ivan12345");
+        result.setSurname("Ivanko123");
+        result.setEmail("jupiter@lmr.lv");
+        result.setCart(cart);
+        result.setRoles(new HashSet<>(roleList));
+        result.setStatus(1);
 
-    @Test
-    public void add_user_to_database() {
-        Mockito.when(validator.validate(any())).thenReturn(new ArrayList<>());
-        AddUserRequest request = new AddUserRequest("Title", "Region1234567");
-        AddUserResponse response = subject.execute(request);
-        Assertions.assertFalse(response.hasErrors());
-        Mockito.verify(userDatabase).add(argThat(new UserMatcher("Title", "Region1234567")));
+        Mockito.when(encoder.encode(request.getPassword())).thenReturn("1234567890");
+        Mockito.when(addCartService.execute(any())).thenReturn(new AddCartResponse(cart));
+        Mockito.when(roleRepository.findAllById(request.getRolesId())).thenReturn(roleList);
+        Mockito.when(userRepository.save(user)).thenReturn(result);
+
+        AddUserResponse addUserResponse = subject.execute(request);
+        assertThat(addUserResponse.getUser()).isEqualTo(result);
+        Mockito.verify(userRepository).save(user);
     }
 }

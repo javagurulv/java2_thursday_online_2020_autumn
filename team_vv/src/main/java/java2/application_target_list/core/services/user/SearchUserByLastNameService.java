@@ -1,6 +1,6 @@
 package java2.application_target_list.core.services.user;
 
-import java2.application_target_list.core.database.user.UserRepository;
+import java2.application_target_list.core.database.jpa.JpaUserRepository;
 import java2.application_target_list.core.domain.User;
 import java2.application_target_list.core.requests.Ordering;
 import java2.application_target_list.core.requests.Paging;
@@ -10,13 +10,14 @@ import java2.application_target_list.core.responses.user.SearchUserByLastNameRes
 import java2.application_target_list.core.validators.user.SearchUserByLastNameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
+@Transactional
 public class SearchUserByLastNameService {
 
     @Value("${search.ordering.enabled}")
@@ -25,22 +26,43 @@ public class SearchUserByLastNameService {
     @Value("${search.paging.enabled}")
     private boolean pagingEnabled;
 
-    @Autowired private UserRepository userRepository;
-    @Autowired private SearchUserByLastNameValidator searchUserByLastNameValidator;
+    @Autowired
+    private SearchUserByLastNameValidator searchUserByLastNameValidator;
+    @Autowired
+    private JpaUserRepository jpaUserRepository;
 
-    public SearchUserByLastNameResponse execute(SearchUsersByLastNameRequest request){
-        List<CoreError> errors = searchUserByLastNameValidator.validate(request);
+    public SearchUserByLastNameResponse execute(SearchUsersByLastNameRequest searchUsersByLastNameRequest){
+        List<CoreError> errors = checkRequestForErrors(searchUsersByLastNameRequest);
 
-        if (!errors.isEmpty()){
-            return new SearchUserByLastNameResponse(errors, null);
+        if (requestHaveErrors(errors)){
+            return createSearchUserByLastNameResponseWithErrors(errors);
         }
 
-        List<User> users = userRepository.findUserByLastName(request.getLastName());
-        users = order(users, request.getOrdering());
-        users = paging(users, request.getPaging());
+        List<User> users = findUsersInDB(searchUsersByLastNameRequest);
+        users = order(users, searchUsersByLastNameRequest.getOrdering());
+        users = paging(users, searchUsersByLastNameRequest.getPaging());
 
+        return createSearchUserByLastNameResponse(users);
+    }
+
+    private SearchUserByLastNameResponse createSearchUserByLastNameResponse(List<User> users){
         return new SearchUserByLastNameResponse(null, users);
+    }
 
+    private List<User> findUsersInDB(SearchUsersByLastNameRequest searchUsersByLastNameRequest){
+        return jpaUserRepository.findByLastName(searchUsersByLastNameRequest.getLastName());
+    }
+
+    private SearchUserByLastNameResponse createSearchUserByLastNameResponseWithErrors(List<CoreError> errors){
+        return new SearchUserByLastNameResponse(errors, null);
+    }
+
+    private boolean requestHaveErrors(List<CoreError> errors){
+        return !errors.isEmpty();
+    }
+
+    private List<CoreError> checkRequestForErrors(SearchUsersByLastNameRequest searchUsersByLastNameRequest){
+        return searchUserByLastNameValidator.validate(searchUsersByLastNameRequest);
     }
 
     private List<User> order(List<User> users, Ordering ordering) {

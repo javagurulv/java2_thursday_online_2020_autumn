@@ -1,44 +1,62 @@
 package dental_clinic.core.requests.patient;
 
 import dental_clinic.core.domain.OrderingDirection;
-import dental_clinic.core.requests.Ordering;
-import dental_clinic.core.requests.Paging;
 
 public class SearchPatientRequest {
 
     private String inputForSearch;
-    private Ordering ordering = new Ordering("name", OrderingDirection.ASC);
-    private Paging paging = new Paging(1, 100);
+    private String orderBy = "name";
+    private OrderingDirection orderDirection = OrderingDirection.ASC;
+    private Integer pageNumber = 1;
+    private Integer pageSize = 100;
 
     public SearchPatientRequest() { }
 
-    public SearchPatientRequest(String inputForSearch, Ordering ordering, Paging paging) {
+    public SearchPatientRequest(String inputForSearch, String orderBy, OrderingDirection orderDirection, Integer pageNumber, Integer pageSize) {
         this.inputForSearch = inputForSearch;
-        this.ordering = ordering;
-        this.paging = paging;
+        this.orderBy = orderBy;
+        this.orderDirection = orderDirection;
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
     }
 
     public String getInputForSearch() {
         return inputForSearch;
     }
 
-    public Ordering getOrdering(){
-        return ordering;
-    }
-
-    public Paging getPaging(){
-        return paging;
-    }
-
     public void setInputForSearch(String inputForSearch) {
         this.inputForSearch = inputForSearch;
     }
 
-    public void setOrdering(Ordering ordering) {
-        this.ordering = ordering;
+    public String getOrderBy() {
+        return orderBy;
     }
 
-    public void setPaging(Paging paging) {
-        this.paging = paging;
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public OrderingDirection getOrderDirection() {
+        return orderDirection;
+    }
+
+    public void setOrderDirection(OrderingDirection orderDirection) {
+        this.orderDirection = orderDirection;
+    }
+
+    public Integer getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

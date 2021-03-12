@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.requests.product.DeleteProductRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.product.DeleteProductResponse;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(MockitoJUnitRunner.class)
 public class DeleteProductServiceTest {
 
-    @Mock private ProductRepository productRepository;
+    @Mock private JpaProductRepository productRepository;
     @Mock private DeleteProductValidator validator;
     @InjectMocks DeleteProductService service;
 

@@ -1,6 +1,5 @@
 package java2.application_target_list.core.domain;
 
-import java.math.BigInteger;
 import java.util.Objects;
 import javax.persistence.*;
 

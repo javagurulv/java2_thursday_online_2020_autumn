@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AddTargetUserController {
 
-    @Autowired private AddTargetService addTargetService;
+    @Autowired
+    private AddTargetService addTargetService;
 
     @GetMapping(value = "/user_menu/target/addTargetToList")
     public String showAddTargetUserPage(ModelMap modelMap) {

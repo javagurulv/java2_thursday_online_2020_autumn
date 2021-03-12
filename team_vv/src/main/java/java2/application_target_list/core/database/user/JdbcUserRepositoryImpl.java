@@ -1,20 +1,16 @@
 package java2.application_target_list.core.database.user;
 
-
-import java2.application_target_list.core.domain.Target;
 import java2.application_target_list.core.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 
 //@Component
 public class JdbcUserRepositoryImpl implements UserRepository {
 
-    @Autowired JdbcTemplate jdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public void addUser(User user) {

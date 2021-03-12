@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-@Component
+//@Component
 public class AddProductUIAction implements UIAction {
 
     @Autowired

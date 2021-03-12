@@ -32,14 +32,13 @@ public class FindReadersService {
             return new FindReadersResponse(null,errors);
         }
 
-        List<Reader> Readers = find(request);
-        Readers = order(Readers, request.getOrdering());
-        Readers = paging(Readers, request.getPaging());
-
-        return new FindReadersResponse(Readers, null);
+        List<Reader> readers = find(request);
+        readers = order(readers, request.getOrdering());
+        readers = paging(readers, request.getPaging());
+        return new FindReadersResponse(readers, null);
     }
 
-    private List<Reader> order(List<Reader> Readers, Ordering ordering) {
+    private List<Reader> order(List<Reader> readers, Ordering ordering) {
         if (ordering != null) {
             Comparator<Reader> comparator = ordering.getOrderBy().equals("firstName")
                     ? Comparator.comparing(Reader::getReaderFirstName)
@@ -47,38 +46,38 @@ public class FindReadersService {
             if (ordering.getOrderDirection().equals("DESC")) {
                 comparator = comparator.reversed();
             }
-            return Readers.stream().sorted(comparator).collect(Collectors.toList());
+            return readers.stream().sorted(comparator).collect(Collectors.toList());
         } else {
-            return Readers;
+            return readers;
         }
     }
 
     private List<Reader> find(FindReadersRequest request) {
-        List<Reader> Readers = new ArrayList<>();
+        List<Reader> readers = new ArrayList<>();
         if (request.isReaderFirstNameProvided() && !request.isReaderLastNameProvided()) {
-            Readers = readerRepository.findReaderByFirstName(request.getReaderFirstName());
+            readers = readerRepository.findReaderByFirstName(request.getReaderFirstName());
         }
         if (!request.isReaderFirstNameProvided() && request.isReaderLastNameProvided()) {
-            Readers = readerRepository.findReaderByLastName(request.getReaderLastName());
+            readers = readerRepository.findReaderByLastName(request.getReaderLastName());
         }
         if (request.isReaderFirstNameProvided() && request.isReaderLastNameProvided()) {
-            Readers = readerRepository.findByFirstNameAndLastName(request.getReaderFirstName(), request.getReaderLastName());
+            readers = readerRepository.findByFirstNameAndLastName(request.getReaderFirstName(), request.getReaderLastName());
         }
         if (!request.isReaderFirstNameProvided() && !request.isReaderLastNameProvided() && request.isReaderPersonalCodeProvided()) {
-            Readers = readerRepository.findReaderByPersonalCode(request.getReaderPersonalCode());
+            readers = readerRepository.findReaderByPersonalCode(request.getReaderPersonalCode());
         }
-        return Readers;
+        return readers;
     }
 
-    private List<Reader> paging(List<Reader> Readers, Paging paging) {
+    private List<Reader> paging(List<Reader> readers, Paging paging) {
         if (paging != null) {
             int skip = (paging.getPageNumber() - 1) * paging.getPageSize();
-            return Readers.stream()
+            return readers.stream()
                     .skip(skip)
                     .limit(paging.getPageSize())
                     .collect(Collectors.toList());
         } else {
-            return Readers;
+            return readers;
         }
     }
 }

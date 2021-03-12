@@ -1,25 +1,25 @@
 package java2.application_target_list.core.services.target;
 
-import java2.application_target_list.core.database.target.TargetRepository;
+import java2.application_target_list.core.database.jpa.JpaTargetRepository;
 import java2.application_target_list.core.requests.Ordering;
 import java2.application_target_list.core.requests.Paging;
+import java2.application_target_list.core.validators.ErrorCreator;
 import java2.application_target_list.core.validators.target.SearchTargetByDescriptionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java2.application_target_list.core.domain.Target;
 import java2.application_target_list.core.requests.target.SearchTargetByDescriptionRequest;
 import java2.application_target_list.core.responses.CoreError;
 import java2.application_target_list.core.responses.target.SearchTargetByDescriptionResponse;
-
-
-
+import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
+@Transactional
 public class SearchTargetByDescriptionService {
 
     @Value("${search.ordering.enabled}")
@@ -28,23 +28,43 @@ public class SearchTargetByDescriptionService {
     @Value("${search.paging.enabled}")
     private boolean pagingEnabled;
 
+    @Autowired
+    private SearchTargetByDescriptionValidator validator;
+    @Autowired
+    private JpaTargetRepository jpaTargetRepository;
 
-    @Autowired private TargetRepository targetRepository;
-    @Autowired private SearchTargetByDescriptionValidator validator;
+    public SearchTargetByDescriptionResponse execute(SearchTargetByDescriptionRequest searchTargetByDescriptionRequest){
+        List<CoreError> errors = checkRequestForErrors(searchTargetByDescriptionRequest);
 
-    public SearchTargetByDescriptionResponse execute(SearchTargetByDescriptionRequest request){
-        List<CoreError> errors = validator.validate(request);
-
-        if (!errors.isEmpty()) {
-            return new SearchTargetByDescriptionResponse(errors, null);
+        if (requestHaveErrors(errors)) {
+            return createSearchTargetByDescriptionResponseWithErrors(errors);
         }
 
-        List<Target> targets = targetRepository.findByTargetDescription(request.getDescription());
-        targets = order(targets, request.getOrdering());
-        targets = paging(targets, request.getPaging());
+        List<Target> targets = findAllTargetsByDescription(searchTargetByDescriptionRequest);
+        targets = order(targets, searchTargetByDescriptionRequest.getOrdering());
+        targets = paging(targets, searchTargetByDescriptionRequest.getPaging());
 
+        return createSearchTargetByDescriptionResponse(targets);
+    }
 
+    private SearchTargetByDescriptionResponse createSearchTargetByDescriptionResponse(List<Target> targets) {
         return new SearchTargetByDescriptionResponse(null, targets);
+    }
+
+    private List<Target> findAllTargetsByDescription(SearchTargetByDescriptionRequest searchTargetByDescriptionRequest){
+        return jpaTargetRepository.findByDescription(searchTargetByDescriptionRequest.getDescription());
+    }
+
+    private SearchTargetByDescriptionResponse createSearchTargetByDescriptionResponseWithErrors(List<CoreError> errors){
+        return new SearchTargetByDescriptionResponse(errors, null);
+    }
+
+    private boolean requestHaveErrors(List<CoreError> errors) {
+        return !errors.isEmpty();
+    }
+
+    private List<CoreError> checkRequestForErrors(SearchTargetByDescriptionRequest searchTargetByDescriptionRequest){
+        return validator.validate(searchTargetByDescriptionRequest);
     }
 
 

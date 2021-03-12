@@ -1,6 +1,5 @@
 package dental_clinic_tests.core.validators_tests.doctor;
 
-import dental_clinic.core.domain.Doctor;
 import dental_clinic.core.requests.doctor.AddDoctorRequest;
 import dental_clinic.core.responses.CoreError;
 import dental_clinic.core.validators.doctor.AddDoctorRequestValidator;
@@ -16,7 +15,7 @@ public class AddDoctorRequestValidatorTest {
 
     @Test
     public void testEmptyName(){
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor(null, "Bobik", "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(null, "Bobik", "12345678");
         CoreError expectedError = new CoreError("name", "Name can't be empty");
         List<CoreError> errorList = addDoctorRequestValidator.validate(addDoctorRequest);
 
@@ -26,7 +25,7 @@ public class AddDoctorRequestValidatorTest {
 
     @Test
     public void testEmptySurname(){
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor("Name", "", "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest("Name", "", "12345678");
         CoreError expectedError = new CoreError("surname", "Surname can't be empty");
         List<CoreError> errorList = addDoctorRequestValidator.validate(addDoctorRequest);
 
@@ -36,7 +35,7 @@ public class AddDoctorRequestValidatorTest {
 
     @Test
     public void testEmptySurnameAndName(){
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor(null, "", "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(null, "", "12345678");
         CoreError expectedError1 = new CoreError("name", "Name can't be empty");
         CoreError expectedError2 = new CoreError("surname", "Surname can't be empty");
         List<CoreError> errorList = addDoctorRequestValidator.validate(addDoctorRequest);
@@ -48,7 +47,7 @@ public class AddDoctorRequestValidatorTest {
 
     @Test
     public void testNoErrors(){
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor("Name", "Surname", "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest("Name", "Surname", "12345678");
         List<CoreError> errorList = addDoctorRequestValidator.validate(addDoctorRequest);
 
         assertTrue(errorList.isEmpty());

@@ -25,17 +25,35 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "category_id")
-    private Long categoryId;
+    @Column(name = "count")
+    private int count;
 
-    public Product(String name, String description, double price) {
+    @Column(name = "status")
+    private int status;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    //private Long categoryId=category.getId();
+
+    public Product(String name, String description, double price, int count) {
         this.name = name;
         this.description = description;
         BigDecimal tmp = new BigDecimal(Double.toString(price));
         this.price = tmp.setScale(2, RoundingMode.DOWN);
+        this.count = count;
     }
 
     public Product() {
+    }
+
+    public String getShortDescription(int length) {
+        if (description.length() < length) {
+            return description;
+        }
+        String shortDescription = description.substring(0, length);
+        return shortDescription + "...";
     }
 }
 

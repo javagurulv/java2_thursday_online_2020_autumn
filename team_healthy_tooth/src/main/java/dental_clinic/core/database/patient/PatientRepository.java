@@ -13,7 +13,7 @@ public interface PatientRepository {
 
     void addPatient(PersonalData personalData);
 
-    PersonalData getPersonalDataById(Long id);
+    Optional<PersonalData> getPersonalDataById(Long id);
 
     List<PersonalData> findPatientsBySurname(String surname);
 

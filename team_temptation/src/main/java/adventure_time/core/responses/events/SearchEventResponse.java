@@ -8,14 +8,14 @@ import java.util.List;
 
 public class SearchEventResponse extends CoreResponse {
 
-    private List<Events> events;
+    private Events events;
 
-    public SearchEventResponse(List<Events> events, List<CoreError> errors) {
+    public SearchEventResponse(Events events, List<CoreError> errors) {
         super(errors);
         this.events = events;
     }
 
-    public List<Events> getEvents() {
+    public Events getEvents() {
         return events;
     }
 }

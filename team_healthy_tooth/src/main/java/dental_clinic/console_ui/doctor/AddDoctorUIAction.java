@@ -29,8 +29,7 @@ public class AddDoctorUIAction implements UIAction {
         System.out.println("Please enter phone");
         String phone = in.nextLine();
 
-        Doctor doctor = new Doctor(name, surname, phone);
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(doctor);
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(name, surname, phone);
 
         AddDoctorResponse addDoctorResponse = addDoctorService.execute(addDoctorRequest);
 

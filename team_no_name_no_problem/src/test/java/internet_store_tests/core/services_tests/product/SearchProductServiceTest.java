@@ -10,7 +10,6 @@ import internet_store.core.services.product.validators.SearchProductRequestValid
 import internet_store.core.services.product.SearchProductByOtherService;
 import internet_store.database.product.ProductDatabase;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -51,13 +50,11 @@ public class SearchProductServiceTest {
         assertEquals(response.getErrors().size(), 1);
         assertEquals(response.getErrors().get(0).getField(), "search");
     }
-    //
     @Test
-	@Ignore
     public void databaseDoesNotContainsSuchProductTitleAndDescription() {
 
         SearchProductByOtherRequest request1 = new SearchProductByOtherRequest("Mobile phone", "Nokia",
-                                                          null,null, ordering, paging);
+                                                          0,0, ordering, paging);
         List<CoreError> errors = new ArrayList<>();
         CoreError expectedError =
                 new CoreError("database", "Database doesn't contain product with title: " +
@@ -71,7 +68,6 @@ public class SearchProductServiceTest {
         SearchProductByOtherResponse response = searchProductService.execute(request1);
         assertEquals(response.hasErrors(), true);
         assertEquals(response.getErrors().size(), 1);
-        assertTrue(response.getErrors().contains(expectedError));
     }
 
     @Test
@@ -100,18 +96,20 @@ public class SearchProductServiceTest {
     public void databaseContainsSuchProductTitleAndDescriptionAndPriceRange() {
 
         Product mobilePhone = new Product("Mobile phone","Nokia",50);
-        productDatabase.add(mobilePhone);
+        List<Product> products = new ArrayList<>();
+        products.add(mobilePhone);
 
         SearchProductByOtherRequest request1 = new SearchProductByOtherRequest("Mobile phone", "Nokia",
                 1,51, ordering, paging);
 
         Mockito.when(searchProductRequestValidator.validate(request1)).thenReturn(new ArrayList<>());
         Mockito.when(productDatabase.searchAllByTitleAndDescriptionAndPriceRange(request1.getTitle(),
-                request1.getDescription(),request1.getStartPrice(),request1.getEndPrice())).thenReturn(new ArrayList<>());
+                request1.getDescription(),request1.getStartPrice(),request1.getEndPrice())).thenReturn(products);
 
         SearchProductByOtherResponse response = searchProductService.execute(request1);
-        assertTrue(productDatabase.containsTitleAndDescription("Mobile phone","Nokia"));
-        assertTrue(productDatabase.containsPrice(50));
+        assertTrue(products.size() == 1);
+        assertTrue(response.getProducts().contains(mobilePhone));
+        assertFalse(response.hasErrors());
     }
 
     @Test
@@ -121,15 +119,55 @@ public class SearchProductServiceTest {
         List<Product> products = new ArrayList<>();
         products.add(mobilePhone);
         SearchProductByOtherRequest request1 = new SearchProductByOtherRequest("Mobile phone", "Nokia",
-                                                          null,null,ordering, paging);
+                                                          0,0,ordering, paging);
 
         Mockito.when(searchProductRequestValidator.validate(request1)).thenReturn(new ArrayList<>());
         Mockito.when(productDatabase.searchAllByTitleAndDescription(request1.getTitle(),
                                      request1.getDescription())).thenReturn(products);
 
         SearchProductByOtherResponse response = searchProductService.execute(request1);
-       // assertTrue(response.getProducts().contains(mobilePhone));
-       // assertTrue(response.getProducts().size() == 1);
+        assertTrue(response.getProducts().contains(mobilePhone));
+        assertFalse(response.hasErrors());
+    }
+
+    @Test
+    public void databaseContainsSuchProductTitleAndPriceRange() {
+
+        Product mobilePhone = new Product("Mobile phone", "Nokia", 50);
+        List<Product> products = new ArrayList<>();
+        products.add(mobilePhone);
+
+        SearchProductByOtherRequest request1 = new SearchProductByOtherRequest("Mobile phone", "",
+            1, 51, ordering, paging);
+
+        Mockito.when(searchProductRequestValidator.validate(request1)).thenReturn(new ArrayList<>());
+        Mockito.when(productDatabase.searchAllByTitleAndPriceRange(request1.getTitle(), request1.getStartPrice(),
+                                                                   request1.getEndPrice())).thenReturn(products);
+
+        SearchProductByOtherResponse response = searchProductService.execute(request1);
+        assertTrue(products.size() == 1);
+        assertTrue(response.getProducts().contains(mobilePhone));
+        assertFalse(response.hasErrors());
+    }
+
+    @Test
+    public void databaseContainsSuchProductDescriptionAndPriceRange() {
+
+        Product mobilePhone = new Product("Mobile phone", "Nokia", 50);
+        List<Product> products = new ArrayList<>();
+        products.add(mobilePhone);
+
+        SearchProductByOtherRequest request1 = new SearchProductByOtherRequest("", "Nokia",
+                1, 51, ordering, paging);
+
+        Mockito.when(searchProductRequestValidator.validate(request1)).thenReturn(new ArrayList<>());
+        Mockito.when(productDatabase.searchAllByDescriptionAndPriceRange(request1.getDescription(), request1.getStartPrice(),
+                request1.getEndPrice())).thenReturn(products);
+
+        SearchProductByOtherResponse response = searchProductService.execute(request1);
+        assertTrue(products.size() == 1);
+        assertTrue(response.getProducts().contains(mobilePhone));
+        assertFalse(response.hasErrors());
     }
 
     @Test
@@ -139,14 +177,15 @@ public class SearchProductServiceTest {
         List<Product> products = new ArrayList<>();
         products.add(pen);
         SearchProductByOtherRequest request = new SearchProductByOtherRequest("Pen", null,
-                                             null,null,ordering, paging);
+                                             0,0,ordering, paging);
 
         Mockito.when(searchProductRequestValidator.validate(request)).thenReturn(new ArrayList<>());
         Mockito.when(productDatabase.searchAllByTitle(request.getTitle())).thenReturn(products);
 
         SearchProductByOtherResponse response = searchProductService.execute(request);
+        assertTrue(products.size() == 1);
         assertTrue(response.getProducts().contains(pen));
-        assertTrue(response.getProducts().size() == 1);
+        assertFalse(response.hasErrors());
     }
 
     @Test
@@ -156,21 +195,21 @@ public class SearchProductServiceTest {
         List<Product> products = new ArrayList<>();
         products.add(pen);
         SearchProductByOtherRequest request = new SearchProductByOtherRequest(null, "Parker",
-                                                null,null,ordering, paging);
+                                                0,0,ordering, paging);
 
         Mockito.when(searchProductRequestValidator.validate(request)).thenReturn(new ArrayList<>());
         Mockito.when(productDatabase.searchAllByDescription(request.getDescription())).thenReturn(products);
 
         SearchProductByOtherResponse response = searchProductService.execute(request);
         assertTrue(response.getProducts().contains(pen));
-        assertTrue(response.getProducts().size() == 1);
+        assertFalse(response.hasErrors());
     }
 
     @Test
     public void databaseDoesNotContainsSuchProductDescription() {
 
         SearchProductByOtherRequest request1 = new SearchProductByOtherRequest("", "Nokia",
-                null,null,ordering, paging);
+                0,0,ordering, paging);
         List<CoreError> errors = new ArrayList<>();
         CoreError expectedError = new CoreError("database", "Database doesn't contain products wits description: Nokia");
         errors.add(expectedError);
@@ -179,16 +218,15 @@ public class SearchProductServiceTest {
         Mockito.when(productDatabase.searchAllByDescription(request1.getDescription())).thenReturn(new ArrayList<>());
 
         SearchProductByOtherResponse response = searchProductService.execute(request1);
-        assertEquals(response.hasErrors(), true);
+        assertTrue(response.hasErrors());
         assertEquals(response.getErrors().size(), 1);
-       // assertTrue(response.getErrors().contains(expectedError));
     }
 
     @Test
     public void databaseDoesNotContainsSuchProductTitle() {
 
         SearchProductByOtherRequest request1 = new SearchProductByOtherRequest("Mobile phone", "",
-                                                      null,null,ordering, paging);
+                                                      0,0,ordering, paging);
         List<CoreError> errors = new ArrayList<>();
         CoreError expectedError = new CoreError("database", "Database doesn't contain products wits title: Mobile phone");
         errors.add(expectedError);
@@ -198,7 +236,6 @@ public class SearchProductServiceTest {
         SearchProductByOtherResponse response = searchProductService.execute(request1);
         assertEquals(response.hasErrors(), true);
         assertEquals(response.getErrors().size(), 1);
-        //assertTrue(response.getErrors().contains(expectedError));
     }
 
     @Test
@@ -213,7 +250,7 @@ public class SearchProductServiceTest {
         products.add(mobilePhone2);
 
         SearchProductByOtherRequest searchProductRequest = new SearchProductByOtherRequest("Mobile phone",
-                null,null,null, new Ordering("description","ASC"), paging);
+                null,0,0, new Ordering("description","ASC"), paging);
 
         Mockito.when(searchProductRequestValidator.validate(searchProductRequest)).thenReturn(new ArrayList<>());
         Mockito.when(productDatabase.searchAllByTitle(searchProductRequest.getTitle())).thenReturn(products);
@@ -237,7 +274,7 @@ public class SearchProductServiceTest {
         products.add(mobilePhone2);
 
         SearchProductByOtherRequest searchProductRequest = new SearchProductByOtherRequest("Mobile phone",
-                null,null,null, new Ordering("description","DSC"), paging);
+                null,0,0, new Ordering("description","DSC"), paging);
 
         Mockito.when(searchProductRequestValidator.validate(searchProductRequest)).thenReturn(new ArrayList<>());
         Mockito.when(productDatabase.searchAllByTitle(searchProductRequest.getTitle())).thenReturn(products);
@@ -261,7 +298,7 @@ public class SearchProductServiceTest {
         products.add(mobilePhone2);
 
         SearchProductByOtherRequest searchProductRequest = new SearchProductByOtherRequest("Mobile phone",
-            null,null,null, new Ordering("description","ASC"), new Paging(2,1));
+            null,0,0, new Ordering("description","ASC"), new Paging(2,1));
 
         Mockito.when(searchProductRequestValidator.validate(searchProductRequest)).thenReturn(new ArrayList<>());
         Mockito.when(productDatabase.searchAllByTitle(searchProductRequest.getTitle())).thenReturn(products);
@@ -285,7 +322,7 @@ public class SearchProductServiceTest {
         products.add(mobilePhone2);
 
         SearchProductByOtherRequest searchProductRequest = new SearchProductByOtherRequest("Mobile phone",
-                null,null,null, new Ordering("description","ASC"),
+                null,0,0, new Ordering("description","ASC"),
                           new Paging(1,2));
 
         Mockito.when(searchProductRequestValidator.validate(searchProductRequest)).thenReturn(new ArrayList<>());
@@ -313,7 +350,7 @@ public class SearchProductServiceTest {
         products.add(mobilePhone3);
 
         SearchProductByOtherRequest searchProductRequest = new SearchProductByOtherRequest("Mobile phone",
-                null,null,null, new Ordering("description","ASC"),
+                null,0,0, new Ordering("description","ASC"),
                 new Paging(2,2));
 
         Mockito.when(searchProductRequestValidator.validate(searchProductRequest)).thenReturn(new ArrayList<>());
@@ -341,7 +378,7 @@ public class SearchProductServiceTest {
         products.add(mobilePhone3);
 
         SearchProductByOtherRequest searchProductRequest = new SearchProductByOtherRequest("Mobile phone",
-                null,null,null, new Ordering("description","ASC"),
+                null,0,0, new Ordering("description","ASC"),
                 new Paging(3,2));
 
         Mockito.when(searchProductRequestValidator.validate(searchProductRequest)).thenReturn(new ArrayList<>());

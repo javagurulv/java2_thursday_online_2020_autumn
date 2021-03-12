@@ -2,7 +2,6 @@ package java2.application_target_list.core.database.user;
 
 import java2.application_target_list.core.domain.User;
 import org.springframework.jdbc.core.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

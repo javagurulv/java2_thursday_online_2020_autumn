@@ -9,7 +9,6 @@ import java2.application_target_list.core.responses.user.SearchUserByLastNameRes
 import java2.application_target_list.core.services.user.SearchUserByLastNameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Scanner;
 
 @Component
@@ -40,20 +39,20 @@ public class SearchUserByLastNameUIAction implements UIAction {
                 SearchUsersByLastNameRequest searchUsersByLastNameRequest = createRequestWithOrderingAndPaging(userName,
                         orderByFromUser, orderDirectionFromUser,
                         pageNumber, pageSize);
-                searchUserByLastNameResponse = createResponse(searchUsersByLastNameRequest);
+                searchUserByLastNameResponse = validateSearchUserByLastNameRequest(searchUsersByLastNameRequest);
             } else if (isOrderingNeeded(orderingFromUser) && !isPagingNeeded(pagingFromUser)){
                 String orderByFromUser = getOrderByFromUser();
                 String orderDirectionFromUser = getOrderingDirectionFromUser();
                 SearchUsersByLastNameRequest searchUsersByLastNameRequest = createRequestWithOrdering(userName, orderByFromUser, orderDirectionFromUser);
-                searchUserByLastNameResponse = createResponse(searchUsersByLastNameRequest);
+                searchUserByLastNameResponse = validateSearchUserByLastNameRequest(searchUsersByLastNameRequest);
             } else if (isPagingNeeded(pagingFromUser) && !isOrderingNeeded(orderingFromUser)){
                 Integer pageNumber = getPageNumberFromUser();
                 Integer pageSize = getPageSizeFromUser();
                 SearchUsersByLastNameRequest searchUsersByLastNameRequest = createRequestWithPaging(userName, pageNumber, pageSize);
-                searchUserByLastNameResponse = createResponse(searchUsersByLastNameRequest);
+                searchUserByLastNameResponse = validateSearchUserByLastNameRequest(searchUsersByLastNameRequest);
             } else {
                 SearchUsersByLastNameRequest searchUsersByLastNameRequest = createRequest(userName);
-                searchUserByLastNameResponse = createResponse(searchUsersByLastNameRequest);
+                searchUserByLastNameResponse = validateSearchUserByLastNameRequest(searchUsersByLastNameRequest);
             }
 
 
@@ -130,7 +129,7 @@ public class SearchUserByLastNameUIAction implements UIAction {
         searchUserByFirstNameResponse.getErrorList().forEach(System.out::println);
     }
 
-    private SearchUserByLastNameResponse createResponse(SearchUsersByLastNameRequest searchUsersByFirstNameRequest){
+    private SearchUserByLastNameResponse validateSearchUserByLastNameRequest(SearchUsersByLastNameRequest searchUsersByFirstNameRequest){
         return searchUserByLastNameService.execute(searchUsersByFirstNameRequest);
     }
 

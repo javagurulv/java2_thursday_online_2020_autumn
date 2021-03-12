@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/add_product_for_cart"><b>Cart</b></a>
+                    <a class="nav-link" href="/estore/add_product_for_cart"><b>Cart</b></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><b>About</b></a>
@@ -79,7 +79,7 @@
 
         <div class="col-lg-3">
 
-            <h3 class="my-2">Settings</h3>
+            <h6 class="my-2">Settings</h6>
             <ul id="settings">
                 <li><span class="caret">Client Control</span>
                     <ul class="nested">
@@ -117,7 +117,7 @@
                                    class="form-control form-control-sm" value="1"
                                    min="1" th:value="${product_page_quantity}"/>
                             <button type="submit" class="btn btn-primary btn-sm"
-                                    formmethod="post" formaction="/set_product_on_page"
+                                    formmethod="post" formaction="/service/set_product_on_page"
                                     value="product_on_page">Set
                             </button>
                         </div>
@@ -128,7 +128,7 @@
                                    class="form-control form-control-sm" value="1"
                                    min="1" th:value="${client_page_quantity}"/>
                             <button type="submit" class="btn btn-primary btn-sm"
-                                    formmethod="post" formaction="/set_client_on_page"
+                                    formmethod="post" formaction="/service/set_client_on_page"
                                     value="client_on_page">Set
                             </button>
                         </div>
@@ -139,7 +139,7 @@
                                    class="form-control form-control-sm" value="1"
                                    min="1" th:value="${order_page_quantity}"/>
                             <button type="submit" class="btn btn-primary btn-sm"
-                                    formmethod="post" formaction="/set_order_on_page"
+                                    formmethod="post" formaction="/service/set_order_on_page"
                                     value="order_on_page">Set
                             </button>
                         </div>
@@ -150,7 +150,7 @@
                                    class="form-control form-control-sm" value="1"
                                    min="0" th:value="${tax}"/>
                             <button type="submit" class="btn btn-primary btn-sm"
-                                    formmethod="post" formaction="/tax"
+                                    formmethod="post" formaction="/service/tax"
                                     value="tax_rate">Set
                             </button>
                         </div>
@@ -161,7 +161,7 @@
                                    class="form-control form-control-sm"
                                    th:value="${currency}"/>
                             <button type="submit" class="btn btn-primary btn-sm"
-                                    formmethod="post" formaction="/currency"
+                                    formmethod="post" formaction="/service/currency"
                                     value="currency">Set
                             </button>
                         </div>
@@ -172,7 +172,7 @@
                                    value="1" class="form-control form-control-sm"
                                    th:value="${orderNumber}"/>
                             <button type="submit" class="btn btn-primary btn-sm"
-                                    formmethod="post" formaction="/order_number"
+                                    formmethod="post" formaction="/service/order_number"
                                     value="orderNumber">Set
                             </button>
                         </div>

@@ -36,7 +36,7 @@ public class AddDoctorServiceTest {
         List<CoreError> errorList = new ArrayList<>();
         errorList.add(expectedError);
 
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor("", null, "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest("", null, "12345678");
         Mockito.when(addDoctorRequestValidator.validate(addDoctorRequest)).thenReturn(errorList);
 
         AddDoctorResponse addDoctorResponse = addDoctorService.execute(addDoctorRequest);
@@ -52,7 +52,7 @@ public class AddDoctorServiceTest {
         List<CoreError> errorList = new ArrayList<>();
         errorList.add(expectedError);
 
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor("Name", "Surname", "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest("Name", "Surname", "12345678");
         Mockito.when(addDoctorRequestValidator.validate(addDoctorRequest)).thenReturn(new ArrayList<>());
         Mockito.when(doctorRepository.containsDoctor(new Doctor("Name", "Surname", "12345678"))).thenReturn(true);
 
@@ -66,7 +66,7 @@ public class AddDoctorServiceTest {
 
     @Test
     public void testDoctorAddedSuccessfully(){
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor("Name", "Surname", "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest("Name", "Surname", "12345678");
         Mockito.when(addDoctorRequestValidator.validate(addDoctorRequest)).thenReturn(new ArrayList<>());
         Mockito.when(doctorRepository.containsDoctor(new Doctor("Name", "Surname", "12345678"))).thenReturn(false);
 

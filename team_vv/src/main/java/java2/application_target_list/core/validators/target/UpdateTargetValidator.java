@@ -1,49 +1,53 @@
 package java2.application_target_list.core.validators.target;
 
-import java2.application_target_list.core.database.target.TargetRepository;
 import java2.application_target_list.core.requests.target.UpdateTargetRequest;
 import java2.application_target_list.core.responses.CoreError;
+import java2.application_target_list.core.validators.ErrorCreator;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UpdateTargetValidator {
+public class UpdateTargetValidator extends ErrorCreator {
 
-    public List<CoreError> validate(UpdateTargetRequest updateTargetRequest,
-                                    TargetRepository targetRepository) {
+    public List<CoreError> validate(UpdateTargetRequest updateTargetRequest) {
         List<CoreError> errors = new ArrayList<>();
+        checkTargetId(updateTargetRequest, errors);
+        checkTargetName(updateTargetRequest, errors);
+        checkTargetDescription(updateTargetRequest, errors);
+        checkTargetDeadline(updateTargetRequest, errors);
+        return errors;
+    }
 
-
-        if (!targetRepository.isIdInTargetList(updateTargetRequest.getTargetIdToChange())){
-            errors.add(new CoreError("Target ID;","no target with that ID"));
-        }
-
-        if (isTargetIdEmpty(updateTargetRequest)){
-            errors.add(new CoreError("Target ID","must not be empty!"));
-        }
-        if (isTargetIdNegative(updateTargetRequest)){
-            errors.add(new CoreError("Target ID","must not be negative!"));
-        }
-
+    private void checkTargetName(UpdateTargetRequest updateTargetRequest, List<CoreError> errors){
         if (isTargetNameEmpty(updateTargetRequest)){
-            errors.add(new CoreError("Target new name","must not be empty!"));
+            errors.add(createCoreError("Target new name","must not be empty!"));
         }
+    }
 
-        if (isTargetDescriptionEmpty(updateTargetRequest)){
-            errors.add(new CoreError("Target new description","must not be empty!"));
-        }
-
+    private void checkTargetDeadline(UpdateTargetRequest updateTargetRequest, List<CoreError> errors){
         if (isDeadlineNegative(updateTargetRequest)){
-            errors.add(new CoreError("Target new deadline", "must not be negative!"));
+            errors.add(createCoreError("Target new deadline", "must not be negative!"));
         }
 
         if (isDeadlineEmpty(updateTargetRequest)){
-            errors.add(new CoreError("Target new deadline", "must not be empty!"));
+            errors.add(createCoreError("Target new deadline", "must not be empty!"));
         }
+    }
 
-        return errors;
+    private void checkTargetDescription(UpdateTargetRequest updateTargetRequest, List<CoreError> errors){
+        if (isTargetDescriptionEmpty(updateTargetRequest)){
+            errors.add(createCoreError("Target new description","must not be empty!"));
+        }
+    }
+
+    private void checkTargetId(UpdateTargetRequest updateTargetRequest, List<CoreError> errors){
+        if (isTargetIdEmpty(updateTargetRequest)){
+            errors.add(createCoreError("Target ID","must not be empty!"));
+        }
+        if (isTargetIdNegative(updateTargetRequest)){
+            errors.add(createCoreError("Target ID","must not be negative!"));
+        }
     }
 
     private boolean isTargetNameEmpty(UpdateTargetRequest request) {
@@ -69,4 +73,5 @@ public class UpdateTargetValidator {
     private boolean isDeadlineNegative(UpdateTargetRequest request){
         return request.getNewTargetDeadline() < 0;
     }
+
 }

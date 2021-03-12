@@ -1,6 +1,6 @@
 package internet_store.web_ui.controller;
 
-import internet_store.core.operation.Tax;
+import internet_store.core.operation.OrderSumProperty;
 import internet_store.core.service.client.paging.ClientPagingService;
 import internet_store.core.service.ordering.CreateOrderNumberService;
 import internet_store.core.service.ordering.paging.OrderControlPagingService;
@@ -25,7 +25,7 @@ public class ServiceController {
     @Autowired
     private CreateOrderNumberService numberService;
     @Autowired
-    private Tax tax;
+    private OrderSumProperty orderSumProperty;
 
     @GetMapping(value = "service/general_settings")
     public String entry(ModelMap modelMap) {
@@ -33,7 +33,7 @@ public class ServiceController {
         return "service/general_service";
     }
 
-    @PostMapping(value = "/set_product_on_page")
+    @PostMapping(value = "/service/set_product_on_page")
     public String setProductOnPage(@RequestParam("product_on_page") Integer productOnPage,
                                    ModelMap modelMap) {
         productsPagingService.setRecordsCountOnPage(productOnPage);
@@ -41,7 +41,7 @@ public class ServiceController {
         return "service/general_service";
     }
 
-    @PostMapping(value = "/set_client_on_page")
+    @PostMapping(value = "/service/set_client_on_page")
     public String setClientOnPage(@RequestParam("client_on_page") Integer clientOnPage,
                                   ModelMap modelMap) {
         clientPagingService.setRecordsCountOnPage(clientOnPage);
@@ -49,7 +49,7 @@ public class ServiceController {
         return "service/general_service";
     }
 
-    @PostMapping(value = "/set_order_on_page")
+    @PostMapping(value = "/service/set_order_on_page")
     public String setOrderOnPage(@RequestParam("order_on_page") Integer orderOnPage,
                                  ModelMap modelMap) {
         orderPagingService.setRecordsCountOnPage(orderOnPage);
@@ -57,24 +57,24 @@ public class ServiceController {
         return "service/general_service";
     }
 
-    @PostMapping(value = "/tax")
+    @PostMapping(value = "/service/tax")
     public String setTax(@RequestParam("tax_rate") BigDecimal taxRate,
                          ModelMap modelMap) {
-        tax.setTaxRate(taxRate);
+        orderSumProperty.setTaxRate(taxRate);
         refreshData(modelMap);
         return "service/general_service";
     }
 
-    @PostMapping(value = "/currency")
+    @PostMapping(value = "/service/currency")
     public String setCurrency(@RequestParam("currency") String currency,
                               ModelMap modelMap) {
 
-        tax.setCurrencySymbol(currency);
+        orderSumProperty.setCurrencySymbol(currency);
         refreshData(modelMap);
         return "service/general_service";
     }
 
-    @PostMapping(value = "/order_number")
+    @PostMapping(value = "/service/order_number")
     public String setOrderNumber(@RequestParam("orderNumber") Integer orderNumber,
                                  ModelMap modelMap) {
         numberService.setOrderNumber(orderNumber);
@@ -86,8 +86,8 @@ public class ServiceController {
         modelMap.addAttribute("product_page_quantity", productsPagingService.getRecordsCountOnPage());
         modelMap.addAttribute("client_page_quantity", clientPagingService.getRecordsCountOnPage());
         modelMap.addAttribute("order_page_quantity", orderPagingService.getRecordsCountOnPage());
-        modelMap.addAttribute("tax", tax.getTaxRate());
-        modelMap.addAttribute("currency", tax.getCurrencySymbol());
+        modelMap.addAttribute("tax", orderSumProperty.getTaxRate());
+        modelMap.addAttribute("currency", orderSumProperty.getCurrencySymbol());
         modelMap.addAttribute("orderNumber", numberService.getOrderNumber());
     }
 }

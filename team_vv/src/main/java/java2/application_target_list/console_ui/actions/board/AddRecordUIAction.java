@@ -1,22 +1,21 @@
 package java2.application_target_list.console_ui.actions.board;
 
 import java2.application_target_list.console_ui.UIAction;
-import java2.application_target_list.core.database.target.TargetRepository;
-import java2.application_target_list.core.database.user.UserRepository;
+import java2.application_target_list.core.database.jpa.JpaTargetRepository;
+import java2.application_target_list.core.database.jpa.JpaUserRepository;
 import java2.application_target_list.core.requests.board.AddRecordRequest;
 import java2.application_target_list.core.responses.board.AddRecordResponse;
 import java2.application_target_list.core.services.board.AddRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Scanner;
 
 @Component
 public class AddRecordUIAction implements UIAction {
 
-    @Autowired AddRecordService addRecordService;
-    @Autowired UserRepository userRepository;
-    @Autowired TargetRepository targetRepository;
+    @Autowired private AddRecordService addRecordService;
+    @Autowired private JpaUserRepository jpaUserRepository;
+    @Autowired private JpaTargetRepository jpaTargetRepository;
     private final Scanner scr = new Scanner(System.in);
 
     @Override
@@ -32,8 +31,8 @@ public class AddRecordUIAction implements UIAction {
             Long targetId = getTargetIdFromUser();
             Long userId = getUserIdFromUser();
 
-            AddRecordRequest addRecordRequest = new AddRecordRequest(targetId, userId);
-            AddRecordResponse addRecordResponse = addRecordService.execute(addRecordRequest);
+            AddRecordRequest addRecordRequest = createAddRecordRequest(targetId, userId);
+            AddRecordResponse addRecordResponse = validateAddRecordRequest(addRecordRequest);
 
             if (addRecordResponse.hasErrors()){
                 printResponseErrors(addRecordResponse);
@@ -44,6 +43,14 @@ public class AddRecordUIAction implements UIAction {
         }
     }
 
+    private AddRecordResponse validateAddRecordRequest(AddRecordRequest addRecordRequest){
+        return addRecordService.execute(addRecordRequest);
+    }
+
+    private AddRecordRequest createAddRecordRequest(Long targetId, Long userId) {
+        return  new AddRecordRequest(targetId, userId);
+    }
+
     private void printBreakMessage(){
         System.out.println("----------");
         System.out.println("Targets list or Users list is empty!");
@@ -51,7 +58,7 @@ public class AddRecordUIAction implements UIAction {
     }
 
     private boolean isTargetOrUserListEmpty(){
-        return userRepository.getUsersList().isEmpty() || targetRepository.getTargetsList().isEmpty();
+        return jpaUserRepository.findAll().isEmpty() || jpaTargetRepository.findAll().isEmpty();
     }
 
     private Long getTargetIdFromUser(){

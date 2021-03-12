@@ -1,24 +1,26 @@
 package eu.retarded.internetstore.core.responses.delivery;
 
-import eu.retarded.internetstore.core.responses.CoreError;
+import eu.retarded.internetstore.core.domain.Delivery;
+import eu.retarded.internetstore.core.requests.delivery.AddDeliveryRequest;
 import eu.retarded.internetstore.core.responses.CoreResponse;
 
-import java.util.List;
+import javax.validation.ConstraintViolation;
+import java.util.Set;
 
 
-public class AddDeliveryResponse extends CoreResponse {
+public class AddDeliveryResponse extends CoreResponse<AddDeliveryRequest> {
 
-    private long deliveryId;
+    private Delivery deliveryId;
 
-    public AddDeliveryResponse(long deliveryId) {
+    public AddDeliveryResponse(Delivery deliveryId) {
         this.deliveryId = deliveryId;
     }
 
-    public AddDeliveryResponse(List<CoreError> errors) {
+    public AddDeliveryResponse(Set<ConstraintViolation<AddDeliveryRequest>> errors) {
         super(errors);
     }
 
-    public long getDeliveryId() {
+    public Delivery getDeliveryId() {
         return deliveryId;
     }
 }

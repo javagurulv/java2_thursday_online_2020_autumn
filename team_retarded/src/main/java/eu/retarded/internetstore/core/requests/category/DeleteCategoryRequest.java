@@ -1,14 +1,12 @@
 package eu.retarded.internetstore.core.requests.category;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class DeleteCategoryRequest {
 
     private final long categoryId;
 
-    public long getCategoryId() {
-        return categoryId;
-    }
-
-    public DeleteCategoryRequest(long categoryId) {
-        this.categoryId = categoryId;
-    }
 }

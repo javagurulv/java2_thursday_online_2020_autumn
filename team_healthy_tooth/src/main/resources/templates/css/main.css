@@ -1,0 +1,72 @@
+* {margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   color: #800040;
+   }
+   page {GetRolesRequestValidator
+   width: 900px;
+   margin: 0 auto;
+   }
+   .title {
+   height: 100px;
+   background-color: #ffe6f2;
+   font-family: "Arial", "Helvetica", sans-serif;
+   font-size: 4em;
+   color: white;
+   text-shadow: 2px 2px 5px #ffffff;
+   text-align: center;
+   }
+   .content{
+   float: left;
+   width: 1950px;
+   height: 80px;
+   background-color: #ffe6f2;
+   }
+   .footer{
+   overflow: hidden;
+   background-color: #660033;
+   }
+   .menuHalf {
+   float: left;
+   width: 47%;
+   margin: 20px 1.15%;
+   height: 680px;
+   background-color: #ffe6f2;
+   font-family: "Brush Script MT", "Courier New", serif;
+   font-size: 2em;
+   text-align: center;
+   }
+   .menuFull {
+   float: left;
+   width: 98%;
+   margin: 20px 1.15%;
+   height: 250px;
+   background-color: #ffe6f2;
+   font-family: "Brush Script MT", "Courier New", serif;
+   font-size: 2em;
+   text-align: center;
+   }
+   .menuLong {
+      float: left;
+      width: 98%;
+      margin: 20px 1.15%;
+      height: 900px;
+      background-color: #ffe6f2;
+      font-family: "Brush Script MT", "Courier New", serif;
+      font-size: 2em;
+      text-align: center;
+      }
+   table {
+   margin-left: auto;
+   margin-right: auto;
+   }
+   .toothStatuses {
+   float: left;
+   width: 98%;
+   margin: 20px 1.15%;
+   height: 500px;
+   background-color: #ffe6f2;
+   font-family: "Brush Script MT", "Courier New", serif;
+   font-size: 2em;
+   text-align: center;
+   }

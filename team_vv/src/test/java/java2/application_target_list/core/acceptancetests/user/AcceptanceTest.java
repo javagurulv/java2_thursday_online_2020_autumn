@@ -1,32 +1,45 @@
 package java2.application_target_list.core.acceptancetests.user;
 
-import java2.application_target_list.config.SpringCoreConfiguration;
-import java2.application_target_list.core.DatabaseCleaner;
+import java2.application_target_list.TargetListApplication;
+import java2.application_target_list.core.acceptancetests.DatabaseCleaner;
 import java2.application_target_list.core.requests.user.*;
 import java2.application_target_list.core.responses.user.*;
 import java2.application_target_list.core.services.user.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TargetListApplication.class)
 public class AcceptanceTest {
 
-    private ApplicationContext applicationContext;
+    @Autowired
     private AddUserService addUserService;
+    @Autowired
     private DeleteUserService deleteUserService;
+    @Autowired
     private GetAllUserService getAllUsersService;
+    @Autowired
     private ChangeUserFirstNameService changeUserFirstNameService;
+    @Autowired
     private ChangeUserLastNameService changeUserLastNameService;
+    @Autowired
     private SearchUserByFirstNameService searchUserByFirstNameService;
+    @Autowired
     private SearchUserByLastNameService searchUserByLastNameService;
+    @Autowired
     private DatabaseCleaner databaseCleaner;
-    private Long userId;
+
+    private Long firstUserId;
+    private Long secondUserId;
+    private Long thirdUserId;
 
     @Before
     public void setup() {
-        createServices();
         databaseCleaner.clean();
     }
 
@@ -70,15 +83,13 @@ public class AcceptanceTest {
     }
 
     private void changeThirdUserLastName() {
-        userId = getAllUsersService.execute(new GetAllUsersRequest()).getUsersList().get(1).getId();
-        ChangeUserLastNameRequest changeUserLastNameRequest = new ChangeUserLastNameRequest(userId, "New Surname");
+        ChangeUserLastNameRequest changeUserLastNameRequest = new ChangeUserLastNameRequest(thirdUserId, "New Surname");
         ChangeUserLastNameResponse changeUserLastNameResponse = changeUserLastNameService.execute(changeUserLastNameRequest);
         Assert.assertFalse(changeUserLastNameResponse.hasErrors());
     }
 
     private void changeSecondUserFirstName() {
-        userId = getAllUsersService.execute(new GetAllUsersRequest()).getUsersList().get(0).getId();
-        ChangeUserFirstNameRequest changeUserFirstNameRequest = new ChangeUserFirstNameRequest(userId, "New Name");
+        ChangeUserFirstNameRequest changeUserFirstNameRequest = new ChangeUserFirstNameRequest(secondUserId, "New Name");
         ChangeUserFirstNameResponse changeUserFirstNameResponse = changeUserFirstNameService.execute(changeUserFirstNameRequest);
         Assert.assertFalse(changeUserFirstNameResponse.hasErrors());
 
@@ -90,8 +101,7 @@ public class AcceptanceTest {
     }
 
     private void deleteFirstUser() {
-        userId = getAllUsersService.execute(new GetAllUsersRequest()).getUsersList().get(0).getId();
-        DeleteUserRequest deleteUserRequest = new DeleteUserRequest(userId);
+        DeleteUserRequest deleteUserRequest = new DeleteUserRequest(firstUserId);
         DeleteUserResponse deleteUserResponse = deleteUserService.execute(deleteUserRequest);
         Assert.assertFalse(deleteUserResponse.hasErrors());
     }
@@ -105,56 +115,12 @@ public class AcceptanceTest {
         AddUserResponse addUserResponse2 = addUserService.execute(addUserRequest2);
         AddUserResponse addUserResponse3 = addUserService.execute(addUserRequest3);
 
+        firstUserId = addUserResponse1.getNewUser().getId();
+        secondUserId = addUserResponse2.getNewUser().getId();
+        thirdUserId = addUserResponse3.getNewUser().getId();
+
         Assert.assertFalse(addUserResponse1.hasErrors());
         Assert.assertFalse(addUserResponse2.hasErrors());
         Assert.assertFalse(addUserResponse3.hasErrors());
-    }
-
-    private ApplicationContext createApplicationContext(){
-        return new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
-    }
-
-    private DatabaseCleaner createDatabaseCleaner() {
-        return applicationContext.getBean(DatabaseCleaner.class);
-    }
-
-    private AddUserService createAddUserService() {
-        return applicationContext.getBean(AddUserService.class);
-    }
-
-    private SearchUserByLastNameService createSearchUserByLastNameService() {
-        return applicationContext.getBean(SearchUserByLastNameService.class);
-    }
-
-    private DeleteUserService createDeleteUserService() {
-        return applicationContext.getBean(DeleteUserService.class);
-    }
-
-    private GetAllUserService createGetAllUserService() {
-        return applicationContext.getBean(GetAllUserService.class);
-    }
-
-    private SearchUserByFirstNameService createSearchUserByFirstNameService() {
-        return applicationContext.getBean(SearchUserByFirstNameService.class);
-    }
-
-    private ChangeUserFirstNameService createChangeUserFirstNameService() {
-        return applicationContext.getBean(ChangeUserFirstNameService.class);
-    }
-
-    private ChangeUserLastNameService createChangeUserLastNameService() {
-        return applicationContext.getBean(ChangeUserLastNameService.class);
-    }
-
-    private void createServices() {
-        applicationContext = createApplicationContext();
-        addUserService = createAddUserService();
-        deleteUserService = createDeleteUserService();
-        getAllUsersService = createGetAllUserService();
-        changeUserFirstNameService = createChangeUserFirstNameService();
-        changeUserLastNameService = createChangeUserLastNameService();
-        searchUserByFirstNameService = createSearchUserByFirstNameService();
-        searchUserByLastNameService = createSearchUserByLastNameService();
-        databaseCleaner = createDatabaseCleaner();
     }
 }

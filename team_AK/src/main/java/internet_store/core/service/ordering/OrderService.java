@@ -1,8 +1,9 @@
 package internet_store.core.service.ordering;
 
+import com.itextpdf.text.DocumentException;
 import internet_store.core.domain.Order;
 import internet_store.core.domain.ProductInCart;
-import internet_store.core.operation.Tax;
+import internet_store.core.operation.OrderSumProperty;
 import internet_store.core.persistence.CartRepository;
 import internet_store.core.persistence.OrderRepository;
 import internet_store.core.service.cart.CartProductsCountService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +28,7 @@ public class OrderService {
     @Autowired
     private CreateOrderNumberService numberService;
     @Autowired
-    private Tax tax;
+    private OrderSumProperty orderSumProperty;
     @Autowired
     private CartRepository cartRepository;
     @Autowired
@@ -35,6 +37,10 @@ public class OrderService {
     private OrderStatusService orderStatusService;
     @Autowired
     private SessionService sessionService;
+    @Autowired
+    private CreatePdfOrder pdfOrder;
+    @Autowired
+    private OrderSumProperty sumProperty;
     private String orderNumber;
     private BigDecimal totalSumInCart;
     private BigDecimal taxAmount;
@@ -49,8 +55,8 @@ public class OrderService {
             orderNumber = numberService.createOrderNumber();
         }
 
-        taxAmount = tax.getTaxAmount(totalSumInCart);
-        total = tax.getAmountWithTax(totalSumInCart);
+        taxAmount = orderSumProperty.getTaxAmount(totalSumInCart);
+        total = orderSumProperty.getAmountWithTax(totalSumInCart);
         order.setNumber(orderNumber);
         order.setDate(new Date());
         order.setClient(sessionService.getSessionClient());
@@ -75,7 +81,21 @@ public class OrderService {
             productInCart.getProduct().setQuantity(newProductQuantity(productInCart));
             orderRepository.saveAndFlush(orderForSave);
         });
+        createOrderReport();
         orderStatusService.changeOrderStatus(orderNumber, "ORDER RECEIVED");
+    }
+
+    private void createOrderReport() {
+        List<Order> orders = orderRepository.findAllByNumber(orderNumber);
+        Thread createPdf = new Thread(() -> {
+            try {
+                pdfOrder.createPdfOrder(orders, orderSumProperty.getCurrencySymbol());
+            } catch (IOException | DocumentException e) {
+                e.printStackTrace();
+            }
+        });
+        createPdf.setDaemon(true);
+        createPdf.start();
     }
 
     private long newProductQuantity(ProductInCart productInCart) {

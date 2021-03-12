@@ -2,7 +2,6 @@ package java2.application_target_list.console_ui.actions.board;
 
 import java2.application_target_list.console_ui.UIAction;
 import java2.application_target_list.core.domain.Record;
-import java2.application_target_list.core.domain.User;
 import java2.application_target_list.core.requests.board.GetAllRecordsRequest;
 import java2.application_target_list.core.responses.board.GetAllRecordsResponse;
 import java2.application_target_list.core.services.board.GetAllRecordsService;
@@ -13,18 +12,26 @@ import org.springframework.stereotype.Component;
 public class GetAllRecordsUIActions implements UIAction {
 
     @Autowired
-    GetAllRecordsService getAllRecordsService;
+    private GetAllRecordsService getAllRecordsService;
 
     @Override
     public void execute() {
-        GetAllRecordsRequest getAllRecordsRequest = new GetAllRecordsRequest();
-        GetAllRecordsResponse getAllRecordsResponse = getAllRecordsService.execute(getAllRecordsRequest);
+        GetAllRecordsRequest getAllRecordsRequest = createGetAllRecordsRequest();
+        GetAllRecordsResponse getAllRecordsResponse = validateGetAllRecordRequest(getAllRecordsRequest);
 
         if (isRecordListEmpty(getAllRecordsResponse)){
             printResponseMessage();
         } else {
             printRecordsList(getAllRecordsResponse);
         }
+    }
+
+    private GetAllRecordsResponse validateGetAllRecordRequest(GetAllRecordsRequest getAllRecordsRequest){
+        return getAllRecordsService.execute(getAllRecordsRequest);
+    }
+
+    private GetAllRecordsRequest createGetAllRecordsRequest() {
+        return new GetAllRecordsRequest();
     }
 
     private boolean isRecordListEmpty(GetAllRecordsResponse getAllRecordsResponse){

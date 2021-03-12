@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.requests.product.UpdateProductRequest;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.responses.product.UpdateProductResponse;
@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 @RunWith(MockitoJUnitRunner.class)
 public class UpdateProductServiceTest {
 
-    @Mock private ProductRepository productRepository;
+    @Mock private JpaProductRepository productRepository;
     @Mock private UpdateProductValidator validator;
     @InjectMocks private UpdateProductService service;
 

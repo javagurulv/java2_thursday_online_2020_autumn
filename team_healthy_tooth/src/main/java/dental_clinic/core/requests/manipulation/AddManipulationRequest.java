@@ -1,22 +1,31 @@
 package dental_clinic.core.requests.manipulation;
 
-import dental_clinic.core.domain.Manipulation;
-
 public class AddManipulationRequest {
 
-    private Manipulation manipulation;
+    private String manipulationType;
+
+    private Integer price;
 
     public AddManipulationRequest() { }
 
-    public AddManipulationRequest(Manipulation manipulation) {
-        this.manipulation = manipulation;
+    public AddManipulationRequest(String manipulationType, Integer price) {
+        this.manipulationType = manipulationType;
+        this.price = price;
     }
 
-    public Manipulation getManipulation() {
-        return manipulation;
+    public String getManipulationType() {
+        return manipulationType;
     }
 
-    public void setManipulation(Manipulation manipulation) {
-        this.manipulation = manipulation;
+    public void setManipulationType(String manipulationType) {
+        this.manipulationType = manipulationType;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }

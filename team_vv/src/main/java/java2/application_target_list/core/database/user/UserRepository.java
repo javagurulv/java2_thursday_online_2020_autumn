@@ -1,9 +1,6 @@
 package java2.application_target_list.core.database.user;
 
-
-import java2.application_target_list.core.domain.Target;
 import java2.application_target_list.core.domain.User;
-
 import java.util.List;
 import java.util.Optional;
 

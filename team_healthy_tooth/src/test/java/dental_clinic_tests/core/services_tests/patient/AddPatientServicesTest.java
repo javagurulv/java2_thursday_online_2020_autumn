@@ -30,8 +30,7 @@ public class AddPatientServicesTest {
 
     @Test
     public void testNotValidSurnameRequest(){
-        PersonalData personalData = new PersonalData("Name", null, "12345678", "25052512345");
-        AddPatientRequest addPatientRequest = new AddPatientRequest(personalData);
+        AddPatientRequest addPatientRequest = new AddPatientRequest("Name", null, "12345678", "25052512345");
         List<CoreError> errors = new ArrayList<>();
         CoreError expectedError = new CoreError("Personal data : surname", "Not valid input for surname");
         errors.add(expectedError);
@@ -46,8 +45,7 @@ public class AddPatientServicesTest {
 
     @Test
     public void testNotValidEmptyRequest(){
-        PersonalData personalData = new PersonalData("", null, "", null);
-        AddPatientRequest addPatientRequest = new AddPatientRequest(personalData);
+        AddPatientRequest addPatientRequest = new AddPatientRequest("", null, "", null);
         List<CoreError> errors = new ArrayList<>();
         CoreError expectedError1 = new CoreError("Personal data : name", "Not valid input for name");
         CoreError expectedError2 = new CoreError("Personal data : surname", "Not valid input for surname");
@@ -72,7 +70,7 @@ public class AddPatientServicesTest {
     @Test
     public void testDatabaseContainsTheSamePatient(){
         PersonalData personalData = new PersonalData("Name", "Surname", "12345678", "25052512345");
-        AddPatientRequest addPatientRequest = new AddPatientRequest(personalData);
+        AddPatientRequest addPatientRequest = new AddPatientRequest("Name", "Surname", "12345678", "25052512345");
         List<CoreError> errors = new ArrayList<>();
         CoreError expectedError = new CoreError("database", "Database contains the same patient");
         errors.add(expectedError);
@@ -88,7 +86,7 @@ public class AddPatientServicesTest {
     @Test
     public void testPatientAddedSuccessfully(){
         PersonalData personalData = new PersonalData("Name", "Surname", "12345678", "25052512345");
-        AddPatientRequest addPatientRequest = new AddPatientRequest(personalData);
+        AddPatientRequest addPatientRequest = new AddPatientRequest("Name", "Surname", "12345678", "25052512345");
         Mockito.when(addPatientRequestValidator.validate(addPatientRequest)).thenReturn(new ArrayList<>());
         Mockito.when(patientRepository.containsSpecificPersonalData(personalData)).thenReturn(false);
 

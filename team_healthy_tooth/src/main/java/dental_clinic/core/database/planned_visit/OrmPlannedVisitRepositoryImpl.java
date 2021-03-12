@@ -2,7 +2,6 @@ package dental_clinic.core.database.planned_visit;
 
 import dental_clinic.core.domain.PersonalData;
 import dental_clinic.core.domain.PlannedVisit;
-import dental_clinic.core.domain.Visit;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -27,6 +27,16 @@ public class OrmPlannedVisitRepositoryImpl implements PlannedVisitsRepository{
         return sessionFactory.getCurrentSession()
                 .createQuery("SELECT p FROM PlannedVisit p", PlannedVisit.class)
                 .getResultList();
+    }
+
+    @Override
+    public Optional<PlannedVisit> getPlannedVisitById(Long id) {
+        PlannedVisit plannedVisit = sessionFactory.getCurrentSession().get(PlannedVisit.class, id);
+        if (plannedVisit == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(plannedVisit);
+        }
     }
 
     @Override

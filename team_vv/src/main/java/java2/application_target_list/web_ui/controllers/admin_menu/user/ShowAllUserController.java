@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ShowAllUserController {
 
-    @Autowired private GetAllUserService getAllUserService;
+    @Autowired
+    private GetAllUserService getAllUserService;
 
     @GetMapping(value = "/admin_menu/user/showAllUsers")
     public String showAllUsersAdminPage(ModelMap modelMap) {

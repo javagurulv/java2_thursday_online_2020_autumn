@@ -35,15 +35,12 @@ public class AcceptanceTest5 {
 
     @Test
     public void test(){
-        PersonalData personalData1 = new PersonalData("Name", "Surname", "12345678", "25038910523");
-
-        AddPatientRequest addPatientRequest1 = new AddPatientRequest(personalData1);
+        AddPatientRequest addPatientRequest1 = new AddPatientRequest("Name", "Surname", "12345678", "25038910523");
         addPatientService().execute(addPatientRequest1);
 
         SearchPatientRequest searchPatientRequest =
-                new SearchPatientRequest("Surname",
-                        new Ordering("name", OrderingDirection.ASC),
-                        new Paging(1, 100));
+                new SearchPatientRequest("Surname", "name", OrderingDirection.ASC,
+                        1, 100);
 
         SearchPatientResponse searchPatientResponse = searchPatientService().execute(searchPatientRequest);
 

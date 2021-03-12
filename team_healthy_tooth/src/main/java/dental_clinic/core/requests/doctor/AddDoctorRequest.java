@@ -1,22 +1,42 @@
 package dental_clinic.core.requests.doctor;
 
-import dental_clinic.core.domain.Doctor;
-
 public class AddDoctorRequest {
 
-    private Doctor doctor;
+    private String name;
+
+    private String surname;
+
+    private String phone;
 
     public AddDoctorRequest() { }
 
-    public AddDoctorRequest(Doctor doctor) {
-        this.doctor = doctor;
+    public AddDoctorRequest(String name, String surname, String phone) {
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public String getName() {
+        return name;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -1,5 +1,6 @@
 package internet_store.application.core.services.shopping_cart_item;
 
+import internet_store.application.core.database.jpa.JpaShoppingCartItemRepository;
 import internet_store.application.core.database.shopping_cart_item.ShoppingCartItemRepository;
 import internet_store.application.core.requests.shopping_cart_item.UpdateShoppingCartItemRequest;
 import internet_store.application.core.responses.CoreError;
@@ -15,7 +16,7 @@ import java.util.List;
 @Transactional
 public class UpdateShoppingCartItemService {
 
-    @Autowired private ShoppingCartItemRepository shoppingCartItemRepository;
+    @Autowired private JpaShoppingCartItemRepository shoppingCartItemRepository;
     @Autowired private UpdateShoppingCartItemValidator validator;
 
     public UpdateShoppingCartItemResponse execute(UpdateShoppingCartItemRequest request) {

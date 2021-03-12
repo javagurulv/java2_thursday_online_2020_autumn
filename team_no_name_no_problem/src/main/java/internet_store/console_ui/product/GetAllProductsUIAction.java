@@ -7,7 +7,8 @@ import internet_store.core.services.product.GetAllProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component public class GetAllProductsUIAction implements UIAction {
+//@Component
+public class GetAllProductsUIAction implements UIAction {
 
     @Autowired private GetAllProductsService getAllProductsService;
 

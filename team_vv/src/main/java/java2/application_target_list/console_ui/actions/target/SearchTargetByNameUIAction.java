@@ -6,18 +6,17 @@ import java2.application_target_list.core.requests.target.SearchTargetByNameRequ
 import java2.application_target_list.core.services.target.SearchTargetByNameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.console_ui.UIAction;
 import java2.application_target_list.core.domain.Target;
 import java2.application_target_list.core.responses.target.SearchTargetByNameResponse;
-
-
 import java.util.Scanner;
 
 @Component
 public class SearchTargetByNameUIAction implements UIAction {
 
-    @Autowired SearchTargetByNameService searchTargetByNameService;
+    @Autowired
+    private SearchTargetByNameService searchTargetByNameService;
+
     private final Scanner scr = new Scanner(System.in);
 
     @Override
@@ -31,37 +30,37 @@ public class SearchTargetByNameUIAction implements UIAction {
             printPagingMessage();
             int pagingFromUser = getNumberFromUser();
 
-            SearchTargetByNameResponse response;
+            SearchTargetByNameResponse searchTargetByNameResponse;
 
             if (isOrderingNeeded(orderingFromUser) && isPagingNeeded(pagingFromUser)){
                 String orderByFromUser = getOrderByFromUser();
                 String orderDirectionFromUser = getOrderingDirectionFromUser();
                 Integer pageNumber = getPageNumberFromUser();
                 Integer pageSize = getPageSizeFromUser();
-                SearchTargetByNameRequest request = createRequestWithOrderingAndPaging(targetName,
+                SearchTargetByNameRequest searchTargetByNameRequest = createRequestWithOrderingAndPaging(targetName,
                                                                                        orderByFromUser, orderDirectionFromUser,
                                                                                        pageNumber, pageSize);
-                response = createResponse(request);
+                searchTargetByNameResponse = validateSearchTargetByNameRequest(searchTargetByNameRequest);
             } else if (isOrderingNeeded(orderingFromUser) && !isPagingNeeded(pagingFromUser)){
                 String orderByFromUser = getOrderByFromUser();
                 String orderDirectionFromUser = getOrderingDirectionFromUser();
-                SearchTargetByNameRequest request = createRequestWithOrdering(targetName, orderByFromUser, orderDirectionFromUser);
-                response = createResponse(request);
+                SearchTargetByNameRequest searchTargetByNameRequest = createRequestWithOrdering(targetName, orderByFromUser, orderDirectionFromUser);
+                searchTargetByNameResponse = validateSearchTargetByNameRequest(searchTargetByNameRequest);
             } else if (isPagingNeeded(pagingFromUser) && !isOrderingNeeded(orderingFromUser)){
                 Integer pageNumber = getPageNumberFromUser();
                 Integer pageSize = getPageSizeFromUser();
-                SearchTargetByNameRequest request = createRequestWithPaging(targetName, pageNumber, pageSize);
-                response = createResponse(request);
+                SearchTargetByNameRequest searchTargetByNameRequest = createRequestWithPaging(targetName, pageNumber, pageSize);
+                searchTargetByNameResponse = validateSearchTargetByNameRequest(searchTargetByNameRequest);
             } else {
-                SearchTargetByNameRequest request = createRequest(targetName);
-                response = createResponse(request);
+                SearchTargetByNameRequest searchTargetByNameRequest = createRequest(targetName);
+                searchTargetByNameResponse = validateSearchTargetByNameRequest(searchTargetByNameRequest);
             }
 
 
-            if (response.hasErrors()) {
-                printResponseErrors(response);
+            if (searchTargetByNameResponse.hasErrors()) {
+                printResponseErrors(searchTargetByNameResponse);
             } else {
-                printResponseResultMessage(response);
+                printResponseResultMessage(searchTargetByNameResponse);
                 break;
             }
         }
@@ -132,7 +131,7 @@ public class SearchTargetByNameUIAction implements UIAction {
         response.getErrorList().forEach(System.out::println);
     }
 
-    private SearchTargetByNameResponse createResponse(SearchTargetByNameRequest request){
+    private SearchTargetByNameResponse validateSearchTargetByNameRequest(SearchTargetByNameRequest request){
         return searchTargetByNameService.execute(request);
     }
 

@@ -26,13 +26,11 @@ public class AcceptanceTest1AddValidAndNotValidPersonalData {
 
     @Test
     public void test(){
-        PersonalData personalData = new PersonalData("Name", "Surname", "12345678", "25065612345");
-        AddPatientRequest addPatientRequest = new AddPatientRequest(personalData);
+        AddPatientRequest addPatientRequest = new AddPatientRequest("Name", "Surname", "12345678", "25065612345");
         addPatientService().execute(addPatientRequest);
         addPatientService().execute(addPatientRequest);
 
-        PersonalData personalDataNotValid = new PersonalData("Name1", "Surname", "1234578", "25065612345");
-        addPatientRequest = new AddPatientRequest(personalDataNotValid);
+        addPatientRequest = new AddPatientRequest("Name1", "Surname", "1234578", "25065612345");
         addPatientService().execute(addPatientRequest);
 
         GetAllPatientsRequest getAllPatientsRequest = new GetAllPatientsRequest();

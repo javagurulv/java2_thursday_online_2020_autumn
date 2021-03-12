@@ -1,6 +1,6 @@
 package internet_store.application.core.services.product;
 
-import internet_store.application.core.database.product.ProductRepository;
+import internet_store.application.core.database.jpa.JpaProductRepository;
 import internet_store.application.core.domain.Product;
 import internet_store.application.core.requests.product.FindByIdRequest;
 import internet_store.application.core.responses.CoreError;
@@ -18,12 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FindByProductIdServiceTest {
 
-    @Mock ProductRepository productRepository;
+    @Mock JpaProductRepository productRepository;
     @Mock FindByProductIdValidator validator;
     @InjectMocks FindByProductIdService service;
 

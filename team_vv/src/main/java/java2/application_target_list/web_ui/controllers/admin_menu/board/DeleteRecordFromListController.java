@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 @Controller
 public class DeleteRecordFromListController {
 
-    @Autowired private DeleteRecordService deleteRecordService;
-    @Autowired private GetFullInfoAboutRecordsService getFullInfoAboutRecordsService;
+    @Autowired
+    private DeleteRecordService deleteRecordService;
+    @Autowired
+    private GetFullInfoAboutRecordsService getFullInfoAboutRecordsService;
 
     @GetMapping(value = "/admin_menu/board/deleteRecordFromList")
     public String showDeleteRecordFromListPage(ModelMap modelMap) {

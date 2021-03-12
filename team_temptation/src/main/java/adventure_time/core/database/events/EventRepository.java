@@ -12,22 +12,14 @@ public interface EventRepository {
 
     boolean add (Events event);
 
-    boolean removeByName (String eventName);
-
-    boolean removeById (Long id);
-
-    List<Events> getEventsList ();
+    boolean delete (Long id);
 
     Optional<Events> findById (Long id);
 
-    boolean updateEvent (Events event);
+    Optional<Events> findByName (String name);
 
-    List<Events> findByEventKind (SearchEventRequest request);
-    List<Events> findByEventKindAndRoute (SearchEventRequest request);
-    List<Events> findByEventKindAndDuration (SearchEventRequest request);
-    List<Events> findByEventKindAndDurationAndRoute (SearchEventRequest request);
-    List<Events> findByEventDuration (SearchEventRequest request);
-    List<Events> findByEventDurationAndRoute (SearchEventRequest request);
-    List<Events> findByRoute (SearchEventRequest request);
+    boolean updateEvent (Events event, Long id);
+
+    List<Events> findEvents (String query);
 
 }

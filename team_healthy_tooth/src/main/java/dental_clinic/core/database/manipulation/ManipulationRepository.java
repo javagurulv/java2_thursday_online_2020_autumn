@@ -3,6 +3,7 @@ package dental_clinic.core.database.manipulation;
 import dental_clinic.core.domain.Manipulation;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ManipulationRepository {
 
@@ -10,11 +11,11 @@ public interface ManipulationRepository {
 
     List <Manipulation> getManipulationsList();
 
-    Manipulation getManipulationById (Long id);
+    Optional<Manipulation> getManipulationById (Long id);
 
     void deactivateManipulation(Long id);
 
-    boolean containsTheSameManipulation (Manipulation manipulation);
+    boolean containsTheSameManipulation (String manipulationType, Integer price);
 
     boolean manipulationIsActive(Long id);
 

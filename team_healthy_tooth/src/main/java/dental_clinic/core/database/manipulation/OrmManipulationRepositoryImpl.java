@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -29,11 +30,13 @@ public class OrmManipulationRepositoryImpl implements ManipulationRepository{
     }
 
     @Override
-    public Manipulation getManipulationById(Long id) {
-        Query query = sessionFactory.getCurrentSession().createQuery(
-                "SELECT m FROM Manipulation m WHERE id = :id");
-        query.setParameter("id", id);
-        return (Manipulation)query.getSingleResult();
+    public Optional<Manipulation> getManipulationById(Long id) {
+        Manipulation manipulation = sessionFactory.getCurrentSession().get(Manipulation.class, id);
+        if (manipulation == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(manipulation);
+        }
     }
 
     @Override
@@ -45,8 +48,11 @@ public class OrmManipulationRepositoryImpl implements ManipulationRepository{
     }
 
     @Override
-    public boolean containsTheSameManipulation(Manipulation manipulation) {
-        return sessionFactory.getCurrentSession().contains(manipulation);
+    public boolean containsTheSameManipulation(String manipulationType, Integer price) {
+        List<Manipulation>manipulations = getManipulationsList();
+        return manipulations.stream()
+                .anyMatch(manipulation -> manipulation.getManipulationType().equals(manipulationType) &&
+                        manipulation.getPrice().equals(price));
     }
 
     @Override

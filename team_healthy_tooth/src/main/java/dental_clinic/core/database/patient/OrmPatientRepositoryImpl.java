@@ -42,16 +42,14 @@ public class OrmPatientRepositoryImpl implements PatientRepository{
     public void addPatient(PersonalData personalData) {
         sessionFactory.getCurrentSession().save(personalData);
         Long id = getPersonalData().get(getPersonalData().size() - 1).getId();
-        JowlEntity jowlEntity = new JowlEntity(getPersonalDataById(id));
+        JowlEntity jowlEntity = new JowlEntity(getPersonalDataById(id).get());
         sessionFactory.getCurrentSession().save(jowlEntity);
     }
 
     @Override
-    public PersonalData getPersonalDataById(Long id) {
-        Query query = sessionFactory.getCurrentSession().createQuery(
-                "SELECT p FROM PersonalData p WHERE id = :id");
-        query.setParameter("id", id);
-        return (PersonalData)query.getResultList().get(0);
+    public Optional<PersonalData> getPersonalDataById(Long id) {
+        PersonalData personalData = sessionFactory.getCurrentSession().get(PersonalData.class, id);
+        return Optional.ofNullable(personalData);
     }
 
     @Override

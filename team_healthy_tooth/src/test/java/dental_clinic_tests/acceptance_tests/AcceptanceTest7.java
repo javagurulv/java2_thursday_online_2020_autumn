@@ -28,11 +28,10 @@ public class AcceptanceTest7 {
 
     @Test
     public void test(){
-        PersonalData personalData = new PersonalData("Name", "Surname", "12345678", "25065612345");
-        AddPatientRequest addPatientRequest = new AddPatientRequest(personalData);
+        AddPatientRequest addPatientRequest = new AddPatientRequest("Name", "Surname", "12345678", "25065612345");
         addPatientService().execute(addPatientRequest);
 
-        AddDoctorRequest addDoctorRequest = new AddDoctorRequest(new Doctor("Doctor", "Hausss", "12345678"));
+        AddDoctorRequest addDoctorRequest = new AddDoctorRequest("Doctor", "Hausss", "12345678");
 
         AddDoctorResponse addDoctorResponse = addDoctorService().execute(addDoctorRequest);
         assertTrue(addDoctorResponse.getDoctor().getName().equals("Doctor"));

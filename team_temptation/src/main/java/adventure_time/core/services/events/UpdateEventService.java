@@ -50,7 +50,7 @@ public class UpdateEventService {
                 request.getDetailsDescription());
 
         event.setEventId(id);
-        databaseEvents.updateEvent(event);
+        //databaseEvents.updateEvent(event);
 
         return new UpdateEventResponse(null, null);
     }

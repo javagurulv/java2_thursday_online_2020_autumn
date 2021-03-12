@@ -10,11 +10,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin_menu/board")
 public class BoardRestController {
 
-    @Autowired private GetRecordService getRecordService;
-    @Autowired private AddRecordService addRecordService;
-    @Autowired private DeleteRecordService deleteRecordService;
-    @Autowired private SetRecordCompleteDateService setRecordCompleteDateService;
-    @Autowired private GetUnfinishedRecordsService getUnfinishedRecordsService;
+    @Autowired
+    private GetRecordService getRecordService;
+    @Autowired
+    private AddRecordService addRecordService;
+    @Autowired
+    private DeleteRecordService deleteRecordService;
+    @Autowired
+    private SetRecordCompleteDateService setRecordCompleteDateService;
+    @Autowired
+    private GetUnfinishedRecordsService getUnfinishedRecordsService;
 
     @GetMapping(path = "{id}", produces = "application/json")
     public GetRecordResponse getRecord(@PathVariable Long id){

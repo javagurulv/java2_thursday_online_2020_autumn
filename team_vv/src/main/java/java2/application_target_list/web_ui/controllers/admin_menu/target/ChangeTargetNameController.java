@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ChangeTargetNameController {
 
-    @Autowired private GetAllTargetsService getAllTargetsService;
-    @Autowired private ChangeTargetNameService changeTargetNameService;
+    @Autowired
+    private GetAllTargetsService getAllTargetsService;
+    @Autowired
+    private ChangeTargetNameService changeTargetNameService;
 
     @GetMapping(value = "/admin_menu/target/changeTargetName")
     public String showChangeTargetNamePage(ModelMap modelMap) {

@@ -3,21 +3,18 @@ package java2.application_target_list.console_ui.actions.target;
 import java2.application_target_list.core.requests.target.AddTargetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java2.application_target_list.console_ui.UIAction;
 import java2.application_target_list.core.responses.target.AddTargetResponse;
 import java2.application_target_list.core.services.target.AddTargetService;
-
-
-import java.math.BigInteger;
 import java.util.Scanner;
 
 @Component
 public class AddTargetUIAction implements UIAction {
 
-    @Autowired AddTargetService addTargetService;
+    @Autowired
+    private AddTargetService addTargetService;
 
-   private final Scanner scr = new Scanner(System.in);
+    private final Scanner scr = new Scanner(System.in);
 
     @Override
     public void execute() {
@@ -27,11 +24,11 @@ public class AddTargetUIAction implements UIAction {
             String targetDescription = getDescriptionFromUser();
             Long targetDeadline = getDeadlineFromUser();
 
-            AddTargetRequest request = createRequest(targetName,targetDescription,targetDeadline);
-            AddTargetResponse response = createResponse(request);
+            AddTargetRequest addTargetRequest = createAddTargetRequest(targetName,targetDescription,targetDeadline);
+            AddTargetResponse addTargetResponse = validateAddTargetRequest(addTargetRequest);
 
-            if (response.hasErrors()) {
-                printResponseErrors(response);
+            if (addTargetResponse.hasErrors()) {
+                printResponseErrors(addTargetResponse);
             } else {
                 printResponseResultMessage();
                 break;
@@ -49,11 +46,11 @@ public class AddTargetUIAction implements UIAction {
         response.getErrorList().forEach(System.out::println);
     }
 
-    private AddTargetResponse createResponse(AddTargetRequest request){
-        return addTargetService.execute(request);
+    private AddTargetResponse validateAddTargetRequest(AddTargetRequest addTargetRequest){
+        return addTargetService.execute(addTargetRequest);
     }
 
-    private AddTargetRequest createRequest(String targetName, String targetDescription, Long targetDeadline){
+    private AddTargetRequest createAddTargetRequest(String targetName, String targetDescription, Long targetDeadline){
         return new AddTargetRequest(targetName,targetDescription,targetDeadline);
     }
 
@@ -69,7 +66,6 @@ public class AddTargetUIAction implements UIAction {
 
     private Long getDeadlineFromUser(){
         System.out.print("Enter target deadline(days): ");
-//        return Integer.parseInt(scr.nextLine());
         return Long.parseLong(scr.nextLine());
     }
 }

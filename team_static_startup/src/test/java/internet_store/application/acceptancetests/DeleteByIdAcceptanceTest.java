@@ -9,17 +9,16 @@ import internet_store.application.core.services.product.AddProductService;
 import internet_store.application.core.services.product.DeleteByProductIdService;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Profile;
-
 import java.math.BigDecimal;
-
 import static org.junit.Assert.*;
 
-@Profile("hibernate")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DeleteByIdAcceptanceTest {
-/*
+
     private ApplicationContext appContext;
 
     @Before
@@ -27,7 +26,7 @@ public class DeleteByIdAcceptanceTest {
         appContext = new AnnotationConfigApplicationContext(SpringCoreConfiguration.class);
         getDatabaseCleaner().clean();
     }
-
+/*
     @Test
     public void shouldDeleteWhenIdIsInDatabase() {
         AddProductRequest addRequest = new AddProductRequest("A1",
@@ -56,7 +55,7 @@ public class DeleteByIdAcceptanceTest {
         assertEquals("Product ID", deleteResponse.getErrors().get(0).getField());
         assertEquals("Should not be empty.", deleteResponse.getErrors().get(0).getMessage());
     }
-
+*/
     private AddProductService getAddProductService() {
         return appContext.getBean(AddProductService.class);
     }
@@ -68,5 +67,5 @@ public class DeleteByIdAcceptanceTest {
     private DatabaseCleaner getDatabaseCleaner() {
         return appContext.getBean(DatabaseCleaner.class);
     }
-*/
+
 }

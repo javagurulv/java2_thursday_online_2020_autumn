@@ -1,6 +1,7 @@
 package internet_store.application.core.services.customer;
 
 import internet_store.application.core.database.customer.CustomerRepository;
+import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.domain.Customer;
 import internet_store.application.core.requests.customer.AddCustomerRequest;
 import internet_store.application.core.responses.customer.AddCustomerResponse;
@@ -16,7 +17,7 @@ import java.util.List;
 @Transactional
 public class AddCustomerService {
 
-    @Autowired private CustomerRepository customerRepository;
+    @Autowired private JpaCustomerRepository customerRepository;
     @Autowired private AddCustomerValidator validator;
 
     public AddCustomerResponse execute(AddCustomerRequest request) {
@@ -29,7 +30,7 @@ public class AddCustomerService {
         customer.setCustomerEmail(request.getCustomerEMail());
         customer.setCustomerAddress(request.getCustomerAddress());
 
-        customerRepository.addCustomer(customer);
+        customerRepository.save(customer);
         return new AddCustomerResponse(customer);
     }
 }

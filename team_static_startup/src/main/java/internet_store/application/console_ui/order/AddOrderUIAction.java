@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 
-@Component
+//@Component
 public class AddOrderUIAction implements UIAction {
 
     @Autowired

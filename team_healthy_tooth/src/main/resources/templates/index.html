@@ -6,68 +6,16 @@
         <meta name="description" content="Dental Clinic demo project">
         <meta name="author" content="Valeria">
         <title>Dental clinic Healthy tooth</title>
-        <!--<link rel="stylesheet" type="text/css" href="/main.css">-->
-
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                color: #800040;
-            }
-                page {
-                width: 900px;
-                margin: 0 auto;
-            }
-            #title {
-                height: 100px;
-                background-color: #ffe6f2;
-                font-family: "Brush Script MT", "Courier New", serif;
-                font-size: 4em;
-                color: white;
-                text-shadow: 2px 2px 5px #ffffff;
-                text-align: center;
-            }
-            #content{
-                float: left;
-                width: 1950px;
-                height: 80px;
-                background-color: #ffe6f2;
-            }
-            #footer{
-                overflow: hidden;
-                background-color: #660033;
-            }
-            #menu1 {
-                float: left;
-                width: 47%;
-                margin: 20px 1.15%;
-                height: 680px;
-                background-color: #ffe6f2;
-                font-family: "Brush Script MT", "Courier New", serif;
-                font-size: 2em;
-                text-align: center;
-            }
-            #menu {
-                float: left;
-                width: 47%;
-                margin: 20px 1.15%;
-                height: 680px;
-                background-color: #ffe6f2;
-                font-family: "Brush Script MT", "Courier New", serif;
-                font-size: 2em;
-                text-align: center;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
 
     <body>
-        <div id="title">
+        <div class="title">
             <h3>Program menu</h3>
         </div>
 
-        <div id="footer">
-            <div id="menu1">
+        <div class="footer">
+            <div class="menuHalf">
                 </br>
                 <a href="/addPatient">Add patient</a> <br>
                 <a href="/changePersonalData">Change patient's personal data</a> <br>
@@ -84,7 +32,7 @@
             </div>
 
 
-            <div id="menu">
+            <div class="menuHalf">
                 </br>
                 <a href="/addDoctor">Add doctor</a> <br>
                 <a href="/fillDoctorsWorkGraphic">Fill doctor's work graphic</a> <br>

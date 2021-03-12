@@ -1,5 +1,6 @@
 package internet_store.application.core.services.order;
 
+import internet_store.application.core.database.jpa.JpaOrderRepository;
 import internet_store.application.core.database.order.OrderRepository;
 import internet_store.application.core.domain.Order;
 import internet_store.application.core.requests.order.FindOrderByIdRequest;
@@ -15,7 +16,7 @@ import java.util.List;
 public class FindOrderByIdService {
 
     @Autowired
-    OrderRepository orderRepository;
+    JpaOrderRepository orderRepository;
     @Autowired
     FindOrderByIdValidator validator;
 
@@ -26,7 +27,7 @@ public class FindOrderByIdService {
             return new FindOrderByIdResponse(errors);
         }
 
-        Order order = orderRepository.findById(request.getId());
+        Order order = orderRepository.findById(request.getId()).get();
         return new FindOrderByIdResponse(order);
     }
 

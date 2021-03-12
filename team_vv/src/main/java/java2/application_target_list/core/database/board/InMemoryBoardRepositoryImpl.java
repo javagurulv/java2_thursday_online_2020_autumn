@@ -1,10 +1,6 @@
 package java2.application_target_list.core.database.board;
 
 import java2.application_target_list.core.domain.Record;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,8 +10,8 @@ import java.util.Optional;
 //@Component
 public class InMemoryBoardRepositoryImpl implements BoardRepository {
 
-    Long recordId = 0L;
-    List<Record> recordsList = new ArrayList<>();
+    private Long recordId = 0L;
+    private List<Record> recordsList = new ArrayList<>();
 
 
     @Override
@@ -23,7 +19,6 @@ public class InMemoryBoardRepositoryImpl implements BoardRepository {
         record.setRecordId(recordId += 1);
         record.setDateAdded(getDate());
         recordsList.add(record);
-//        return recordId;
     }
 
     @Override

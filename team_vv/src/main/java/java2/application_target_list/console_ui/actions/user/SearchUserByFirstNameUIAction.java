@@ -1,7 +1,6 @@
 package java2.application_target_list.console_ui.actions.user;
 
 import java2.application_target_list.console_ui.UIAction;
-import java2.application_target_list.core.domain.Target;
 import java2.application_target_list.core.domain.User;
 import java2.application_target_list.core.requests.Ordering;
 import java2.application_target_list.core.requests.Paging;
@@ -10,13 +9,14 @@ import java2.application_target_list.core.responses.user.SearchUserByFirstNameRe
 import java2.application_target_list.core.services.user.SearchUserByFirstNameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Scanner;
 
 @Component
 public class SearchUserByFirstNameUIAction implements UIAction {
 
-    @Autowired SearchUserByFirstNameService searchUserByFirstNameService;
+    @Autowired
+    private SearchUserByFirstNameService searchUserByFirstNameService;
+
     private final Scanner scr = new Scanner(System.in);
 
     @Override
@@ -40,20 +40,20 @@ public class SearchUserByFirstNameUIAction implements UIAction {
                 SearchUsersByFirstNameRequest searchUsersByFirstNameRequest = createRequestWithOrderingAndPaging(userName,
                         orderByFromUser, orderDirectionFromUser,
                         pageNumber, pageSize);
-                searchUserByFirstNameResponse = createResponse(searchUsersByFirstNameRequest);
+                searchUserByFirstNameResponse = validateSearchUserFirstNameRequest(searchUsersByFirstNameRequest);
             } else if (isOrderingNeeded(orderingFromUser) && !isPagingNeeded(pagingFromUser)){
                 String orderByFromUser = getOrderByFromUser();
                 String orderDirectionFromUser = getOrderingDirectionFromUser();
                 SearchUsersByFirstNameRequest searchUsersByFirstNameRequest = createRequestWithOrdering(userName, orderByFromUser, orderDirectionFromUser);
-                searchUserByFirstNameResponse = createResponse(searchUsersByFirstNameRequest);
+                searchUserByFirstNameResponse = validateSearchUserFirstNameRequest(searchUsersByFirstNameRequest);
             } else if (isPagingNeeded(pagingFromUser) && !isOrderingNeeded(orderingFromUser)){
                 Integer pageNumber = getPageNumberFromUser();
                 Integer pageSize = getPageSizeFromUser();
                 SearchUsersByFirstNameRequest searchUsersByFirstNameRequest = createRequestWithPaging(userName, pageNumber, pageSize);
-                searchUserByFirstNameResponse = createResponse(searchUsersByFirstNameRequest);
+                searchUserByFirstNameResponse = validateSearchUserFirstNameRequest(searchUsersByFirstNameRequest);
             } else {
                 SearchUsersByFirstNameRequest searchUsersByFirstNameRequest = createRequest(userName);
-                searchUserByFirstNameResponse = createResponse(searchUsersByFirstNameRequest);
+                searchUserByFirstNameResponse = validateSearchUserFirstNameRequest(searchUsersByFirstNameRequest);
             }
 
 
@@ -130,7 +130,7 @@ public class SearchUserByFirstNameUIAction implements UIAction {
         searchUserByFirstNameResponse.getErrorList().forEach(System.out::println);
     }
 
-    private SearchUserByFirstNameResponse createResponse(SearchUsersByFirstNameRequest searchUsersByFirstNameRequest){
+    private SearchUserByFirstNameResponse validateSearchUserFirstNameRequest(SearchUsersByFirstNameRequest searchUsersByFirstNameRequest){
         return searchUserByFirstNameService.execute(searchUsersByFirstNameRequest);
     }
 
