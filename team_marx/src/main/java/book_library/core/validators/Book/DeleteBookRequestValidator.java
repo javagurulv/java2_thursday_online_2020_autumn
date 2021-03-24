@@ -1,7 +1,6 @@
 package book_library.core.validators.Book;
 
 import book_library.core.requests.Book.DeleteBookRequest;
-import book_library.core.requests.Book.RemoveBookRequest;
 import book_library.core.responses.CoreError;
 import org.springframework.stereotype.Component;
 
