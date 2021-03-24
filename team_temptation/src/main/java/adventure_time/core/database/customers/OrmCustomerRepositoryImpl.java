@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,21 +64,25 @@ public class OrmCustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public boolean updateCustomer(Customers customer, Long id) {
-        sessionFactory.getCurrentSession()
-                .createQuery("UPDATE Customers SET " +
-                        "name =: name, " +
-                        "email =: email, " +
-                        "phone =: phone, " +
-                        "password =: password " +
-                        "WHERE id = :id")
-                .setParameter("id", id)
-                .setParameter("name", customer.getCustomerName())
-                .setParameter("email", customer.getCustomerEmail())
-                .setParameter("phone", customer.getCustomerPhone())
-                .setParameter("password", customer.getCustomerPassword())
-                .executeUpdate();
-
-        return true;
+        try {
+            sessionFactory.getCurrentSession()
+                    .createQuery("UPDATE Customers SET " +
+                            "name =: name, " +
+                            "email =: email, " +
+                            "phone =: phone, " +
+                            "password =: password " +
+                            "WHERE id = :id")
+                    .setParameter("id", id)
+                    .setParameter("name", customer.getCustomerName())
+                    .setParameter("email", customer.getCustomerEmail())
+                    .setParameter("phone", customer.getCustomerPhone())
+                    .setParameter("password", customer.getCustomerPassword())
+                    .executeUpdate();
+            return true;
+        } catch (PersistenceException exception) {
+            sessionFactory.getCurrentSession().clear();
+            return false;
+        }
     }
 
     @Override

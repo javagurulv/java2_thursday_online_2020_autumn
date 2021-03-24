@@ -13,21 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertNotNull;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = {SpringCoreConfiguration.class})
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringCoreConfiguration.class})
 //@WebAppConfiguration0
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SpringContextTest {
-//
-//
-//    @Autowired
-//    private ApplicationContext applicationContext;
-//
-//    @Test
-//    public void start() {
-//        assertNotNull(applicationContext);
-//    }
+
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @Test
+    public void start() {
+        assertNotNull(applicationContext);
+    }
 
 }
 

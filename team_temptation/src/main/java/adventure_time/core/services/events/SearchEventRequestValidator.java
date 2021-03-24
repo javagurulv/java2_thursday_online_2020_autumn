@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 public class SearchEventRequestValidator {
 
     private static final Pattern PATTERN_ID = Pattern.compile("[0-9]+");
-    private static final Pattern PATTERN_NAME = Pattern.compile("[а-яА-ЯёЁa-zA-Z0-9,\\()!\\?\\+-:;]{5,50}");
 
     public List<CoreError> validate (SearchEventRequest request) {
 
@@ -32,17 +31,17 @@ public class SearchEventRequestValidator {
         }
 
         if (name && request.getEventName().isBlank()) {
-            CoreError error = new CoreError("customerEmail", "Email must be defined.");
+            CoreError error = new CoreError("eventName", "The event name is not defined");
             errors.add(error);
         }
 
-        if (name && !PATTERN_NAME.matcher(request.getEventName()).matches()) {
-            CoreError error = new CoreError("customerEmail", "Email is incorrect.");
+        if (id && request.getEventId().toString().isBlank()) {
+            CoreError error = new CoreError("eventId", "The event id is not defined");
             errors.add(error);
         }
 
         if (id && !PATTERN_ID.matcher(request.getEventId().toString()).matches()) {
-            CoreError error = new CoreError("customerID", "ID is incorrect.");
+            CoreError error = new CoreError("eventId", "Id is incorrect.");
             errors.add(error);
         }
 

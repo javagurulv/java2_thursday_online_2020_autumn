@@ -41,12 +41,17 @@ public class SearchEventUIAction implements UIAction {
 
          SearchEventResponse response = searchEventService.searchEvent(request);
 
-        if (response.hasError()) {
-            System.out.println("Your request is not correct cause of:");
-            response.getErrors().forEach(System.out::println);
-        } else {
-            System.out.println("Here are list of events under your request:");
-            System.out.println(response.getEvents());
+         if (response.hasError()) {
+             System.out.println("Your request could not be fulfilled for the reasons: ");
+             response.getErrors().forEach(System.out::println);
+         } else {
+             if (response.getEvents() != null) {
+                 System.out.println("Here is the event: ");
+                 System.out.println(response.getEvents());
+             } else {
+                 System.out.println("Your request could not be fulfilled for the reasons: ");
+                 response.getErrors().forEach(System.out::println);
+             }
          }
     }
 }

@@ -36,9 +36,8 @@ public class UpdateCustomerService {
             return new UpdateCustomerResponse();
         }
 
-        CoreError error = new CoreError("customerEmail", "Sorry, in DB already exist the user with email" +
-                customer.getCustomerEmail() +
-                ". You have to choose another one.");
+        CoreError error = new CoreError("customerEmail", "Sorry, in DB already exist the user with email '" +
+                customer.getCustomerEmail() + "'. You have to choose another one.");
         errors.add(error);
         return new UpdateCustomerResponse(errors);
 

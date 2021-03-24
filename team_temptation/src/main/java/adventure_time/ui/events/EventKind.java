@@ -9,10 +9,16 @@ public class EventKind {
 
     public EventKind() {
         eventKind = new HashMap<>();
+        eventKind.put(0 , "undefined");
         eventKind.put(1, "bike trip");
         eventKind.put(2, "boat trip");
         eventKind.put(3, "walking trip");
         eventKind.put(4, "motorcycle trip");
         eventKind.put(5, "bus trip");
+
+    }
+
+    public Map<Integer, String> getEventKind() {
+        return eventKind;
     }
 }

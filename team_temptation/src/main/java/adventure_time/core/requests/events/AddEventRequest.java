@@ -4,12 +4,10 @@ public class AddEventRequest {
 
     private String eventName;
     private String eventKind;
-    //    private Guides guide;
     private Integer durationHours;
     private Integer maxNumberParticipants;
     private Integer minNumberParticipants;
-    private String route; // List<StayPoint>
-
+    private String route;
     private String detailsDescription;
 
     public AddEventRequest(String eventName, String eventKind, Integer durationHours,

@@ -1,6 +1,5 @@
 package internet_store.application.core.services.customer;
 
-import internet_store.application.core.database.customer.CustomerRepository;
 import internet_store.application.core.database.jpa.JpaCustomerRepository;
 import internet_store.application.core.domain.Customer;
 import internet_store.application.core.requests.customer.AddCustomerRequest;
@@ -8,12 +7,12 @@ import internet_store.application.core.responses.customer.AddCustomerResponse;
 import internet_store.application.core.responses.CoreError;
 import internet_store.application.core.services.customer.validators.AddCustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
+@Service
 @Transactional
 public class AddCustomerService {
 
@@ -25,7 +24,9 @@ public class AddCustomerService {
         if (!errors.isEmpty()) {
             return new AddCustomerResponse(errors);
         }
-        Customer customer = new Customer(request.getCustomerFirstName(), request.getCustomerSecondName());
+        Customer customer = new Customer();
+        customer.setCustomerFirstName(request.getCustomerFirstName());
+        customer.setCustomerSecondName(request.getCustomerSecondName());
         customer.setCustomerPhone(request.getCustomerPhone());
         customer.setCustomerEmail(request.getCustomerEMail());
         customer.setCustomerAddress(request.getCustomerAddress());

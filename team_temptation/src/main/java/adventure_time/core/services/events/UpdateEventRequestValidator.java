@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UpdateEventRequestValidator {
+public class   UpdateEventRequestValidator {
 
     public List<CoreError> validateId (UpdateEventRequest request) {
 

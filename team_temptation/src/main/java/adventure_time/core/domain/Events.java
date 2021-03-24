@@ -35,8 +35,7 @@ public class Events {
 
     public Events() {}
 
-    public Events(String eventName, String eventKind, Integer durationHours,
-                  Integer maxNumberParticipants, Integer minNumberParticipants,
+    public Events(String eventName, String eventKind, Integer durationHours, Integer maxNumberParticipants, Integer minNumberParticipants,
                   String route, String detailsDescription) {
         this.eventName = eventName;
         this.eventKind = eventKind;
@@ -133,15 +132,15 @@ public class Events {
 
     @Override
     public String toString() {
-        return "Event[" +
-                "Id=" + eventId +
-                ", kind='" + eventKind + '\'' +
-                ", duration=" + durationHours +
-                ", max=" + maxNumberParticipants +
-                ", min=" + minNumberParticipants +
+        return "Events{" +
+                "eventId=" + eventId +
+                ", eventName='" + eventName + '\'' +
+                ", eventKind='" + eventKind + '\'' +
+                ", durationHours=" + durationHours +
+                ", maxNumberParticipants=" + maxNumberParticipants +
+                ", minNumberParticipants=" + minNumberParticipants +
                 ", route='" + route + '\'' +
-                ", name='" + eventName + '\'' +
-                ", details='" + detailsDescription + '\'' +
-                ']';
+                ", detailsDescription='" + detailsDescription + '\'' +
+                '}';
     }
 }

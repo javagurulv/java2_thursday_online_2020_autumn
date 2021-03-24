@@ -49,8 +49,7 @@ public class UpdateEventService {
                 request.getMinNumberParticipants(), request.getRoute(),
                 request.getDetailsDescription());
 
-        event.setEventId(id);
-        //databaseEvents.updateEvent(event);
+        databaseEvents.updateEvent(event, id);
 
         return new UpdateEventResponse(null, null);
     }

@@ -1,5 +1,6 @@
 package adventure_time.core.database.events;
 
+import adventure_time.core.requests.Paging;
 import adventure_time.core.requests.events.AddEventRequest;
 import adventure_time.core.requests.events.SearchEventRequest;
 import adventure_time.core.domain.Events;
@@ -20,6 +21,6 @@ public interface EventRepository {
 
     boolean updateEvent (Events event, Long id);
 
-    List<Events> findEvents (String query);
+    List<Events> findEvents (String query, Paging paging);
 
 }

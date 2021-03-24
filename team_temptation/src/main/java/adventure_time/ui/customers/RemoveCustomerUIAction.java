@@ -27,7 +27,7 @@ public class RemoveCustomerUIAction implements UIAction {
         if (response.hasError()) {
             response.getErrors().forEach(System.out::println);
         } else {
-            System.out.println("The customer is removed to the \"inactive\" state");
+            System.out.println("The customer was deleted");
         }
 
         System.out.println();

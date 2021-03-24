@@ -39,8 +39,8 @@ public class AdminMenu {
         menuFunctionMap.put(32, findUIAction(uiActionList, AddEventUIAction.class));
         menuFunctionMap.put(33, findUIAction(uiActionList, RemoveEventUIAction.class));
         menuFunctionMap.put(34, findUIAction(uiActionList, SearchEventUIAction.class));
-        menuFunctionMap.put(35, findUIAction(uiActionList, UpdateUIAction.class));
-        menuFunctionMap.put(36, findUIAction(uiActionList, ShowListOfEventsUIAction.class));
+        menuFunctionMap.put(35, findUIAction(uiActionList, UpdateEventUIAction.class));
+        menuFunctionMap.put(36, findUIAction(uiActionList, ShowEventsUIAction.class));
         //Tours
         menuFunctionMap.put(41, findUIAction(uiActionList, ToMainMenuUIAction.class));
         menuFunctionMap.put(42, findUIAction(uiActionList, ToMainMenuUIAction.class));

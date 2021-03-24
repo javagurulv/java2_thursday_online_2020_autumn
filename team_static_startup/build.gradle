@@ -33,4 +33,7 @@ dependencies {
 
 	compile ('org.liquibase:liquibase-core:4.2.2')
 
+	compileOnly ('org.projectlombok:lombok:1.18+')
+	annotationProcessor ('org.projectlombok:lombok:1.18+')
+
 }

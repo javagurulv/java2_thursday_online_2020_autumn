@@ -11,60 +11,29 @@ import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-//@DIComponent
 @Component
 public class RemoveEventUIAction implements UIAction {
 
-//    @DIDependency
     @Autowired
     private RemoveEventService removeEventService;
-
-//    public RemoveEventUIAction(RemoveEventService removeEventService) {
-//        this.removeEventService = removeEventService;
-//    }
 
     @Override
     public void execute() {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Deleting...");
-        System.out.println("Choose the way of the event deletion: by the name (press N) or by the ID-number (press I):");
+        System.out.println("Enter an event ID:");
 
-        RemoveEventRequest request;
-
-        if (scanner.nextLine().equals("N")) {
-            System.out.println("Enter an event name: ");
-            request = new RemoveEventRequest(scanner.nextLine(),  "byName");
-        } else {
-            System.out.println("Enter an event ID: ");
-            request = new RemoveEventRequest(toLong(scanner.nextLine()), "byId");
-        }
+        RemoveEventRequest request = new RemoveEventRequest(scanner.nextLong());
 
         RemoveEventResponse response = removeEventService.removeEvent(request);
 
         if (response.hasError()) {
             response.getErrors().forEach(System.out::println);
         } else {
-            System.out.print("The event \"" + whatIsTheValueOFThisWay(request));
-            System.out.println(endOfMessage(response));
+            System.out.print("The event was deleted");
         }
-    }
 
-    private String endOfMessage(RemoveEventResponse response) {
-        return response.isSuccessRemoval()
-                ? "\" removed from list."
-                : "\" not found.";
-    }
-
-    private static String whatIsTheValueOFThisWay(RemoveEventRequest request) {
-        return request.getDeletionWay().equals("byName")
-                ? request.getEventName()
-                : request.getEventId().toString();
-    }
-
-    private Long toLong (String byId) {
-        return byId.isBlank()
-                ? 0L
-                : Long.parseLong(byId);
+        System.out.println();
     }
 }

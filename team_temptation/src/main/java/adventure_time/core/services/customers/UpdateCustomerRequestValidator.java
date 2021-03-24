@@ -28,11 +28,6 @@ public class UpdateCustomerRequestValidator {
         boolean nullPhone = request.getPhone() == null || request.getPhone().isBlank();
         boolean nullPassword = request.getPassword() == null || request.getPassword().isBlank();
 
-//        if (nullName) {
-//            CoreError error = new CoreError("customerName", "Must be not empty");
-//            errors.add(error);
-//        }
-
         if (!nullName && request.getName().length() < MIN_NAME_LENGTH) {
             CoreError error = new CoreError("customerName", "Must contain from 5 to 55 symbols");
             errors.add(error);
@@ -43,30 +38,15 @@ public class UpdateCustomerRequestValidator {
             errors.add(error);
         }
 
-//        if (nullEmail) {
-//            CoreError error = new CoreError("customerEmail", "Must be not empty");
-//            errors.add(error);
-//        }
-
         if (!nullEmail && (!PATTERN_EMAIL.matcher(request.getEmail()).matches())) {
             CoreError error = new CoreError("customerEmail", "Email is incorrect");
             errors.add(error);
         }
 
-//        if (nullPhone) {
-//            CoreError error = new CoreError("customerPhone", "Must be not empty");
-//            errors.add(error);
-//        }
-
         if (!nullPhone && (!PATTERN_PHONE_LV.matcher(request.getPhone()).matches())) {
             CoreError error = new CoreError("customerPhone", "Phone number is incorrect");
             errors.add(error);
         }
-
-//        if (nullPassword) {
-//            CoreError error = new CoreError("customerPassword", "Must be not empty" );
-//            errors.add(error);
-//        }
 
         if ((!nullPassword) && request.getPassword().length() < MIN_PASSWORD_LENGTH) {
             CoreError error = new CoreError("customerPassword", "Passwords too short");

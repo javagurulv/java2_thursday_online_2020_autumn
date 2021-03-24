@@ -2,6 +2,7 @@ package adventure_time.core.services.events;
 
 import adventure_time.core.requests.events.RemoveEventRequest;
 import adventure_time.core.responses.CoreError;
+import adventure_time.core.responses.customer.RemoveCustomerResponse;
 import adventure_time.core.responses.events.RemoveEventResponse;
 import adventure_time.core.database.events.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,19 +10,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-//@DIComponent
 @Component
 public class RemoveEventService {
-//    @DIDependency
     @Autowired
-    private EventRepository databaseEvents;
-//    @DIDependency
+    private EventRepository database;
     @Autowired private RemoveEventRequestValidator validator;
-
-//    public RemoveEventService(EventDatabase databaseEvents, RemoveEventRequestValidator validator) {
-//        this.databaseEvents = databaseEvents;
-//        this.validator = validator;
-//    }
 
     public RemoveEventResponse removeEvent(RemoveEventRequest request) {
 
@@ -31,14 +24,12 @@ public class RemoveEventService {
             return new RemoveEventResponse(errors);
         }
 
-//        boolean isSuccessRemoval;
-//        if (request.getDeletionWay().equals("byName")) {
-//            isSuccessRemoval = databaseEvents.removeByName(request.getEventName());
-//        } else {
-//            isSuccessRemoval = databaseEvents.removeById(request.getEventId());
-//        }
-
-        return new RemoveEventResponse(true); //isSuccessRemoval);
-
+        if (!database.delete(request.getEventId())) {
+            errors.add(new CoreError("customerId",
+                    "There is no any event with ID: " + request.getEventId() + " in the database"));
+            return new RemoveEventResponse(errors);
+        } else {
+            return new RemoveEventResponse();
+        }
     }
 }
