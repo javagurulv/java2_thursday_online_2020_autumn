@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class ReaderBookRepository {
 
     @Autowired
