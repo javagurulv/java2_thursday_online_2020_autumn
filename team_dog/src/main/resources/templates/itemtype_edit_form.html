@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Edit item type</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+
+    <script type="text/javascript" th:src="@{/js/storescripts.js}"></script>
+
+</head>
+<body class="p-5">
+
+<h3>Edit Item type</h3>
+<form th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${itemTypeDto}" method="post">
+        Name: <input type="text" th:field="*{typeName}"><br><br>
+        Material: <input type="text" th:field="*{material}" value="yo"><br><br>
+        Description: <input type="text" th:field="*{description}"><br><br>
+        <input type="submit" value="Submit"/> <input type="reset" value="Reset">
+</form>
+
+</body>
+</html>

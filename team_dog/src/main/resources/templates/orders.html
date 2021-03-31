@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Orders</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+
+    <script type="text/javascript" th:src="@{/js/storescripts.js}"></script>
+
+</head>
+<body class="p-5">
+
+<h3>This is admin page and must be secured by Spring Security </h3>
+<form action="#" th:action="@{/home}" method="get">
+    <input type="submit" value="Return to Shop"/>
+</form>
+<br>
+
+<form th:action="@{/admin/item/types}" method="get">
+    <input type="submit" value="Item types"/>
+</form>
+<br>
+
+<form action="#" th:action="@{/admin/orders}" method="get">
+    <input type="submit" value="Orders"/>
+</form>
+<hr/>
+
+<div th:each="order:${orders}">
+    <p>
+        <a th:text="'Order id: ' + ${order.orderId}"></a><br>
+    </p>
+    <form th:action="@{/admin/items/{path}/edit(path=${order.id})}" method="get">
+        <input type="submit" value="Edit"/>
+        <input type="submit" th:formaction="@{/admin/items/{path}/delete(path=${order.id})}" formmethod="post" value="Delete"/>
+    </form>
+    <hr/>
+</div>
+
+</body>
+</html>

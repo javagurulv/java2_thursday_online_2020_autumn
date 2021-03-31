@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script type="text/javascript" th:src="@{/rsc/js/scripts3.js}"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Admin DashBoard</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+
+    <script type="text/javascript" th:src="@{/js/storescripts.js}"></script>
+
+</head>
+
+<body class="p-5">
+
+<h3>This is admin page and must be secured by Spring Security </h3>
+<form action="#" th:action="@{/home}" method="get">
+    <input type="submit" value="Return to Shop"/>
+</form>
+<br>
+
+<form th:action="@{/admin/item/types}" method="get">
+    <input type="submit" value="Item types"/>
+</form>
+<br>
+
+<form action="#" th:action="@{/admin/orders}" method="get">
+    <input type="submit" value="Orders"/>
+</form>
+
+</body>
+</html>
