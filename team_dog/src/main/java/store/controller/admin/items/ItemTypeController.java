@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import store.dtos.ItemTypeDto;
+import store.dtos.ItemTypeDTO;
 import store.entity.items.ItemType;
 import store.service.resolver.ApiResolver;
 
@@ -21,7 +21,7 @@ public class ItemTypeController {
     @GetMapping
     public String listItemTypes(ItemType i, Model model){
         model.addAttribute("itemTypeDtos", apiResolver.getAllItemTypes());
-        return "itemtypes";
+        return "admin_itemtypes";
     }
 
     @PostMapping
@@ -33,11 +33,11 @@ public class ItemTypeController {
     @GetMapping("/{id}/edit")
     public String openEditItemTypeMenu(@PathVariable Long id, Model model){
         model.addAttribute("itemTypeDto", apiResolver.getItemTypeById(id));
-        return "itemtype_edit_form";
+        return "admin_itemtype_edit_form";
     }
 
     @PostMapping("/{id}/edit")
-    public String editItemType(@PathVariable Long id, ItemTypeDto itemTypeDto){
+    public String editItemType(@PathVariable Long id, ItemTypeDTO itemTypeDto){
         apiResolver.updateItemType(id, itemTypeDto);
         return "redirect:/admin/item/types";
     }

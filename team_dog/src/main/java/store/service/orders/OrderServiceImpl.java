@@ -2,13 +2,13 @@ package store.service.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import store.dtos.OrderDTO;
 import store.entity.items.Item;
 import store.entity.orders.Order;
 import store.repositories.OrderRepository;
 import store.service.utility.OrderWaresEntityService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,13 +24,13 @@ public class OrderServiceImpl implements OrderService {
     OrderWaresEntityService orderWaresEntityService;
 
     @Override
-    public Order createNewOrder() {
+    public Long createNewOrder(OrderDTO orderDTO) {
         Long orderId = generateOrderId();
         List<Long> itemIds = orderWaresEntityService.transformItemIds(basket);
-        Order order = new Order(orderId, itemIds);
+        Order order = new Order(orderId, itemIds, orderDTO.getEmail(), orderDTO.getAddress(), orderDTO.getPhone(), orderDTO.getAdditionalInformation());
         orderRepository.save(order);
         basket.clear();
-        return order;
+        return orderId;
     }
 
     @Override
@@ -51,6 +51,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Item> getBasket() {
         return basket;
+    }
+
+    @Override
+    public OrderDTO getOrder(Long id) {
+        Order order = orderRepository.getOne(id);
+        return new OrderDTO(order);
+    }
+
+    @Override
+    public List<Item> getOrderItems(Long id) {
+        Order order = orderRepository.getOne(id);
+        return orderWaresEntityService.transformItemsFromIds(order.getItemList());
     }
 
     private Long generateOrderId(){

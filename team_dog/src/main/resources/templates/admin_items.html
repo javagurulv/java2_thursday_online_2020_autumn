@@ -32,10 +32,10 @@
 
 <h3>Add Item</h3>
 <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${itemDTO}" method="post">
-    <p> Name: <input type="text" th:field="*{name}"></p>
-    <p> Qty: <input type="text" th:field="*{quantity}"></p>
-    <p> Price: <input type="text" th:field="*{price}"></p>
-    <p> Description: <input type="text" th:field="*{description}"></p>
+    <p> Name: <input type="text" required="required" th:field="*{name}"></p>
+    <p> Qty: <input type="text" required="required" th:field="*{quantity}"></p>
+    <p> Price: <input type="text" required="required" th:field="*{price}"></p>
+    <p> Description: <input type="text" required="required"th:field="*{description}"></p>
     <p> <input type="submit" value="Submit"/> <input type="reset" value="Reset"></p>
 </form>
 <hr/>

@@ -2,9 +2,7 @@ package store.service.items;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import store.dtos.ItemDTO;
 import store.entity.items.Item;
-import store.entity.items.ItemType;
 import store.repositories.ItemRepository;
 
 import java.util.List;

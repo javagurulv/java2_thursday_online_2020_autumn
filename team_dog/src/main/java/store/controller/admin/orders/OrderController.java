@@ -17,6 +17,6 @@ public class OrderController {
     @GetMapping
     public String getAllOrder(Model model){
         model.addAttribute("orders", apiResolver.getAllOrders());
-        return "orders";
+        return "admin_orders";
     }
 }

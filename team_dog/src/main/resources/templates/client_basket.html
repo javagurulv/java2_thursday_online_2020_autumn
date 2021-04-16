@@ -31,8 +31,10 @@
 
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-1 mr-0 px-3" th:href="@{/}"><span data-feather="home"></span> Online Store</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand col-md-3 col-lg-1 mr-0 px-3" th:href="@{/}"><span data-feather="home"></span> Online
+        Store</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
@@ -53,7 +55,8 @@
                 </h6>
                 <ul class="nav flex-column" th:each="itemType:${itemTypeDtos}">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/wares(type=${itemType.id})}" th:text="${itemType.typeName}">
+                        <a class="nav-link active" th:href="@{/wares(type=${itemType.id})}"
+                           th:text="${itemType.typeName}">
                             <span data-feather="tag"></span>
                         </a>
                 </ul>
@@ -74,12 +77,6 @@
                             About us
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" th:href="@{/script/getPdf}">
-                            <span data-feather="settings"></span>
-                            Complete order
-                        </a>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -92,19 +89,24 @@
                         <div class="col-md-2" th:each="item:${basket}">
                             <h4 th:text="${item.name}"></h4>
                             <div class="card mb-4 shadow-sm">
-                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                                     focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>
                                     Placeholder</title>
                                     <rect width="100%" height="100%" fill="#55595c"/>
-                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Suppose to be a photo of item, but its gone now</text>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Suppose to be a photo of item, but
+                                        its gone now
+                                    </text>
                                 </svg>
                                 <div class="card-body">
-                                    <p class="card-text"th:text="${item.description}"></p>
+                                    <p class="card-text" th:text="${item.description}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <form th:action="@{/basket}" th:method="post">
-                                        <div class="btn-group" >
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary"
-                                                    th:name="itemId" th:value="${item.id}">Remove from basket</button>
-                                        </div>
+                                            <div class="btn-group">
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                        th:name="itemId" th:value="${item.id}">Remove from basket
+                                                </button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -112,11 +114,22 @@
                         </div>
                     </div>
                 </div>
+
+                <form action="#" th:action="@{/basket/complete_order}" th:object="${orderDTO}" method="post">
+                    <p> Email: <input type="text" required="required" th:field="*{email}"></p>
+                    <p> Delivery address: <input type="text" required="required" th:field="*{address}"></p>
+                    <p> Phone(optional): <input type="text" th:field="*{phone}"></p>
+                    <p> Additional info: <input type="text" th:field="*{additionalInformation}"></p>
+                    <p><input type="submit" value="Complete order"/> <input type="reset" value="Reset"></p>
+                </form>
+
             </div>
         </main>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>

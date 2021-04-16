@@ -67,6 +67,15 @@ function add_to_basket(itemId){
     }
 }
 
+// function getPdf(){
+//     var http = new XMLHttpRequest();
+//     http.open("GET", "http://localhost:8080/script/getPdf", true);
+//     http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+//     http.onload = function() {
+//         alert("yo");
+//     }
+// }
+
 // function complete_order(){
 //     var http = new XMLHttpRequest();
 //     http.open("POST", "http://localhost:8080/getPdf", true);

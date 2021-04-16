@@ -22,10 +22,13 @@ create table item_types
 
 create table orders
 (
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    order_id bigint(30),
-    primary key (id),
-    unique (id)
+    order_id bigint(30) NOT NULL,
+    primary key (order_id),
+    email varchar(50),
+    address nvarchar(100),
+    phone varchar(20),
+    add_info nvarchar(2000),
+    unique (order_id)
 );
 
 create table order_wares

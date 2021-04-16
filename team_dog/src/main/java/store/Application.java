@@ -14,16 +14,16 @@ public class Application {
 
 
 
-//todo make multi threaded ( multiply users usage)
-//todo make multi language support
-//todo add images to items
+//todo IMPLEMENT multi threaded ( multiply users usage)
+//todo IMPLEMENT multi language support
+//todo IMPLEMENT images to items
 //todo make items & itemtypes pages url variable introduced e.g. __${#httpServletRequest.requestURI}__}
-//todo add null checks for adding new items, itemtypes
+//todo add null checks for adding new items, itemtypes (html required="required" field check implementation)
 //todo removing whole itemtype with items included ?
 //todo populate PDF
-//todo introduce email sending service
-//todo make Search function on top of shop page
-//todo make paginations for items
+//todo IMPLEMENT email sending service
+//todo IMPLEMENT Search function on top of shop page
+//todo IMPLEMENT paginations for items
 //todo make PDF with jersey's Response and redirect to home/basket/ack that pdf is created, basket is empty
-// TODO thymeleaf adds ? in each url end
-// todo make DELETE REST method for delete actions, PUT for editing
+//todo thymeleaf adds ? in each url end
+//todo make DELETE REST method for delete actions, PUT for editing

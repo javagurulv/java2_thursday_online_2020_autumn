@@ -20,7 +20,7 @@ public class ItemController {
     @GetMapping
     public String listItemsByTypes(@PathVariable Integer id, ItemDTO i, Model model){
         model.addAttribute("itemDtos", apiResolver.getByItemTypeId(id));
-        return "items";
+        return "admin_items";
     }
 
     @PostMapping  //todo make select dropdown for item types input model
@@ -33,7 +33,7 @@ public class ItemController {
     @GetMapping("/edit")
     public String openEditItemMenu(@PathVariable Long id, Model model){
         model.addAttribute("itemDto", apiResolver.getItemById(id));
-        return "item_edit_form";
+        return "admin_item_edit_form";
     }
 
     @PostMapping("/edit")

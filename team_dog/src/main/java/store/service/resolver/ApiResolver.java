@@ -2,7 +2,8 @@ package store.service.resolver;
 
 import org.springframework.core.io.Resource;
 import store.dtos.ItemDTO;
-import store.dtos.ItemTypeDto;
+import store.dtos.ItemTypeDTO;
+import store.dtos.OrderDTO;
 import store.entity.items.Item;
 import store.entity.items.ItemType;
 import store.entity.orders.Order;
@@ -13,7 +14,7 @@ public interface ApiResolver {
 
     List<ItemDTO> getByItemTypeId(Integer itemTypeId);
 
-    List<ItemTypeDto> getAllItemTypes();
+    List<ItemTypeDTO> getAllItemTypes();
 
     ItemDTO getItemById(Long id);
 
@@ -29,9 +30,9 @@ public interface ApiResolver {
 
     void addNewItemType(ItemType itemType);
 
-    ItemTypeDto getItemTypeById(Long id);
+    ItemTypeDTO getItemTypeById(Long id);
 
-    void updateItemType(Long id, ItemTypeDto itemTypeDto);
+    void updateItemType(Long id, ItemTypeDTO itemTypeDto);
 
     void deleteItemTypeById(Long id);
 
@@ -40,4 +41,10 @@ public interface ApiResolver {
     String addItemToBasket(Long itemId);
 
     Resource getPdfOrder();
+
+    Long createNewOrder(OrderDTO orderDTO);
+
+    OrderDTO getOrder(Long id);
+
+    List<Item> getOrderItems(Long id);
 }

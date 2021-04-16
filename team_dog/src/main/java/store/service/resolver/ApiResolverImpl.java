@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import store.dtos.ItemDTO;
-import store.dtos.ItemTypeDto;
+import store.dtos.ItemTypeDTO;
+import store.dtos.OrderDTO;
 import store.entity.items.Item;
 import store.entity.items.ItemType;
 import store.entity.orders.Order;
@@ -40,9 +41,9 @@ public class ApiResolverImpl implements ApiResolver {
     }
 
     @Override
-    public List<ItemTypeDto> getAllItemTypes() {
+    public List<ItemTypeDTO> getAllItemTypes() {
         List<ItemType> itemTypes = itemTypeService.getAllItemTypes();
-        return itemTypes.stream().map(ItemTypeDto::new).collect(Collectors.toList());
+        return itemTypes.stream().map(ItemTypeDTO::new).collect(Collectors.toList());
     }
 
     @Override
@@ -83,13 +84,13 @@ public class ApiResolverImpl implements ApiResolver {
     }
 
     @Override
-    public ItemTypeDto getItemTypeById(Long id) {
+    public ItemTypeDTO getItemTypeById(Long id) {
         ItemType itemType = itemTypeService.getById(id);
-        return new ItemTypeDto(itemType);
+        return new ItemTypeDTO(itemType);
     }
 
     @Override
-    public void updateItemType(Long id, ItemTypeDto itemTypeChanges) {
+    public void updateItemType(Long id, ItemTypeDTO itemTypeChanges) {
         ItemType itemType = itemTypeService.getById(id);
         updateItemType(itemType, itemTypeChanges);
         itemTypeService.saveItemType(itemType);
@@ -115,7 +116,22 @@ public class ApiResolverImpl implements ApiResolver {
 
     @Override
     public Resource getPdfOrder() {
-        return pdfService.handleRequest();
+        return pdfService.getPdf();
+    }
+
+    @Override
+    public Long createNewOrder(OrderDTO orderDTO) {
+        return orderService.createNewOrder(orderDTO);
+    }
+
+    @Override
+    public OrderDTO getOrder(Long id) {
+        return orderService.getOrder(id);
+    }
+
+    @Override
+    public List<Item> getOrderItems(Long id) {
+        return orderService.getOrderItems(id);
     }
 
     private void updateItem(Item itemToUpdate, ItemDTO changes) {
@@ -125,7 +141,7 @@ public class ApiResolverImpl implements ApiResolver {
         itemToUpdate.setDescription(changes.getDescription());
     }
 
-    private void updateItemType(ItemType typeToUpdate, ItemTypeDto changes){
+    private void updateItemType(ItemType typeToUpdate, ItemTypeDTO changes){
         typeToUpdate.setTypeName(changes.getTypeName());
         typeToUpdate.setMaterial(changes.getMaterial());
         typeToUpdate.setDescription(changes.getDescription());

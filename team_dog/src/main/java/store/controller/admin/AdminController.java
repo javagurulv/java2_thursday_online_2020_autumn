@@ -10,7 +10,7 @@ public class AdminController {
 
     @GetMapping     //TODO make secured , prob. Spring Security ?
     public String adminPage(){
-        return "admin";
+        return "admin_dashboard";
     }
 
 }

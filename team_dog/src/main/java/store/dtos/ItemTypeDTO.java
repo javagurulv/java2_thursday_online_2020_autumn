@@ -2,18 +2,18 @@ package store.dtos;
 
 import store.entity.items.ItemType;
 
-public class ItemTypeDto {
+public class ItemTypeDTO {
 
     private Long id;
     private String typeName;
     private String material;
     private String description;
 
-    public ItemTypeDto() {
+    public ItemTypeDTO() {
 
     }
 
-    public ItemTypeDto(ItemType itemType) {
+    public ItemTypeDTO(ItemType itemType) {
         this.id = itemType.getId();
         this.typeName = itemType.getTypeName();
         this.material = itemType.getMaterial();

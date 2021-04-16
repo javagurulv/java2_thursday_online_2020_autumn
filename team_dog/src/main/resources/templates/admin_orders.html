@@ -33,10 +33,12 @@
 <div th:each="order:${orders}">
     <p>
         <a th:text="'Order id: ' + ${order.orderId}"></a><br>
+        <a th:text="'Email: ' + ${order.email}"></a><br>
+        <a th:text="'Delivery adress: ' + ${order.email}"></a><br>
     </p>
-    <form th:action="@{/admin/items/{path}/edit(path=${order.id})}" method="get">
+    <form th:action="@{/admin/items/{path}/edit(path=${order.orderId})}" method="post">
         <input type="submit" value="Edit"/>
-        <input type="submit" th:formaction="@{/admin/items/{path}/delete(path=${order.id})}" formmethod="post" value="Delete"/>
+        <input type="submit" th:formaction="@{/admin/items/{path}/delete(path=${order.orderId})}" formmethod="post" value="Delete"/>
     </form>
     <hr/>
 </div>

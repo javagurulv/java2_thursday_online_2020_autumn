@@ -4,5 +4,5 @@ import org.springframework.core.io.Resource;
 
 public interface PdfService {
 
-    Resource handleRequest();
+    Resource getPdf();
 }

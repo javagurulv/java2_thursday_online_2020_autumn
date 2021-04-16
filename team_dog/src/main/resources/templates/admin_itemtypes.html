@@ -30,18 +30,17 @@
 </form>
 <hr/>
 
-<h3>Add New Item type</h3>
+<h4>Add New Item type</h4>
 
 <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${itemType}" method="post">
-    <p>Name: <input type="text" th:field="*{typeName}"></p>
-    <p>Material: <input type="text" th:field="*{material}"></p>
-    <p>Description: <input type="text" th:field="*{description}"></p>
+    <p>Name: <input type="text" required="required" th:field="*{typeName}"></p>
+    <p>Material: <input type="text" required="required" th:field="*{material}"></p>
+    <p>Description: <input type="text" required="required" th:field="*{description}"></p>
     <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"></p>
 </form>
 
 <hr/>
-Items by types: <br>
-<hr/>
+<h4>Items by types: </h4><br>
 
 <div th:each="itemType:${itemTypeDtos}">
     <form th:action="@{/admin/items/{path}(path=${itemType.id})}" method="get">

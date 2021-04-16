@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class PdfServiceImpl implements PdfService{
+public class PdfServiceImpl implements PdfService {
 
     @Autowired
     OrderService orderService;
@@ -43,9 +43,9 @@ public class PdfServiceImpl implements PdfService{
     }
 
     @Override
-    public Resource handleRequest() {
-        Order order = orderService.createNewOrder();
-        prepareDocument(order.getOrderId());
+    public Resource getPdf() {
+        Order order;
+        prepareDocument(1L);
         return throwOutDocument();
     }
 
